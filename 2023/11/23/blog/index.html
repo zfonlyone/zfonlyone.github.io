@@ -101,17 +101,17 @@
 
 
 
-<meta name="description" content="使用淘宝源的 cnpm 替换 npmnpm install -g cnpm –registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.orgcnpm install -g cnpm                 # 升级 npmcnpm cache clean -f                 # 清除 npm 缓存&#x3D;&#x3D;&#x3D;更新 hex">
+<meta name="description" content="#安装npm install -g hexo-cli #hexo在5.0之后把swig给删除了需要自己手动安装npm i hexo-renderer-swig之后hexo cleanhexo generatehexo server">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo 建站">
 <meta property="og:url" content="http://yoursite.com/2023/11/23/blog/index.html">
 <meta property="og:site_name" content="代码诗集">
-<meta property="og:description" content="使用淘宝源的 cnpm 替换 npmnpm install -g cnpm –registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.orgcnpm install -g cnpm                 # 升级 npmcnpm cache clean -f                 # 清除 npm 缓存&#x3D;&#x3D;&#x3D;更新 hex">
+<meta property="og:description" content="#安装npm install -g hexo-cli #hexo在5.0之后把swig给删除了需要自己手动安装npm i hexo-renderer-swig之后hexo cleanhexo generatehexo server">
 <meta property="og:locale">
 <meta property="og:image" content="http://yoursite.com/test.png">
 <meta property="og:image" content="http://yoursite.com/images/test.png">
 <meta property="article:published_time" content="2023-11-23T02:47:10.000Z">
-<meta property="article:modified_time" content="2023-11-03T02:49:46.872Z">
+<meta property="article:modified_time" content="2023-11-03T02:57:41.513Z">
 <meta property="article:author" content="zfonlyone">
 <meta property="article:tag" content="code">
 <meta name="twitter:card" content="summary">
@@ -421,12 +421,10 @@
       
 
       
-        <h1 id="使用淘宝源的-cnpm-替换-npm"><a href="#使用淘宝源的-cnpm-替换-npm" class="headerlink" title="使用淘宝源的 cnpm 替换 npm"></a>使用淘宝源的 cnpm 替换 npm</h1><p>npm install -g cnpm –registry&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>cnpm install -g cnpm                 # 升级 npm<br>cnpm cache clean -f                 # 清除 npm 缓存<br>&#x3D;&#x3D;&#x3D;更新 hexo: 进入 blog 目录，执行如下命令&#x3D;&#x3D;&#x3D; </p>
-<h1 id="更新-package-json-中的-hexo-及个插件版本"><a href="#更新-package-json-中的-hexo-及个插件版本" class="headerlink" title="更新 package.json 中的 hexo 及个插件版本"></a>更新 package.json 中的 hexo 及个插件版本</h1><p>cnpm install -g npm-check           # 检查之前安装的插件，都有哪些是可以升级的<br>cnpm install -g npm-upgrade         # 升级系统中的插件<br>npm-check<br>npm-upgrade</p>
-<h1 id="更新-hexo-及所有插件"><a href="#更新-hexo-及所有插件" class="headerlink" title="更新 hexo 及所有插件"></a>更新 hexo 及所有插件</h1><p>cnpm update</p>
-<h1 id="确认-hexo-已经更新"><a href="#确认-hexo-已经更新" class="headerlink" title="确认 hexo 已经更新"></a>确认 hexo 已经更新</h1><p>hexo -v</p>
-<p>#安装<br>npm install -g hexo-cli</p>
+        <p>#安装<br>npm install -g hexo-cli</p>
 <p>#hexo在5.0之后把swig给删除了需要自己手动安装<br>npm i hexo-renderer-swig<br>之后<br>hexo clean<br>hexo generate<br>hexo server</p>
+<span id="more"></span> 
+
 <p>#修改Hexo 博客目录中的 _config.yml<br>theme: fluid  # 指定主题<br>language: zh-CN  # 指定语言，会影响主题显示的语言，按需修改</p>
 <p>#首次使用主题的「关于页」需要手动创建：<br>hexo new page about<br>创建成功后，编辑博客目录下 &#x2F;source&#x2F;about&#x2F;index.md，添加 layout 属性。</p>
 <p>#生成文章的时候生成一个同名的资源目录用于存放图片文件<br>post_asset_folder: true</p>
@@ -442,6 +440,10 @@
 <li>主页正中间的文字<br>主题目录 themes\fluid 下 _config.yml 中的 text 字段。</li>
 </ol>
 <p>#阅读量统计<br>Leancloud 的免费服务来进行统计</p>
+<h1 id="使用淘宝源的-cnpm-替换-npm"><a href="#使用淘宝源的-cnpm-替换-npm" class="headerlink" title="使用淘宝源的 cnpm 替换 npm"></a>使用淘宝源的 cnpm 替换 npm</h1><p>npm install -g cnpm –registry&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>cnpm install -g cnpm                 # 升级 npm<br>cnpm cache clean -f                 # 清除 npm 缓存<br>&#x3D;&#x3D;&#x3D;更新 hexo: 进入 blog 目录，执行如下命令&#x3D;&#x3D;&#x3D; </p>
+<h1 id="更新-package-json-中的-hexo-及个插件版本"><a href="#更新-package-json-中的-hexo-及个插件版本" class="headerlink" title="更新 package.json 中的 hexo 及个插件版本"></a>更新 package.json 中的 hexo 及个插件版本</h1><p>cnpm install -g npm-check           # 检查之前安装的插件，都有哪些是可以升级的<br>cnpm install -g npm-upgrade         # 升级系统中的插件<br>npm-check<br>npm-upgrade</p>
+<h1 id="更新-hexo-及所有插件"><a href="#更新-hexo-及所有插件" class="headerlink" title="更新 hexo 及所有插件"></a>更新 hexo 及所有插件</h1><p>cnpm update</p>
+<h1 id="确认-hexo-已经更新"><a href="#确认-hexo-已经更新" class="headerlink" title="确认 hexo 已经更新"></a>确认 hexo 已经更新</h1><p>hexo -v</p>
 <p>#本地启动<br>hexo g<br>hexo s</p>
 <p>#推送<br>hexo g -d</p>
 

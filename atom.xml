@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>代码诗集</title>
+  
+  <subtitle>Alpha cat</subtitle>
+  <link href="http://yoursite.com/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2023-11-03T02:59:48.245Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>zfonlyone</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>md使用指南</title>
+    <link href="http://yoursite.com/2023/11/23/md%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2023/11/23/md%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</id>
+    <published>2023-11-23T02:47:10.000Z</published>
+    <updated>2023-11-03T02:59:48.245Z</updated>
+    
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GitHub Flavored Markdown使用指南</title>
+    <link href="http://yoursite.com/2023/11/23/GitHub%20Flavored%20Markdown%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2023/11/23/GitHub%20Flavored%20Markdown%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</id>
+    <published>2023-11-23T02:47:10.000Z</published>
+    <updated>2023-11-03T03:07:25.311Z</updated>
+    
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>黑苹果折腾指南</title>
+    <link href="http://yoursite.com/2023/11/23/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"/>
+    <id>http://yoursite.com/2023/11/23/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/</id>
+    <published>2023-11-23T02:47:10.000Z</published>
+    <updated>2024-06-15T19:26:16.991Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h1 id="OC配置文件"><a href="#OC配置文件" class="headerlink" title="OC配置文件"></a>OC配置文件</h1><p>安装系统时<br>-v keepsyms&#x3D;1 debug&#x3D;0x100 alcid&#x3D;28 -no_compat_check amfi_get_out_of_my_way&#x3D;0x1 ngfxcompat&#x3D;1 ngfxgl&#x3D;1 nvda_drv_vrl&#x3D;1 ipc_control_port_options&#x3D;0</p><p>日常使用<br>keepsyms&#x3D;1 debug&#x3D;0x100 alcid&#x3D;28 -no_compat_check amfi_get_out_of_my_way&#x3D;0x1 ngfxcompat&#x3D;1 ngfxgl&#x3D;1 nvda_drv_vrl&#x3D;1 ipc_control_port_options&#x3D;0</p><h1 id="OCPL补丁"><a href="#OCPL补丁" class="headerlink" title="OCPL补丁"></a>OCPL补丁</h1><p>进入系统后使用OCPL工具打上补丁<br>注意需要关闭SIP</p><p>#相关工具<br>1.OpenCore引导配置编辑工具</p><p>OCAT-Win64<br>OCAT-Mac<br>OpenCore-Configurator (只有Mac版本)</p><p>2.OCLP补丁驱动工具(主要用于打显卡，WiFi等驱动,见群文件OCLP 1.4最新版本)</p><p>注意：MacOS Ventura 13及以上系统打显卡驱动，通常需要先安装Kernel Debug Kit，否则，可能出现提示：系统无需补丁，按钮灰色，无法点击的问题！(如果没有魔法上网，几乎都会下载失败，建议直接去苹果官网下载，下载你对应系统版本号的)</p><p>官方Kernel Debug Kit下载地址:<br><a href="https://idmsa.apple.com/IDMSWebAuth/signin.html?path=/download/all/?q=Kernel%2520Debug%2520Kit&appIdKey=891bd3417a7776362562d2197f89480a8547b108fd934911bcbea0110d07f757&rv=0">https://idmsa.apple.com/IDMSWebAuth/signin.html?path=%2Fdownload%2Fall%2F%3Fq%3DKernel%2520Debug%2520Kit&amp;appIdKey=891bd3417a7776362562d2197f89480a8547b108fd934911bcbea0110d07f757&amp;rv=0</a></p><p>3.其他工具</p><p>Win工具<br>SSDTTime-master  （提取DSDT，SSDT，通常用于修复IRQ,USB等）<br>USBToolBox-v0.2.0（USB定制工具）<br>Windows &amp;macOS 时间同步  （修改注册表，用于mac-win时间同步）<br>balenaEtcher       (通常用于U盘Mac dmg等系统镜像刻录)<br>R-Drive_Image_7.0  （可用于rdr恢复镜像）</p><p>Mac工具</p><p>MaciASL （编辑修改DSDT,SSDT）<br>one-key-hidpi-master  （开启HiDPI）<br>intel-power-gadget  （Intel 2代以上CPU电源管理(变频，睿频)查看）<br>ssdtPRGen （intel 2,3代变频，睿频脚本）</p><p>iStat Menus662 （Mac系统信息查看）<br>Sensei_1.5.7   （Mac系统信息查看）<br>MonitorControl （Mac系统屏幕亮度调节，HDMI等声音调节）<br>AMD Power Gadget (AMD Ryzen平台电源管理查看)</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;h1 id=&quot;OC配置文件&quot;&gt;&lt;a href=&quot;#OC配置文件&quot; class=&quot;headerlink&quot; title=&quot;OC配置文件&quot;&gt;&lt;/a&gt;O</summary>
+      
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo 建站</title>
+    <link href="http://yoursite.com/2020/11/23/blog/"/>
+    <id>http://yoursite.com/2020/11/23/blog/</id>
+    <published>2020-11-23T02:47:10.000Z</published>
+    <updated>2024-06-15T19:29:18.469Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm install -g hexo-cli</p><h1 id="hexo在5-0之后把swig给删除了需要自己手动安装"><a href="#hexo在5-0之后把swig给删除了需要自己手动安装" class="headerlink" title="hexo在5.0之后把swig给删除了需要自己手动安装"></a>hexo在5.0之后把swig给删除了需要自己手动安装</h1><p>npm i hexo-renderer-swig<br>之后<br>hexo clean<br>hexo generate<br>hexo server</p><span id="more"></span> <h1 id="修改Hexo-博客目录中的-config-yml"><a href="#修改Hexo-博客目录中的-config-yml" class="headerlink" title="修改Hexo 博客目录中的 _config.yml"></a>修改Hexo 博客目录中的 _config.yml</h1><p>theme: fluid  # 指定主题<br>language: zh-CN  # 指定语言，会影响主题显示的语言，按需修改</p><h1 id="首次使用主题的「关于页」需要手动创建："><a href="#首次使用主题的「关于页」需要手动创建：" class="headerlink" title="首次使用主题的「关于页」需要手动创建："></a>首次使用主题的「关于页」需要手动创建：</h1><p>hexo new page about<br>创建成功后，编辑博客目录下 &#x2F;source&#x2F;about&#x2F;index.md，添加 layout 属性。</p><h1 id="生成文章的时候生成一个同名的资源目录用于存放图片文件"><a href="#生成文章的时候生成一个同名的资源目录用于存放图片文件" class="headerlink" title="生成文章的时候生成一个同名的资源目录用于存放图片文件"></a>生成文章的时候生成一个同名的资源目录用于存放图片文件</h1><p>post_asset_folder: true</p><h1 id="图片使用方法："><a href="#图片使用方法：" class="headerlink" title="图片使用方法："></a>图片使用方法：</h1><p><img src="/test.png" alt="图片引用方法二"></p><p>方法三：md中无法查看，但页面可以看到<br><img src="/images/test.png" alt="图片引用方法三"></p><h1 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h1><ol><li>浏览器tab页名称<br>修改根目录下 _config.yml 中的 title 字段。</li><li>博客标题<br>主题目录 themes\fluid 下 _config.yml 中的 blog_title 字段。</li><li>主页正中间的文字<br>主题目录 themes\fluid 下 _config.yml 中的 text 字段。</li></ol><h1 id="阅读量统计"><a href="#阅读量统计" class="headerlink" title="阅读量统计"></a>阅读量统计</h1><p>Leancloud 的免费服务来进行统计</p><h1 id="使用淘宝源的-cnpm-替换-npm"><a href="#使用淘宝源的-cnpm-替换-npm" class="headerlink" title="使用淘宝源的 cnpm 替换 npm"></a>使用淘宝源的 cnpm 替换 npm</h1><p>npm install -g cnpm –registry&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>cnpm install -g cnpm                 # 升级 npm<br>cnpm cache clean -f                 # 清除 npm 缓存<br>&#x3D;&#x3D;&#x3D;更新 hexo: 进入 blog 目录，执行如下命令&#x3D;&#x3D;&#x3D; </p><h1 id="更新-package-json-中的-hexo-及个插件版本"><a href="#更新-package-json-中的-hexo-及个插件版本" class="headerlink" title="更新 package.json 中的 hexo 及个插件版本"></a>更新 package.json 中的 hexo 及个插件版本</h1><p>cnpm install -g npm-check           # 检查之前安装的插件，都有哪些是可以升级的<br>cnpm install -g npm-upgrade         # 升级系统中的插件<br>npm-check<br>npm-upgrade</p><h1 id="更新-hexo-及所有插件"><a href="#更新-hexo-及所有插件" class="headerlink" title="更新 hexo 及所有插件"></a>更新 hexo 及所有插件</h1><p>cnpm update<br>使用npm的话，用下面命令更新<br>npm install -g npm</p><h1 id="确认-hexo-已经更新"><a href="#确认-hexo-已经更新" class="headerlink" title="确认 hexo 已经更新"></a>确认 hexo 已经更新</h1><p>hexo -v</p><p>#本地启动<br>hexo g<br>hexo s</p><p>#推送<br>hexo g -d</p><p>#新电脑重新部署error<br>##进入站点根目录<br>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;hexo&#x2F;hanyubolg&#x2F;</p><p>##删除git提交内容文件夹<br>rm -rf .deploy_git&#x2F;</p><p>##执行<br>git config –global core.autocrlf false</p><p>##最后<br>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>]]></content>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;p&gt;npm install -g hexo-cli&lt;/p&gt;
+&lt;h1 id=&quot;hexo在5-0之后把swig给删除了需要自己手动安装&quot;&gt;&lt;a href=&quot;#hexo在5-0之后把swig给删除了需要自己手动安装&quot; class=&quot;headerlink&quot; title=&quot;hexo在5.0之后把swig给删除了需要自己手动安装&quot;&gt;&lt;/a&gt;hexo在5.0之后把swig给删除了需要自己手动安装&lt;/h1&gt;&lt;p&gt;npm i hexo-renderer-swig&lt;br&gt;之后&lt;br&gt;hexo clean&lt;br&gt;hexo generate&lt;br&gt;hexo server&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>给安然的诗-10-23</title>
+    <link href="http://yoursite.com/2018/10/25/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-10-23/"/>
+    <id>http://yoursite.com/2018/10/25/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-10-23/</id>
+    <published>2018-10-25T14:52:20.000Z</published>
+    <updated>2018-10-25T14:54:58.654Z</updated>
+    
+    <content type="html"><![CDATA[<div align=center>我们的约定是路口的小灯我会提前10分钟望着你将出现的转角看你一步步走近<span id="more"></span>很轻很轻我也轻轻的向你挥手轻轻地问好住在心里的小猫咪再也按捺不住叮咚！叮咚！你可以收下这只小猫咪吗？我猜想你不会拒绝所以我会牵着你的手然后向唐吉诃德借来白马和长枪开始一场优雅的迁徙春天我们看杜鹃花开夏天在海边紧紧相拥秋天我们缩在一家猫咖度过整整一个下午就这样冬天到了我们会在雪地里画一个魔法阵在宇宙的中心接吻任由时间飘落在身上你的头发白了我的牙也掉光了我们不说话就这样望着耗尽一生站成路口的小灯<div align = right>七野禾10.23</div>]]></content>
+    
+    
+    <summary type="html">&lt;div align=center&gt;
+我们的约定是路口的小灯
+我会提前10分钟
+望着你将出现的转角
+看你一步步走近</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>给安然的诗 9.26</title>
+    <link href="http://yoursite.com/2018/09/28/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-9-26/"/>
+    <id>http://yoursite.com/2018/09/28/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-9-26/</id>
+    <published>2018-09-28T11:46:10.000Z</published>
+    <updated>2018-09-29T10:02:13.148Z</updated>
+    
+    <content type="html"><![CDATA[<div align=center>偏执构建的堡垒中我甘愿成为感性的奴隶<span id="more"></span>当喜欢逐渐演变成一场重感冒我并不担心如何痊愈在39.5℃的意识里命运是断线的几只风筝趁生活还未打成死结一只猫咪将我们拾起然后你在我脑中轻轻涂鸦误解产生的浮力足以打捞我沉默的心孤独并非一千零一夜的瓶中恶魔忧郁的海洋涌入我们之间两种情愫在彼岸隔海相望漂流瓶需要一些幸运眷顾如果我喜欢你的心情像飞蛾扑火那是不是墓碑才能表明真心我不能假装安然离开如同退烧不能发生在半夜黎明前把晦涩归还给昨天在海边我要将你死死的抱住如果 你说甘愿被你感染<div align = right>七野禾9.26初稿9.27一改9.28二改</div>]]></content>
+    
+    
+    <summary type="html">&lt;div align=center&gt;
+偏执构建的堡垒中
+我甘愿成为感性的奴隶</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>装修</title>
+    <link href="http://yoursite.com/2018/09/26/%E8%A3%85%E4%BF%AE/"/>
+    <id>http://yoursite.com/2018/09/26/%E8%A3%85%E4%BF%AE/</id>
+    <published>2018-09-26T11:44:05.000Z</published>
+    <updated>2018-09-28T11:47:09.436Z</updated>
+    
+    <content type="html"><![CDATA[<div align=center>拆掉的旧的单车棚换上新的地瓷砖一切都是可以更换的建筑但每一栋建筑都有一道过不去的坎<div align = right>七野禾9.26</div>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div align=center&gt;
+拆掉的旧的单车棚
+换上新的地瓷砖
+一切都是可以更换的建筑
+但每一栋建筑都有一道过不去的坎
+
+&lt;div align = right&gt;七野禾
+9.26
+&lt;/div&gt;</summary>
+      
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>台风山竹</title>
+    <link href="http://yoursite.com/2018/09/17/%E5%8F%B0%E9%A3%8E%E5%B1%B1%E7%AB%B9/"/>
+    <id>http://yoursite.com/2018/09/17/%E5%8F%B0%E9%A3%8E%E5%B1%B1%E7%AB%B9/</id>
+    <published>2018-09-17T11:42:15.000Z</published>
+    <updated>2018-09-29T10:03:16.101Z</updated>
+    
+    <content type="html"><![CDATA[<div align=center>昨晚与母亲联络和她解释了周六因事耽搁的视频通话<span id="more"></span>母亲很担心我台风山竹的消息从各种途径传到她的耳朵家乡学校都已经停课某某广州工作的表姐也因台风停工我和她解释这里是遥远的北方台风不会影响我母亲没有地理观念大连只是一个名称一个比北京还要远的地方但她的儿子在这座城市这距离从来没有离开过她的身边<div align = right>七野禾9.17</div>]]></content>
+    
+    
+    <summary type="html">&lt;div align=center&gt;
+昨晚与母亲联络
+和她解释了周六因事耽搁的视频通话</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>夏日组诗</title>
+    <link href="http://yoursite.com/2018/08/28/%E5%A4%8F%E6%97%A5%E7%BB%84%E8%AF%97/"/>
+    <id>http://yoursite.com/2018/08/28/%E5%A4%8F%E6%97%A5%E7%BB%84%E8%AF%97/</id>
+    <published>2018-08-28T03:28:29.000Z</published>
+    <updated>2018-09-29T10:04:04.016Z</updated>
+    
+    <content type="html"><![CDATA[<div align=center>一<p>不知什么时候<br>在心底 筑起高墙<span id="more"></span><br>企图阻挡尘世间的纷纷扰扰<br>但是不能隔绝宿命<br>就像可以假装木纳<br>引用帕拉图来回绝<br>同时一切<br>也会在自己身上验证<br>真是命运可笑的捉弄</p><p>二</p><p>选择是人生的基石<br>回溯前半生的历程<br>像一个历史学家般发言<br>如果上帝学会了回溯算法<br>人生也不会在欢乐中发霉</p><p>三</p><p>把思想写在纸上<br>引诱注意力的上钩<br>我在此刻猜想你皱起的眉头<br>不用担心<br>人不是复杂的动物<br>喜欢和爱不用刻意区别</p><p>四</p><p>剧本</p><p>人们习惯给未来规划目标<br>我把未来写成一本剧本<br>但无法控制结局的导向<br>因为我是一个二三流的编剧<br>剧本是一张只有填空题的试卷<br>麻木地记下<br>某年某月<br>在某处遇见某个人<br>我只是一个二三流的演员<br>难免会有穿帮的时候<br>穿帮那天我看见你的名字<br>我改写了结局</p><p>五</p><p>时常有错觉<br>能够跑赢时间<br>奈何一切<br>都有一个期限<br>喜欢超过了保质期</p><p>六</p><p>阿尼玛<br>是每一个男孩的梦中情人<br>阿尼姆<br>是每一个女孩的最佳恋人</p><p>阿尼玛和阿尼姆会相爱吗？</p><p>七</p><p>文体不限<br>诗歌除外</p><p>九</p><p>理想主义者<br>只剩下理想</p><div align = right>七野禾8.28</div>]]></content>
+    
+    
+    <summary type="html">&lt;div align=center&gt;
+一
+
+&lt;p&gt;不知什么时候&lt;br&gt;在心底 筑起高墙</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>能否</title>
+    <link href="http://yoursite.com/2018/07/24/%E8%83%BD%E5%90%A6/"/>
+    <id>http://yoursite.com/2018/07/24/%E8%83%BD%E5%90%A6/</id>
+    <published>2018-07-24T03:15:42.000Z</published>
+    <updated>2018-09-29T10:03:51.796Z</updated>
+    
+    <content type="html"><![CDATA[<div align=center>小小的县城窄窄的路能否让我和心上人多走几步<span id="more"></span>红绿灯 斑马路能否让眼前的他慢下脚步<p>行道树 街道牌<br>一幕幕倒退的回忆<br>能否挽回<br>离开的背影</p><p>七月是云朵<br>夏天是风<br>你是沉默的路灯<br>与敷衍的黄昏</p><p>一圈一圈<br>永远不想走到终点<br>眼泪眼泪<br>就让风带走你们</p><div align = right>PS：尝试以女生的角度，描写其内心活动七野禾7.24</div><hr>]]></content>
+    
+    
+    <summary type="html">&lt;div align=center&gt;
+小小的县城
+窄窄的路
+能否让我和心上人
+多走几步</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>路（两首）</title>
+    <link href="http://yoursite.com/2018/06/14/%E8%B7%AF/"/>
+    <id>http://yoursite.com/2018/06/14/%E8%B7%AF/</id>
+    <published>2018-06-14T14:01:19.000Z</published>
+    <updated>2018-09-29T10:03:43.380Z</updated>
+    
+    <content type="html"><![CDATA[<p>（其一）</p><p>知行楼前<br>一段不长的小道<br>我的故友<br>在这沉睡了许多年<span id="more"></span><br>我只在早晨和傍晚<br>拜访他<br>只有等世界安静了<br>脱轨的生活与鸟儿才会归巢</p><p>宁静的小道<br>不远处传来<br>打篮球的男生爽朗的声音<br>和结伴而行的女孩清脆的笑声</p><p>但这是暂时的<br>打破宁静的都将归为沉寂<br>漫长的年代里<br>一切只是浮光掠影</p><p>一段不长的路<br>我从这头走到那头<br>恍惚间<br>回头已是白头</p><p>（其二）</p><p>国道二零七<br>江华段<br>每一条回家的路<br>最初都是离家的路</p><p>一辆稍旧的小巴<br>终年奔波于此<br>它没有看见过外面的世界<br>只从旅客口中得知世界的全貌</p><p>在天黑前<br>搭上最后的班车<br>从北向南<br>一同的还有<br>农民 小贩 初中生</p><p>黄昏的残影<br>被天边明丽的蓝色吞灭<br>悄然跌落成万家灯火</p><p>远处刚刚亮起的灯光暗示<br>夜的到来<br>车里的喧闹退散<br>沉默弥漫在空气中</p><p>一双双黑色的眼睛<br>透过玻璃寻找<br>在某一个路口<br>反射性的呼出声来</p><p>司机！<br>踩一脚（jio）</p><div align = right>七野禾6.14</div>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;（其一）&lt;/p&gt;
+&lt;p&gt;知行楼前&lt;br&gt;一段不长的小道&lt;br&gt;我的故友&lt;br&gt;在这沉睡了许多年</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第三天的初夏</title>
+    <link href="http://yoursite.com/2018/05/07/%E7%AC%AC%E4%B8%89%E5%A4%A9%E7%9A%84%E5%88%9D%E5%A4%8F/"/>
+    <id>http://yoursite.com/2018/05/07/%E7%AC%AC%E4%B8%89%E5%A4%A9%E7%9A%84%E5%88%9D%E5%A4%8F/</id>
+    <published>2018-05-07T13:55:38.000Z</published>
+    <updated>2018-09-29T10:03:35.561Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://thumbpress.com/wp-content/uploads/2015/02/cool-stars-building-view-colors-photography1.jpg" alt="image"></p><div align=center>海浪把初夏推向岸边  风藏进鸟的眼睛<span id="more"></span>  每一个路人擦肩而过  都有他等待的人  <div align=center>阳光欺骗了所有盛开的栀子花  暴雨如期而至  地上满是开心的尸体  心甘情愿  <div align=center>你不开口  我就不问  风铃响起的日子  你就会想起我  <div align=center>傍晚一盏盏灯  指引归家的人  流浪的我是  城市的萤火虫  <div align=center>一千扇窗户有一千种颜色  一阵风住满了  所有的房间  夏天 诞生 在夜里 <div align = right>七野禾5.7</div>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;http://thumbpress.com/wp-content/uploads/2015/02/cool-stars-building-view-colors-photography1.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div align=center&gt;
+海浪把初夏推向岸边  
+风藏进鸟的眼睛</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>四月</title>
+    <link href="http://yoursite.com/2018/04/19/%E5%9B%9B%E6%9C%88/"/>
+    <id>http://yoursite.com/2018/04/19/%E5%9B%9B%E6%9C%88/</id>
+    <published>2018-04-18T16:30:25.000Z</published>
+    <updated>2018-09-28T14:47:09.161Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1239474080,1101111313&fm=27&gp=0.jpg" alt="image"></p><div align=center>程序是一个精明的愣头青代码描绘不出情感  如果爱是上帝的安排  那么一定是源于某处的错误<span id="more"></span><div align=center>象征死亡的却不死亡冬天剥削春天于是   人间的四月     雷雨夭折在海边<div align=center>等待是一种无期徒刑从你打算开始    镣铐锁上心   在劫难逃<div align=center>承诺这种俏皮话  期限只有一秒钟     说的人随口而出     听的人至死不渝<div align = right>七野禾4.19</div><hr>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1239474080,1101111313&amp;fm=27&amp;gp=0.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div align=center&gt;
+程序是一个精明的愣头青
+代码描绘不出情感  
+如果爱是上帝的安排  
+那么一定是源于某处的错误</summary>
+    
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/categories/poetry/"/>
+    
+    
+    <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+</feed>

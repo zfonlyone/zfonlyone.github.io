@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2023-11-03T03:07:25.311Z</updated>
+  <updated>2024-06-15T19:54:20.905Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,45 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>GitHub Flavored Markdown使用指南</title>
-    <link href="http://yoursite.com/2023/11/23/GitHub%20Flavored%20Markdown%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
-    <id>http://yoursite.com/2023/11/23/GitHub%20Flavored%20Markdown%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</id>
-    <published>2023-11-23T02:47:10.000Z</published>
-    <updated>2023-11-03T03:07:25.311Z</updated>
-    
-    
-    
-    
-    <category term="code" scheme="http://yoursite.com/categories/code/"/>
-    
-    
-    <category term="code" scheme="http://yoursite.com/tags/code/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>md使用指南</title>
-    <link href="http://yoursite.com/2023/11/23/md%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
-    <id>http://yoursite.com/2023/11/23/md%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</id>
-    <published>2023-11-23T02:47:10.000Z</published>
-    <updated>2023-11-03T02:59:48.245Z</updated>
-    
-    
-    
-    
-    <category term="code" scheme="http://yoursite.com/categories/code/"/>
-    
-    
-    <category term="code" scheme="http://yoursite.com/tags/code/"/>
-    
-  </entry>
-  
-  <entry>
     <title>黑苹果折腾指南</title>
-    <link href="http://yoursite.com/2023/11/23/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"/>
-    <id>http://yoursite.com/2023/11/23/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/</id>
-    <published>2023-11-23T02:47:10.000Z</published>
-    <updated>2024-06-15T19:26:16.991Z</updated>
+    <link href="http://yoursite.com/2024/05/23/tool/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/"/>
+    <id>http://yoursite.com/2024/05/23/tool/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/</id>
+    <published>2024-05-23T00:00:10.000Z</published>
+    <updated>2024-06-15T19:54:20.905Z</updated>
     
     <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h1 id="OC配置文件"><a href="#OC配置文件" class="headerlink" title="OC配置文件"></a>OC配置文件</h1><p>安装系统时<br>-v keepsyms&#x3D;1 debug&#x3D;0x100 alcid&#x3D;28 -no_compat_check amfi_get_out_of_my_way&#x3D;0x1 ngfxcompat&#x3D;1 ngfxgl&#x3D;1 nvda_drv_vrl&#x3D;1 ipc_control_port_options&#x3D;0</p><p>日常使用<br>keepsyms&#x3D;1 debug&#x3D;0x100 alcid&#x3D;28 -no_compat_check amfi_get_out_of_my_way&#x3D;0x1 ngfxcompat&#x3D;1 ngfxgl&#x3D;1 nvda_drv_vrl&#x3D;1 ipc_control_port_options&#x3D;0</p><h1 id="OCPL补丁"><a href="#OCPL补丁" class="headerlink" title="OCPL补丁"></a>OCPL补丁</h1><p>进入系统后使用OCPL工具打上补丁<br>注意需要关闭SIP</p><p>#相关工具<br>1.OpenCore引导配置编辑工具</p><p>OCAT-Win64<br>OCAT-Mac<br>OpenCore-Configurator (只有Mac版本)</p><p>2.OCLP补丁驱动工具(主要用于打显卡，WiFi等驱动,见群文件OCLP 1.4最新版本)</p><p>注意：MacOS Ventura 13及以上系统打显卡驱动，通常需要先安装Kernel Debug Kit，否则，可能出现提示：系统无需补丁，按钮灰色，无法点击的问题！(如果没有魔法上网，几乎都会下载失败，建议直接去苹果官网下载，下载你对应系统版本号的)</p><p>官方Kernel Debug Kit下载地址:<br><a href="https://idmsa.apple.com/IDMSWebAuth/signin.html?path=/download/all/?q=Kernel%2520Debug%2520Kit&appIdKey=891bd3417a7776362562d2197f89480a8547b108fd934911bcbea0110d07f757&rv=0">https://idmsa.apple.com/IDMSWebAuth/signin.html?path=%2Fdownload%2Fall%2F%3Fq%3DKernel%2520Debug%2520Kit&amp;appIdKey=891bd3417a7776362562d2197f89480a8547b108fd934911bcbea0110d07f757&amp;rv=0</a></p><p>3.其他工具</p><p>Win工具<br>SSDTTime-master  （提取DSDT，SSDT，通常用于修复IRQ,USB等）<br>USBToolBox-v0.2.0（USB定制工具）<br>Windows &amp;macOS 时间同步  （修改注册表，用于mac-win时间同步）<br>balenaEtcher       (通常用于U盘Mac dmg等系统镜像刻录)<br>R-Drive_Image_7.0  （可用于rdr恢复镜像）</p><p>Mac工具</p><p>MaciASL （编辑修改DSDT,SSDT）<br>one-key-hidpi-master  （开启HiDPI）<br>intel-power-gadget  （Intel 2代以上CPU电源管理(变频，睿频)查看）<br>ssdtPRGen （intel 2,3代变频，睿频脚本）</p><p>iStat Menus662 （Mac系统信息查看）<br>Sensei_1.5.7   （Mac系统信息查看）<br>MonitorControl （Mac系统屏幕亮度调节，HDMI等声音调节）<br>AMD Power Gadget (AMD Ryzen平台电源管理查看)</p>]]></content>
     
@@ -75,13 +41,147 @@
   </entry>
   
   <entry>
+    <title>GitHub Flavored Markdown使用指南</title>
+    <link href="http://yoursite.com/2023/11/23/tool/GitHub%20Flavored%20Markdown%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2023/11/23/tool/GitHub%20Flavored%20Markdown%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</id>
+    <published>2023-11-23T02:47:10.000Z</published>
+    <updated>2023-11-03T03:07:25.311Z</updated>
+    
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>md使用指南</title>
+    <link href="http://yoursite.com/2023/11/23/tool/md%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+    <id>http://yoursite.com/2023/11/23/tool/md%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</id>
+    <published>2023-11-23T02:47:10.000Z</published>
+    <updated>2023-11-03T02:59:48.245Z</updated>
+    
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VPS配置</title>
+    <link href="http://yoursite.com/2021/01/01/vps/VPS%E9%85%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2021/01/01/vps/VPS%E9%85%8D%E7%BD%AE/</id>
+    <published>2020-12-31T16:00:01.000Z</published>
+    <updated>2024-06-15T20:08:17.206Z</updated>
+    
+    <content type="html"><![CDATA[<p>哈哈</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;哈哈&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cloudflare配置</title>
+    <link href="http://yoursite.com/2021/01/01/vps/cloudflare%E9%85%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2021/01/01/vps/cloudflare%E9%85%8D%E7%BD%AE/</id>
+    <published>2020-12-31T16:00:01.000Z</published>
+    <updated>2024-06-15T20:10:23.390Z</updated>
+    
+    <content type="html"><![CDATA[<p>哈哈</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;哈哈&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo建站研究</title>
+    <link href="http://yoursite.com/2021/01/01/vps/hexo%E5%BB%BA%E7%AB%99%E7%A0%94%E7%A9%B6/"/>
+    <id>http://yoursite.com/2021/01/01/vps/hexo%E5%BB%BA%E7%AB%99%E7%A0%94%E7%A9%B6/</id>
+    <published>2020-12-31T16:00:01.000Z</published>
+    <updated>2024-06-15T20:05:22.785Z</updated>
+    
+    <content type="html"><![CDATA[<p>哈哈</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;哈哈&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>域名配置备忘录</title>
+    <link href="http://yoursite.com/2021/01/01/vps/%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE%E5%A4%87%E5%BF%98%E5%BD%95/"/>
+    <id>http://yoursite.com/2021/01/01/vps/%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE%E5%A4%87%E5%BF%98%E5%BD%95/</id>
+    <published>2020-12-31T16:00:01.000Z</published>
+    <updated>2024-06-15T20:09:04.555Z</updated>
+    
+    <content type="html"><![CDATA[<p>哈哈</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;哈哈&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="code" scheme="http://yoursite.com/tags/code/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo 建站</title>
-    <link href="http://yoursite.com/2020/11/23/blog/"/>
-    <id>http://yoursite.com/2020/11/23/blog/</id>
+    <link href="http://yoursite.com/2020/11/23/tool/blog/"/>
+    <id>http://yoursite.com/2020/11/23/tool/blog/</id>
     <published>2020-11-23T02:47:10.000Z</published>
     <updated>2024-06-15T19:48:30.157Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm install -g hexo-cli</p><h1 id="hexo在5-0之后把swig给删除了需要自己手动安装"><a href="#hexo在5-0之后把swig给删除了需要自己手动安装" class="headerlink" title="hexo在5.0之后把swig给删除了需要自己手动安装"></a>hexo在5.0之后把swig给删除了需要自己手动安装</h1><p>npm i hexo-renderer-swig<br>之后<br>hexo clean<br>hexo generate<br>hexo server</p><span id="more"></span> <h1 id="修改Hexo-博客目录中的-config-yml"><a href="#修改Hexo-博客目录中的-config-yml" class="headerlink" title="修改Hexo 博客目录中的 _config.yml"></a>修改Hexo 博客目录中的 _config.yml</h1><p>theme: fluid  # 指定主题<br>language: zh-CN  # 指定语言，会影响主题显示的语言，按需修改</p><h1 id="首次使用主题的「关于页」需要手动创建："><a href="#首次使用主题的「关于页」需要手动创建：" class="headerlink" title="首次使用主题的「关于页」需要手动创建："></a>首次使用主题的「关于页」需要手动创建：</h1><p>hexo new page about<br>创建成功后，编辑博客目录下 &#x2F;source&#x2F;about&#x2F;index.md，添加 layout 属性。</p><h1 id="生成文章的时候生成一个同名的资源目录用于存放图片文件"><a href="#生成文章的时候生成一个同名的资源目录用于存放图片文件" class="headerlink" title="生成文章的时候生成一个同名的资源目录用于存放图片文件"></a>生成文章的时候生成一个同名的资源目录用于存放图片文件</h1><p>post_asset_folder: true</p><h1 id="图片使用方法："><a href="#图片使用方法：" class="headerlink" title="图片使用方法："></a>图片使用方法：</h1><p><img src="/test.png" alt="图片引用方法二"></p><p>方法三：md中无法查看，但页面可以看到<br><img src="/images/test.png" alt="图片引用方法三"></p><h1 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h1><ol><li>浏览器tab页名称<br>修改根目录下 _config.yml 中的 title 字段。</li><li>博客标题<br>主题目录 themes\fluid 下 _config.yml 中的 blog_title 字段。</li><li>主页正中间的文字<br>主题目录 themes\fluid 下 _config.yml 中的 text 字段。</li></ol><h1 id="阅读量统计"><a href="#阅读量统计" class="headerlink" title="阅读量统计"></a>阅读量统计</h1><p>Leancloud 的免费服务来进行统计</p><h1 id="使用淘宝源的-cnpm-替换-npm"><a href="#使用淘宝源的-cnpm-替换-npm" class="headerlink" title="使用淘宝源的 cnpm 替换 npm"></a>使用淘宝源的 cnpm 替换 npm</h1><p>npm install -g cnpm –registry&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>cnpm install -g cnpm                 # 升级 npm<br>cnpm cache clean -f                 # 清除 npm 缓存<br>&#x3D;&#x3D;&#x3D;更新 hexo: 进入 blog 目录，执行如下命令&#x3D;&#x3D;&#x3D; </p><h1 id="更新-package-json-中的-hexo-及个插件版本"><a href="#更新-package-json-中的-hexo-及个插件版本" class="headerlink" title="更新 package.json 中的 hexo 及个插件版本"></a>更新 package.json 中的 hexo 及个插件版本</h1><p>cnpm install -g npm-check           # 检查之前安装的插件，都有哪些是可以升级的<br>cnpm install -g npm-upgrade         # 升级系统中的插件<br>npm-check<br>npm-upgrade</p><h1 id="更新-hexo-及所有插件"><a href="#更新-hexo-及所有插件" class="headerlink" title="更新 hexo 及所有插件"></a>更新 hexo 及所有插件</h1><p>cnpm update<br>使用npm的话，用下面命令更新<br>npm install -g npm</p><h1 id="确认-hexo-已经更新"><a href="#确认-hexo-已经更新" class="headerlink" title="确认 hexo 已经更新"></a>确认 hexo 已经更新</h1><p>hexo -v</p><p>#本地启动<br>hexo g<br>hexo s</p><p>#推送<br>hexo g -d</p><p>#新电脑重新部署error<br>##进入站点根目录<br>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;hexo&#x2F;***&#x2F;</p><p>##删除git提交内容文件夹<br>rm -rf .deploy_git&#x2F;</p><p>##执行<br>git config –global core.autocrlf false</p><p>git config –global user.email “<a href="mailto:&#121;&#111;&#x75;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#x2e;&#x63;&#x6f;&#109;">&#121;&#111;&#x75;&#64;&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#x2e;&#x63;&#x6f;&#109;</a>“<br>git config –global user.name “Your Name”<br>生成密钥<br>ssh-keygen -t rsa -C ‘上面的邮箱’<br>最后在.ssh目录下(C盘用户文件夹下)得到了两个文件：id_rsa（私有秘钥）和id_rsa.pub（公有密钥）<br>复制id_rsa.pub到github</p><p>##最后<br>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>npm install -g hexo-cli</p><h1 id="hexo在5-0之后把swig给删除了需要自己手动安装"><a href="#hexo在5-0之后把swig给删除了需要自己手动安装" class="headerlink" title="hexo在5.0之后把swig给删除了需要自己手动安装"></a>hexo在5.0之后把swig给删除了需要自己手动安装</h1><p>npm i hexo-renderer-swig<br>之后<br>hexo clean<br>hexo generate<br>hexo server</p><span id="more"></span> <h1 id="修改Hexo-博客目录中的-config-yml"><a href="#修改Hexo-博客目录中的-config-yml" class="headerlink" title="修改Hexo 博客目录中的 _config.yml"></a>修改Hexo 博客目录中的 _config.yml</h1><p>theme: fluid  # 指定主题<br>language: zh-CN  # 指定语言，会影响主题显示的语言，按需修改</p><h1 id="首次使用主题的「关于页」需要手动创建："><a href="#首次使用主题的「关于页」需要手动创建：" class="headerlink" title="首次使用主题的「关于页」需要手动创建："></a>首次使用主题的「关于页」需要手动创建：</h1><p>hexo new page about<br>创建成功后，编辑博客目录下 &#x2F;source&#x2F;about&#x2F;index.md，添加 layout 属性。</p><h1 id="生成文章的时候生成一个同名的资源目录用于存放图片文件"><a href="#生成文章的时候生成一个同名的资源目录用于存放图片文件" class="headerlink" title="生成文章的时候生成一个同名的资源目录用于存放图片文件"></a>生成文章的时候生成一个同名的资源目录用于存放图片文件</h1><p>post_asset_folder: true</p><h1 id="图片使用方法："><a href="#图片使用方法：" class="headerlink" title="图片使用方法："></a>图片使用方法：</h1><p><img src="/test.png" alt="图片引用方法二"></p><p>方法三：md中无法查看，但页面可以看到<br><img src="/images/test.png" alt="图片引用方法三"></p><h1 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h1><ol><li>浏览器tab页名称<br>修改根目录下 _config.yml 中的 title 字段。</li><li>博客标题<br>主题目录 themes\fluid 下 _config.yml 中的 blog_title 字段。</li><li>主页正中间的文字<br>主题目录 themes\fluid 下 _config.yml 中的 text 字段。</li></ol><h1 id="阅读量统计"><a href="#阅读量统计" class="headerlink" title="阅读量统计"></a>阅读量统计</h1><p>Leancloud 的免费服务来进行统计</p><h1 id="使用淘宝源的-cnpm-替换-npm"><a href="#使用淘宝源的-cnpm-替换-npm" class="headerlink" title="使用淘宝源的 cnpm 替换 npm"></a>使用淘宝源的 cnpm 替换 npm</h1><p>npm install -g cnpm –registry&#x3D;<a href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>cnpm install -g cnpm                 # 升级 npm<br>cnpm cache clean -f                 # 清除 npm 缓存<br>&#x3D;&#x3D;&#x3D;更新 hexo: 进入 blog 目录，执行如下命令&#x3D;&#x3D;&#x3D; </p><h1 id="更新-package-json-中的-hexo-及个插件版本"><a href="#更新-package-json-中的-hexo-及个插件版本" class="headerlink" title="更新 package.json 中的 hexo 及个插件版本"></a>更新 package.json 中的 hexo 及个插件版本</h1><p>cnpm install -g npm-check           # 检查之前安装的插件，都有哪些是可以升级的<br>cnpm install -g npm-upgrade         # 升级系统中的插件<br>npm-check<br>npm-upgrade</p><h1 id="更新-hexo-及所有插件"><a href="#更新-hexo-及所有插件" class="headerlink" title="更新 hexo 及所有插件"></a>更新 hexo 及所有插件</h1><p>cnpm update<br>使用npm的话，用下面命令更新<br>npm install -g npm</p><h1 id="确认-hexo-已经更新"><a href="#确认-hexo-已经更新" class="headerlink" title="确认 hexo 已经更新"></a>确认 hexo 已经更新</h1><p>hexo -v</p><p>#本地启动<br>hexo g<br>hexo s</p><p>#推送<br>hexo g -d</p><p>#新电脑重新部署error<br>##进入站点根目录<br>cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;hexo&#x2F;***&#x2F;</p><p>##删除git提交内容文件夹<br>rm -rf .deploy_git&#x2F;</p><p>##执行<br>git config –global core.autocrlf false</p><p>git config –global user.email “<a href="mailto:&#x79;&#x6f;&#117;&#x40;&#101;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#46;&#99;&#111;&#x6d;">&#x79;&#x6f;&#117;&#x40;&#101;&#120;&#97;&#x6d;&#x70;&#108;&#x65;&#46;&#99;&#111;&#x6d;</a>“<br>git config –global user.name “Your Name”<br>生成密钥<br>ssh-keygen -t rsa -C ‘上面的邮箱’<br>最后在.ssh目录下(C盘用户文件夹下)得到了两个文件：id_rsa（私有秘钥）和id_rsa.pub（公有密钥）<br>复制id_rsa.pub到github</p><p>##最后<br>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>]]></content>
     
     
     <summary type="html">&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;p&gt;npm install -g hexo-cli&lt;/p&gt;
@@ -98,8 +198,8 @@
   
   <entry>
     <title>给安然的诗-10-23</title>
-    <link href="http://yoursite.com/2018/10/25/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-10-23/"/>
-    <id>http://yoursite.com/2018/10/25/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-10-23/</id>
+    <link href="http://yoursite.com/2018/10/25/poetry/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-10-23/"/>
+    <id>http://yoursite.com/2018/10/25/poetry/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-10-23/</id>
     <published>2018-10-25T14:52:20.000Z</published>
     <updated>2018-10-25T14:54:58.654Z</updated>
     
@@ -123,8 +223,8 @@
   
   <entry>
     <title>给安然的诗 9.26</title>
-    <link href="http://yoursite.com/2018/09/28/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-9-26/"/>
-    <id>http://yoursite.com/2018/09/28/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-9-26/</id>
+    <link href="http://yoursite.com/2018/09/28/poetry/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-9-26/"/>
+    <id>http://yoursite.com/2018/09/28/poetry/%E7%BB%99%E5%AE%89%E7%84%B6%E7%9A%84%E8%AF%97-9-26/</id>
     <published>2018-09-28T11:46:10.000Z</published>
     <updated>2018-09-29T10:02:13.148Z</updated>
     
@@ -146,8 +246,8 @@
   
   <entry>
     <title>装修</title>
-    <link href="http://yoursite.com/2018/09/26/%E8%A3%85%E4%BF%AE/"/>
-    <id>http://yoursite.com/2018/09/26/%E8%A3%85%E4%BF%AE/</id>
+    <link href="http://yoursite.com/2018/09/26/poetry/%E8%A3%85%E4%BF%AE/"/>
+    <id>http://yoursite.com/2018/09/26/poetry/%E8%A3%85%E4%BF%AE/</id>
     <published>2018-09-26T11:44:05.000Z</published>
     <updated>2018-09-28T11:47:09.436Z</updated>
     
@@ -178,8 +278,8 @@
   
   <entry>
     <title>台风山竹</title>
-    <link href="http://yoursite.com/2018/09/17/%E5%8F%B0%E9%A3%8E%E5%B1%B1%E7%AB%B9/"/>
-    <id>http://yoursite.com/2018/09/17/%E5%8F%B0%E9%A3%8E%E5%B1%B1%E7%AB%B9/</id>
+    <link href="http://yoursite.com/2018/09/17/poetry/%E5%8F%B0%E9%A3%8E%E5%B1%B1%E7%AB%B9/"/>
+    <id>http://yoursite.com/2018/09/17/poetry/%E5%8F%B0%E9%A3%8E%E5%B1%B1%E7%AB%B9/</id>
     <published>2018-09-17T11:42:15.000Z</published>
     <updated>2018-09-29T10:03:16.101Z</updated>
     
@@ -201,8 +301,8 @@
   
   <entry>
     <title>夏日组诗</title>
-    <link href="http://yoursite.com/2018/08/28/%E5%A4%8F%E6%97%A5%E7%BB%84%E8%AF%97/"/>
-    <id>http://yoursite.com/2018/08/28/%E5%A4%8F%E6%97%A5%E7%BB%84%E8%AF%97/</id>
+    <link href="http://yoursite.com/2018/08/28/poetry/%E5%A4%8F%E6%97%A5%E7%BB%84%E8%AF%97/"/>
+    <id>http://yoursite.com/2018/08/28/poetry/%E5%A4%8F%E6%97%A5%E7%BB%84%E8%AF%97/</id>
     <published>2018-08-28T03:28:29.000Z</published>
     <updated>2018-09-29T10:04:04.016Z</updated>
     
@@ -225,8 +325,8 @@
   
   <entry>
     <title>能否</title>
-    <link href="http://yoursite.com/2018/07/24/%E8%83%BD%E5%90%A6/"/>
-    <id>http://yoursite.com/2018/07/24/%E8%83%BD%E5%90%A6/</id>
+    <link href="http://yoursite.com/2018/07/24/poetry/%E8%83%BD%E5%90%A6/"/>
+    <id>http://yoursite.com/2018/07/24/poetry/%E8%83%BD%E5%90%A6/</id>
     <published>2018-07-24T03:15:42.000Z</published>
     <updated>2018-09-29T10:03:51.796Z</updated>
     
@@ -250,8 +350,8 @@
   
   <entry>
     <title>路（两首）</title>
-    <link href="http://yoursite.com/2018/06/14/%E8%B7%AF/"/>
-    <id>http://yoursite.com/2018/06/14/%E8%B7%AF/</id>
+    <link href="http://yoursite.com/2018/06/14/poetry/%E8%B7%AF/"/>
+    <id>http://yoursite.com/2018/06/14/poetry/%E8%B7%AF/</id>
     <published>2018-06-14T14:01:19.000Z</published>
     <updated>2018-09-29T10:03:43.380Z</updated>
     
@@ -272,8 +372,8 @@
   
   <entry>
     <title>第三天的初夏</title>
-    <link href="http://yoursite.com/2018/05/07/%E7%AC%AC%E4%B8%89%E5%A4%A9%E7%9A%84%E5%88%9D%E5%A4%8F/"/>
-    <id>http://yoursite.com/2018/05/07/%E7%AC%AC%E4%B8%89%E5%A4%A9%E7%9A%84%E5%88%9D%E5%A4%8F/</id>
+    <link href="http://yoursite.com/2018/05/07/poetry/%E7%AC%AC%E4%B8%89%E5%A4%A9%E7%9A%84%E5%88%9D%E5%A4%8F/"/>
+    <id>http://yoursite.com/2018/05/07/poetry/%E7%AC%AC%E4%B8%89%E5%A4%A9%E7%9A%84%E5%88%9D%E5%A4%8F/</id>
     <published>2018-05-07T13:55:38.000Z</published>
     <updated>2018-09-29T10:03:35.561Z</updated>
     
@@ -296,8 +396,8 @@
   
   <entry>
     <title>四月</title>
-    <link href="http://yoursite.com/2018/04/19/%E5%9B%9B%E6%9C%88/"/>
-    <id>http://yoursite.com/2018/04/19/%E5%9B%9B%E6%9C%88/</id>
+    <link href="http://yoursite.com/2018/04/19/poetry/%E5%9B%9B%E6%9C%88/"/>
+    <id>http://yoursite.com/2018/04/19/poetry/%E5%9B%9B%E6%9C%88/</id>
     <published>2018-04-18T16:30:25.000Z</published>
     <updated>2018-09-28T14:47:09.161Z</updated>
     
@@ -317,6 +417,56 @@
     
     
     <category term="poetry" scheme="http://yoursite.com/tags/poetry/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客模板</title>
+    <link href="http://yoursite.com/1970/01/01/%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://yoursite.com/1970/01/01/%E5%8D%9A%E5%AE%A2%E6%A8%A1%E6%9D%BF/</id>
+    <published>1969-12-31T16:00:01.000Z</published>
+    <updated>2024-06-15T20:02:50.459Z</updated>
+    
+    <content type="html"><![CDATA[<p>哈哈</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;哈哈&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="template" scheme="http://yoursite.com/categories/template/"/>
+    
+    
+    <category term="template" scheme="http://yoursite.com/tags/template/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL语句</title>
+    <link href="http://yoursite.com/1970/01/01/code/sql/"/>
+    <id>http://yoursite.com/1970/01/01/code/sql/</id>
+    <published>1969-12-31T16:00:01.000Z</published>
+    <updated>2024-06-27T19:13:28.469Z</updated>
+    
+    <content type="html"><![CDATA[<p>SQL语句</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;SQL语句&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="code" scheme="http://yoursite.com/categories/code/"/>
+    
+    
+    <category term="SQL" scheme="http://yoursite.com/tags/SQL/"/>
     
   </entry>
   

@@ -202,36 +202,36 @@
 
   <url>
     <loc>http://yoursite.com/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://yoursite.com/tags/code/</loc>
-    <lastmod>2024-08-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/tags/template/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://yoursite.com/tags/SQL/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <lastmod>2024-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/code/</loc>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://yoursite.com/tags/poetry/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -239,22 +239,22 @@
 
   
   <url>
-    <loc>http://yoursite.com/categories/code/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <loc>http://yoursite.com/categories/template/</loc>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/template/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <loc>http://yoursite.com/categories/code/</loc>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://yoursite.com/categories/poetry/</loc>
-    <lastmod>2024-08-23</lastmod>
+    <lastmod>2024-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

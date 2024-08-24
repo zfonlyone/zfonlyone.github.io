@@ -21,10 +21,10 @@ http://yoursite.com/2018/09/26/poetry/%E8%A3%85%E4%BF%AE/
 http://yoursite.com/categories/index.html
 http://yoursite.com/tags/index.html
 http://yoursite.com/
-http://yoursite.com/tags/code/
 http://yoursite.com/tags/template/
 http://yoursite.com/tags/SQL/
+http://yoursite.com/tags/code/
 http://yoursite.com/tags/poetry/
-http://yoursite.com/categories/code/
 http://yoursite.com/categories/template/
+http://yoursite.com/categories/code/
 http://yoursite.com/categories/poetry/

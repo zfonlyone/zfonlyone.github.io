@@ -1,0 +1,129 @@
+# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: 代码诗集
+subtitle: Alpha cat
+description: 程序猿/吟游诗人/AI民工
+keywords:
+author: zfonlyone
+language: zh-Hans
+timezone:
+#avatar: /avatar.jpg
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://yoursite.com
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace:
+  
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+  
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: next
+
+# Deployment
+## Docs: http://hexo.io/docs/deployment.html
+#deploy: 
+  #type: git
+  #repo: git@github.com:zfonlyone/zfonlyone.github.io
+deploy:
+  type: git
+  repo: git@github.com:zfonlyone/zfonlyone.github.io
+  branch: master
+
+  
+menu:
+    home: /
+    archives: /archives
+    tags: /tags
+    categories: /categories
+social:
+  GitHub: https://github.com/zfonlyone
+  
+live2d:
+  model: koharu
+  bottom: -10
+  mobileShow: false
+  
+auto_excerpt:
+  enable: true
+  length: 100
+jiathis: true
+
+#Share
+sharesdk: true
+shareSDKappkey: appkey
+
+
+#阅读统计
+valine:
+  enable: true
+  appid: 34owYRlpZh7YH4KlnPKsGCgw-MdYXbMMI
+  appkey: QCqiPY61VAiHOfGPQblSBfEW
+  notify: false # Mail notifier
+  verify: false # Verification code
+  placeholder: Just go go # Comment box placeholder
+  avatar: mm # Gravatar style
+  guest_info: nick,mail,link # Custom comment header
+  pageSize: 10 # Pagination size
+  language: zh-CN
+  visitor: true # Article reading statistic
+  comment_count: true # If false, comment count will only be displayed in post page, not in home page
+  recordIP: false # Whether to record the commenter IP
+  serverURLs: # When the custom domain name is enabled, fill it in here (it will be detected automatically by default, no need to fill in)
+  #post_meta_order: 0

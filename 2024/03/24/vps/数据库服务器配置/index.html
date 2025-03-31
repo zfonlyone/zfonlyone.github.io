@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="数据库服务器配置指南 AI生成：本文由人工智能辅助生成，内容已经过人工审核。  本文详细介绍了MySQL、PostgreSQL和Redis数据库的安装、配置、优化、备份和安全加固方法，帮助你构建高性能、安全可靠的数据库服务器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库服务器配置指南">
+<meta property="og:url" content="https://zfonlyone.github.io/2024/03/24/vps/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="数据库服务器配置指南 AI生成：本文由人工智能辅助生成，内容已经过人工审核。  本文详细介绍了MySQL、PostgreSQL和Redis数据库的安装、配置、优化、备份和安全加固方法，帮助你构建高性能、安全可靠的数据库服务器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-24T12:45:00.000Z">
+<meta property="article:modified_time" content="2024-03-24T12:45:00.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="PostgreSQL">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2024/03/24/vps/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2024/03/24/vps/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/","path":"2024/03/24/vps/数据库服务器配置/","title":"数据库服务器配置指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据库服务器配置指南 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">数据库服务器配置指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1. MySQL数据库配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-MySQL%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 MySQL安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-Debian%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Ubuntu&#x2F;Debian安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CentOS-RHEL%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">CentOS&#x2F;RHEL安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-MySQL%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 MySQL基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-MySQL%E7%94%A8%E6%88%B7%E5%92%8C%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 MySQL用户和权限管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-MySQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 MySQL性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">内存配置优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">存储引擎优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">查询优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-MySQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 MySQL备份与恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8mysqldump%E5%A4%87%E4%BB%BD"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">使用mysqldump备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">恢复数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Percona-XtraBackup%E8%BF%9B%E8%A1%8C%E7%89%A9%E7%90%86%E5%A4%87%E4%BB%BD"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">使用Percona XtraBackup进行物理备份</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-MySQL%E7%9B%91%E6%8E%A7%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 MySQL监控与维护</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">设置监控脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL%E6%97%A5%E5%BF%97%E8%BD%AE%E8%BD%AC"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">MySQL日志轮转</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-MySQL%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 MySQL安全加固</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-PostgreSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">2. PostgreSQL数据库配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-PostgreSQL%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 PostgreSQL安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-Debian%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Ubuntu&#x2F;Debian安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CentOS-RHEL%E5%AE%89%E8%A3%85-1"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">CentOS&#x2F;RHEL安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-PostgreSQL%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 PostgreSQL基础配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-PostgreSQL%E7%94%A8%E6%88%B7%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 PostgreSQL用户和数据库管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-PostgreSQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 PostgreSQL性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">内存配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E6%80%A7%E8%83%BD"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">写入性能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96-1"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">查询优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-PostgreSQL%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 PostgreSQL备份与恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8pg-dump%E5%92%8Cpg-dumpall%E5%A4%87%E4%BB%BD"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">使用pg_dump和pg_dumpall备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE-1"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">恢复数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8pg-basebackup%E7%89%A9%E7%90%86%E5%A4%87%E4%BB%BD"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">使用pg_basebackup物理备份</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-PostgreSQL%E7%9B%91%E6%8E%A7%E5%92%8C%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 PostgreSQL监控和维护</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC-1"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">设置监控脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%B4%E6%8A%A4%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">维护任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-PostgreSQL%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 PostgreSQL安全加固</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="nav-number">1.3.</span> <span class="nav-text">3. 数据库常见问题排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-MySQL%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 MySQL常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">连接问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">性能问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">磁盘空间问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-PostgreSQL%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 PostgreSQL常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">连接问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">性能问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E9%97%AE%E9%A2%98-1"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">磁盘空间问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%AB%98%E5%8F%AF%E7%94%A8%E5%92%8C%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95"><span class="nav-number">1.4.</span> <span class="nav-text">4. 高可用和水平扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 MySQL主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-PostgreSQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 PostgreSQL主从复制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.5.</span> <span class="nav-text">5. 数据库性能调优最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E7%A1%AC%E4%BB%B6%E9%85%8D%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 硬件配置建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 索引优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 查询优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E8%BF%9E%E6%8E%A5%E6%B1%A0%E5%92%8C%E5%BA%94%E7%94%A8%E4%BE%A7%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 连接池和应用侧优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2024/03/24/vps/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据库服务器配置指南 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库服务器配置指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-24 20:45:00" itemprop="dateCreated datePublished" datetime="2024-03-24T20:45:00+08:00">2024-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-24 20:45:00" itemprop="dateModified" datetime="2024-03-24T20:45:00+08:00">2024-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VPS/" itemprop="url" rel="index"><span itemprop="name">VPS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="数据库服务器配置指南"><a href="#数据库服务器配置指南" class="headerlink" title="数据库服务器配置指南"></a>数据库服务器配置指南</h1><blockquote>
+<p>AI生成：本文由人工智能辅助生成，内容已经过人工审核。</p>
+</blockquote>
+<p>本文详细介绍了MySQL、PostgreSQL和Redis数据库的安装、配置、优化、备份和安全加固方法，帮助你构建高性能、安全可靠的数据库服务器。</p>
+<span id="more"></span>
+
+<h2 id="1-MySQL数据库配置"><a href="#1-MySQL数据库配置" class="headerlink" title="1. MySQL数据库配置"></a>1. MySQL数据库配置</h2><p>MySQL是目前最流行的开源关系型数据库之一，下面详细介绍MySQL的安装配置和优化方法。</p>
+<h3 id="1-1-MySQL安装"><a href="#1-1-MySQL安装" class="headerlink" title="1.1 MySQL安装"></a>1.1 MySQL安装</h3><h4 id="Ubuntu-Debian安装"><a href="#Ubuntu-Debian安装" class="headerlink" title="Ubuntu&#x2F;Debian安装"></a>Ubuntu&#x2F;Debian安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新包索引</span></span><br><span class="line">apt update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装MySQL服务器</span></span><br><span class="line">apt install -y mysql-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行安全配置脚本</span></span><br><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<h4 id="CentOS-RHEL安装"><a href="#CentOS-RHEL安装" class="headerlink" title="CentOS&#x2F;RHEL安装"></a>CentOS&#x2F;RHEL安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装MySQL仓库</span></span><br><span class="line">rpm -Uvh https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装MySQL服务器</span></span><br><span class="line">yum install -y mysql-community-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动MySQL并设置开机自启</span></span><br><span class="line">systemctl start mysqld</span><br><span class="line">systemctl <span class="built_in">enable</span> mysqld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取临时密码</span></span><br><span class="line">grep <span class="string">&#x27;temporary password&#x27;</span> /var/log/mysqld.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行安全配置脚本</span></span><br><span class="line">mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-MySQL基础配置"><a href="#1-2-MySQL基础配置" class="headerlink" title="1.2 MySQL基础配置"></a>1.2 MySQL基础配置</h3><p>MySQL的主配置文件通常位于:</p>
+<ul>
+<li>Ubuntu&#x2F;Debian: <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code></li>
+<li>CentOS&#x2F;RHEL: <code>/etc/my.cnf</code></li>
+</ul>
+<p>基本配置示例：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment"># 基本设置</span></span><br><span class="line"><span class="attr">user</span>                   = mysql</span><br><span class="line"><span class="attr">pid-file</span>               = /var/run/mysqld/mysqld.pid</span><br><span class="line"><span class="attr">socket</span>                 = /var/run/mysqld/mysqld.sock</span><br><span class="line"><span class="attr">datadir</span>                = /var/lib/mysql</span><br><span class="line"><span class="attr">log-error</span>              = /var/log/mysql/error.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符集和排序规则</span></span><br><span class="line"><span class="attr">character-set-server</span>   = utf8mb4</span><br><span class="line"><span class="attr">collation-server</span>       = utf8mb4_unicode_ci</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接设置</span></span><br><span class="line"><span class="attr">max_connections</span>        = <span class="number">150</span></span><br><span class="line"><span class="attr">max_allowed_packet</span>     = <span class="number">16</span>M</span><br><span class="line"><span class="attr">wait_timeout</span>           = <span class="number">600</span></span><br><span class="line"><span class="attr">interactive_timeout</span>    = <span class="number">600</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># InnoDB设置</span></span><br><span class="line"><span class="attr">innodb_buffer_pool_size</span> = <span class="number">1</span>G</span><br><span class="line"><span class="attr">innodb_log_file_size</span>    = <span class="number">256</span>M</span><br><span class="line"><span class="attr">innodb_flush_log_at_trx_commit</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">innodb_flush_method</span>     = O_DIRECT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 慢查询日志</span></span><br><span class="line"><span class="attr">slow_query_log</span>         = <span class="number">1</span></span><br><span class="line"><span class="attr">slow_query_log_file</span>    = /var/log/mysql/mysql-slow.log</span><br><span class="line"><span class="attr">long_query_time</span>        = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>应用配置并重启MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启MySQL服务</span></span><br><span class="line">systemctl restart mysql  <span class="comment"># Ubuntu/Debian</span></span><br><span class="line">systemctl restart mysqld <span class="comment"># CentOS/RHEL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-MySQL用户和权限管理"><a href="#1-3-MySQL用户和权限管理" class="headerlink" title="1.3 MySQL用户和权限管理"></a>1.3 MySQL用户和权限管理</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 登录MySQL</span></span><br><span class="line">mysql <span class="operator">-</span>u root <span class="operator">-</span>p</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建新用户</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;  <span class="comment">-- 允许远程访问</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 授予权限</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> database_name.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>, <span class="keyword">INSERT</span>, <span class="keyword">UPDATE</span> <span class="keyword">ON</span> database_name.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 刷新权限</span></span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看用户权限</span></span><br><span class="line"><span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 撤销权限</span></span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> database_name.<span class="operator">*</span> <span class="keyword">FROM</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除用户</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> <span class="string">&#x27;newuser&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-MySQL性能优化"><a href="#1-4-MySQL性能优化" class="headerlink" title="1.4 MySQL性能优化"></a>1.4 MySQL性能优化</h3><h4 id="内存配置优化"><a href="#内存配置优化" class="headerlink" title="内存配置优化"></a>内存配置优化</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为中小型服务器(4-8GB内存)</span></span><br><span class="line"><span class="attr">innodb_buffer_pool_size</span> = <span class="number">2</span>G       <span class="comment"># 总内存的50-70%</span></span><br><span class="line"><span class="attr">innodb_log_file_size</span> = <span class="number">512</span>M        <span class="comment"># buffer_pool的25%左右</span></span><br><span class="line"><span class="attr">innodb_buffer_pool_instances</span> = <span class="number">4</span>   <span class="comment"># 每个实例不少于1GB</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询缓存（MySQL 8.0已移除）</span></span><br><span class="line"><span class="attr">query_cache_size</span> = <span class="number">64</span>M             <span class="comment"># MySQL 5.7及更早版本</span></span><br><span class="line"><span class="attr">query_cache_type</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接缓冲区</span></span><br><span class="line"><span class="attr">max_connections</span> = <span class="number">200</span></span><br><span class="line"><span class="attr">thread_cache_size</span> = <span class="number">16</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="存储引擎优化"><a href="#存储引擎优化" class="headerlink" title="存储引擎优化"></a>存储引擎优化</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># InnoDB优化</span></span><br><span class="line"><span class="attr">innodb_flush_log_at_trx_commit</span> = <span class="number">2</span>  <span class="comment"># 性能与安全的折中</span></span><br><span class="line"><span class="attr">innodb_flush_method</span> = O_DIRECT      <span class="comment"># 避免双重缓冲</span></span><br><span class="line"><span class="attr">innodb_file_per_table</span> = <span class="number">1</span>           <span class="comment"># 每个表单独存储</span></span><br><span class="line"><span class="attr">innodb_io_capacity</span> = <span class="number">1000</span>           <span class="comment"># SSD磁盘可以设置更高</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 添加索引</span></span><br><span class="line"><span class="keyword">CREATE</span> INDEX idx_name <span class="keyword">ON</span> table_name (column_name);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 优化表</span></span><br><span class="line">OPTIMIZE <span class="keyword">TABLE</span> table_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 分析表</span></span><br><span class="line">ANALYZE <span class="keyword">TABLE</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-MySQL备份与恢复"><a href="#1-5-MySQL备份与恢复" class="headerlink" title="1.5 MySQL备份与恢复"></a>1.5 MySQL备份与恢复</h3><h4 id="使用mysqldump备份"><a href="#使用mysqldump备份" class="headerlink" title="使用mysqldump备份"></a>使用mysqldump备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份单个数据库</span></span><br><span class="line">mysqldump -u root -p database_name &gt; database_name.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份多个数据库</span></span><br><span class="line">mysqldump -u root -p --databases db1 db2 &gt; databases.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份所有数据库</span></span><br><span class="line">mysqldump -u root -p --all-databases &gt; all_databases.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只备份结构不备份数据</span></span><br><span class="line">mysqldump -u root -p --no-data database_name &gt; schema.sql</span><br></pre></td></tr></table></figure>
+
+<h4 id="恢复数据"><a href="#恢复数据" class="headerlink" title="恢复数据"></a>恢复数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 恢复数据库</span></span><br><span class="line">mysql -u root -p database_name &lt; database_name.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复多个或所有数据库</span></span><br><span class="line">mysql -u root -p &lt; databases.sql</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用Percona-XtraBackup进行物理备份"><a href="#使用Percona-XtraBackup进行物理备份" class="headerlink" title="使用Percona XtraBackup进行物理备份"></a>使用Percona XtraBackup进行物理备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Percona XtraBackup</span></span><br><span class="line">apt install -y percona-xtrabackup-80  <span class="comment"># Ubuntu/Debian</span></span><br><span class="line">yum install -y percona-xtrabackup-80  <span class="comment"># CentOS/RHEL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建完整备份</span></span><br><span class="line">xtrabackup --backup --target-dir=/backup/full</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备备份用于恢复</span></span><br><span class="line">xtrabackup --prepare --target-dir=/backup/full</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复备份</span></span><br><span class="line">systemctl stop mysql</span><br><span class="line"><span class="built_in">rm</span> -rf /var/lib/mysql/*</span><br><span class="line">xtrabackup --copy-back --target-dir=/backup/full</span><br><span class="line"><span class="built_in">chown</span> -R mysql:mysql /var/lib/mysql</span><br><span class="line">systemctl start mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-MySQL监控与维护"><a href="#1-6-MySQL监控与维护" class="headerlink" title="1.6 MySQL监控与维护"></a>1.6 MySQL监控与维护</h3><h4 id="设置监控脚本"><a href="#设置监控脚本" class="headerlink" title="设置监控脚本"></a>设置监控脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># /usr/local/bin/mysql_monitor.sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查MySQL状态</span></span><br><span class="line">mysqladmin -u monitor_user -p<span class="string">&#x27;password&#x27;</span> ping &amp;&gt;/dev/null</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;MySQL is down!&quot;</span> | mail -s <span class="string">&quot;MySQL Alert&quot;</span> admin@example.com</span><br><span class="line">    systemctl restart mysql</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;MySQL is running&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查连接数</span></span><br><span class="line">CONN_COUNT=$(mysqladmin -u monitor_user -p<span class="string">&#x27;password&#x27;</span> status | awk <span class="string">&#x27;&#123;print $4&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$CONN_COUNT</span> -gt 100 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;High connection count: <span class="variable">$CONN_COUNT</span>&quot;</span> | mail -s <span class="string">&quot;MySQL Connection Alert&quot;</span> admin@example.com</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查慢查询</span></span><br><span class="line">SLOW_QUERIES=$(mysqladmin -u monitor_user -p<span class="string">&#x27;password&#x27;</span> extended-status | grep <span class="string">&quot;Slow_queries&quot;</span> | awk <span class="string">&#x27;&#123;print $4&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$SLOW_QUERIES</span> -gt 10 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Slow queries detected: <span class="variable">$SLOW_QUERIES</span>&quot;</span> | mail -s <span class="string">&quot;MySQL Performance Alert&quot;</span> admin@example.com</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>设置定时任务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x /usr/local/bin/mysql_monitor.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*/5 * * * * root /usr/local/bin/mysql_monitor.sh&quot;</span> &gt; /etc/cron.d/mysql_monitor</span><br></pre></td></tr></table></figure>
+
+<h4 id="MySQL日志轮转"><a href="#MySQL日志轮转" class="headerlink" title="MySQL日志轮转"></a>MySQL日志轮转</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置logrotate</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/logrotate.d/mysql &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">/var/log/mysql/*.log &#123;</span></span><br><span class="line"><span class="string">    daily</span></span><br><span class="line"><span class="string">    rotate 7</span></span><br><span class="line"><span class="string">    missingok</span></span><br><span class="line"><span class="string">    create 640 mysql adm</span></span><br><span class="line"><span class="string">    compress</span></span><br><span class="line"><span class="string">    delaycompress</span></span><br><span class="line"><span class="string">    sharedscripts</span></span><br><span class="line"><span class="string">    postrotate</span></span><br><span class="line"><span class="string">        if [ -x /usr/bin/mysqladmin ] &amp;&amp; [ -r /etc/mysql/debian.cnf ]; then</span></span><br><span class="line"><span class="string">            /usr/bin/mysqladmin --defaults-file=/etc/mysql/debian.cnf flush-logs</span></span><br><span class="line"><span class="string">        fi</span></span><br><span class="line"><span class="string">    endscript</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-7-MySQL安全加固"><a href="#1-7-MySQL安全加固" class="headerlink" title="1.7 MySQL安全加固"></a>1.7 MySQL安全加固</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 禁用本地文件加载</span></span><br><span class="line"><span class="attr">local_infile</span> = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制登录失败次数</span></span><br><span class="line"><span class="attr">max_connect_errors</span> = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启SSL连接</span></span><br><span class="line"><span class="attr">ssl_cert</span> = /etc/mysql/server-cert.pem</span><br><span class="line"><span class="attr">ssl_key</span> = /etc/mysql/server-key.pem</span><br><span class="line"><span class="attr">ssl_ca</span> = /etc/mysql/ca.pem</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用审计日志（需要插件）</span></span><br><span class="line"><span class="attr">audit_log</span> = FORCE_PLUS_PERMANENT</span><br><span class="line"><span class="attr">audit_log_file</span> = /var/log/mysql/audit.log</span><br></pre></td></tr></table></figure>
+
+<p>配置防火墙只允许特定IP访问MySQL：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW配置</span></span><br><span class="line">ufw allow from 192.168.1.0/24 to any port 3306</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld配置</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=192.168.1.0/24 port port=3306 protocol=tcp accept&#x27;</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-PostgreSQL数据库配置"><a href="#2-PostgreSQL数据库配置" class="headerlink" title="2. PostgreSQL数据库配置"></a>2. PostgreSQL数据库配置</h2><p>PostgreSQL是一个功能强大的开源关系型数据库系统，以其可靠性、稳定性和丰富的功能著称。</p>
+<h3 id="2-1-PostgreSQL安装"><a href="#2-1-PostgreSQL安装" class="headerlink" title="2.1 PostgreSQL安装"></a>2.1 PostgreSQL安装</h3><h4 id="Ubuntu-Debian安装-1"><a href="#Ubuntu-Debian安装-1" class="headerlink" title="Ubuntu&#x2F;Debian安装"></a>Ubuntu&#x2F;Debian安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新包索引</span></span><br><span class="line">apt update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装PostgreSQL</span></span><br><span class="line">apt install -y postgresql postgresql-contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录到PostgreSQL</span></span><br><span class="line"><span class="built_in">sudo</span> -u postgres psql</span><br></pre></td></tr></table></figure>
+
+<h4 id="CentOS-RHEL安装-1"><a href="#CentOS-RHEL安装-1" class="headerlink" title="CentOS&#x2F;RHEL安装"></a>CentOS&#x2F;RHEL安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装PostgreSQL仓库</span></span><br><span class="line">dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用内置PostgreSQL模块</span></span><br><span class="line">dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装PostgreSQL</span></span><br><span class="line">dnf install -y postgresql13-server postgresql13-contrib</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化数据库</span></span><br><span class="line">/usr/pgsql-13/bin/postgresql-13-setup initdb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动并设置开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> postgresql-13</span><br><span class="line">systemctl start postgresql-13</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-PostgreSQL基础配置"><a href="#2-2-PostgreSQL基础配置" class="headerlink" title="2.2 PostgreSQL基础配置"></a>2.2 PostgreSQL基础配置</h3><p>PostgreSQL的主要配置文件位于数据目录中：</p>
+<ul>
+<li>Ubuntu&#x2F;Debian: <code>/etc/postgresql/13/main/postgresql.conf</code>和<code>pg_hba.conf</code></li>
+<li>CentOS&#x2F;RHEL: <code>/var/lib/pgsql/13/data/postgresql.conf</code>和<code>pg_hba.conf</code></li>
+</ul>
+<p>基本配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># postgresql.conf基本设置</span></span><br><span class="line"><span class="attr">listen_addresses</span> = <span class="string">&#x27;localhost&#x27;</span>           <span class="comment"># 默认只监听本地</span></span><br><span class="line"><span class="attr">max_connections</span> = <span class="number">100</span>                   <span class="comment"># 最大连接数</span></span><br><span class="line"><span class="attr">shared_buffers</span> = <span class="number">1</span>GB                    <span class="comment"># 共享内存缓冲区</span></span><br><span class="line"><span class="attr">work_mem</span> = <span class="number">16</span>MB                         <span class="comment"># 每个连接的工作内存</span></span><br><span class="line"><span class="attr">maintenance_work_mem</span> = <span class="number">256</span>MB            <span class="comment"># 维护操作使用的内存</span></span><br><span class="line"><span class="attr">effective_cache_size</span> = <span class="number">3</span>GB              <span class="comment"># 可用于磁盘缓存的内存估计</span></span><br><span class="line"><span class="attr">wal_buffers</span> = <span class="number">16</span>MB                      <span class="comment"># WAL缓冲区大小</span></span><br><span class="line"><span class="attr">synchronous_commit</span> = <span class="literal">off</span>                <span class="comment"># 高性能但降低持久性保证</span></span><br><span class="line"><span class="attr">max_wal_size</span> = <span class="number">1</span>GB                      <span class="comment"># WAL最大大小</span></span><br><span class="line"><span class="attr">checkpoint_timeout</span> = <span class="number">15</span>min              <span class="comment"># 检查点之间的最大时间</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端认证配置 (pg_hba.conf):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># TYPE  DATABASE        USER            ADDRESS                 METHOD</span><br><span class="line"># &quot;local&quot; is for Unix domain socket connections only</span><br><span class="line">local   all             all                                     peer</span><br><span class="line"># IPv4 local connections:</span><br><span class="line">host    all             all             127.0.0.1/32            md5</span><br><span class="line"># IPv6 local connections:</span><br><span class="line">host    all             all             ::1/128                 md5</span><br><span class="line"># Allow remote connections from trusted network:</span><br><span class="line">host    all             all             192.168.1.0/24          md5</span><br></pre></td></tr></table></figure>
+
+<p>应用配置更改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启PostgreSQL服务</span></span><br><span class="line">systemctl restart postgresql         <span class="comment"># Ubuntu/Debian</span></span><br><span class="line">systemctl restart postgresql-13      <span class="comment"># CentOS/RHEL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-PostgreSQL用户和数据库管理"><a href="#2-3-PostgreSQL用户和数据库管理" class="headerlink" title="2.3 PostgreSQL用户和数据库管理"></a>2.3 PostgreSQL用户和数据库管理</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 登录PostgreSQL</span></span><br><span class="line">sudo <span class="operator">-</span>u postgres psql</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建新用户</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> dbuser <span class="keyword">WITH</span> ENCRYPTED PASSWORD <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">CREATE</span> DATABASE mydb;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 授予权限</span></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> DATABASE mydb <span class="keyword">TO</span> dbuser;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 为用户创建Schema</span></span><br><span class="line">\c mydb</span><br><span class="line"><span class="keyword">CREATE</span> SCHEMA IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> myschema <span class="keyword">AUTHORIZATION</span> dbuser;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 更改数据库所有者</span></span><br><span class="line"><span class="keyword">ALTER</span> DATABASE mydb OWNER <span class="keyword">TO</span> dbuser;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 撤销权限</span></span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> DATABASE mydb <span class="keyword">FROM</span> dbuser;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除用户</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> dbuser;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-PostgreSQL性能优化"><a href="#2-4-PostgreSQL性能优化" class="headerlink" title="2.4 PostgreSQL性能优化"></a>2.4 PostgreSQL性能优化</h3><h4 id="内存配置"><a href="#内存配置" class="headerlink" title="内存配置"></a>内存配置</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4GB内存服务器的配置</span></span><br><span class="line"><span class="attr">shared_buffers</span> = <span class="number">1</span>GB                     <span class="comment"># 内存的25%</span></span><br><span class="line"><span class="attr">work_mem</span> = <span class="number">16</span>MB                          <span class="comment"># 连接级内存</span></span><br><span class="line"><span class="attr">maintenance_work_mem</span> = <span class="number">256</span>MB             <span class="comment"># 维护操作内存</span></span><br><span class="line"><span class="attr">effective_cache_size</span> = <span class="number">3</span>GB               <span class="comment"># 内存的75%</span></span><br><span class="line"><span class="attr">temp_buffers</span> = <span class="number">16</span>MB                      <span class="comment"># 临时表内存</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="写入性能"><a href="#写入性能" class="headerlink" title="写入性能"></a>写入性能</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写入优化</span></span><br><span class="line"><span class="attr">wal_buffers</span> = <span class="number">16</span>MB                       <span class="comment"># 16MB通常足够</span></span><br><span class="line"><span class="attr">checkpoint_timeout</span> = <span class="number">15</span>min               <span class="comment"># 减少检查点频率</span></span><br><span class="line"><span class="attr">max_wal_size</span> = <span class="number">1</span>GB                       <span class="comment"># 增加WAL大小</span></span><br><span class="line"><span class="attr">checkpoint_completion_target</span> = <span class="number">0.9</span>       <span class="comment"># 延长检查点完成时间</span></span><br><span class="line"><span class="attr">synchronous_commit</span> = <span class="literal">off</span>                 <span class="comment"># 提高性能但有丢失事务风险</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查询优化-1"><a href="#查询优化-1" class="headerlink" title="查询优化"></a>查询优化</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 分析表</span></span><br><span class="line">ANALYZE table_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建索引</span></span><br><span class="line"><span class="keyword">CREATE</span> INDEX idx_name <span class="keyword">ON</span> table_name (column_name);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看查询计划</span></span><br><span class="line">EXPLAIN ANALYZE <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="keyword">condition</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 设置表统计目标</span></span><br><span class="line"><span class="keyword">ALTER TABLE</span> table_name <span class="keyword">SET</span> STATISTICS <span class="number">1000</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-PostgreSQL备份与恢复"><a href="#2-5-PostgreSQL备份与恢复" class="headerlink" title="2.5 PostgreSQL备份与恢复"></a>2.5 PostgreSQL备份与恢复</h3><h4 id="使用pg-dump和pg-dumpall备份"><a href="#使用pg-dump和pg-dumpall备份" class="headerlink" title="使用pg_dump和pg_dumpall备份"></a>使用pg_dump和pg_dumpall备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份单个数据库</span></span><br><span class="line">pg_dump -U postgres -d mydb -f mydb_backup.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份为压缩文件</span></span><br><span class="line">pg_dump -U postgres -d mydb | gzip &gt; mydb_backup.sql.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份为自定义格式(支持并行和选择性恢复)</span></span><br><span class="line">pg_dump -U postgres -d mydb -Fc -f mydb_backup.dump</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份所有数据库</span></span><br><span class="line">pg_dumpall -U postgres &gt; all_databases.sql</span><br></pre></td></tr></table></figure>
+
+<h4 id="恢复数据-1"><a href="#恢复数据-1" class="headerlink" title="恢复数据"></a>恢复数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 恢复SQL格式备份</span></span><br><span class="line">psql -U postgres -d mydb &lt; mydb_backup.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复压缩备份</span></span><br><span class="line">gunzip -c mydb_backup.sql.gz | psql -U postgres -d mydb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复自定义格式</span></span><br><span class="line">pg_restore -U postgres -d mydb mydb_backup.dump</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用pg-basebackup物理备份"><a href="#使用pg-basebackup物理备份" class="headerlink" title="使用pg_basebackup物理备份"></a>使用pg_basebackup物理备份</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置远程连接和复制权限</span></span><br><span class="line"><span class="comment"># 编辑pg_hba.conf添加:</span></span><br><span class="line"><span class="comment"># host    replication     postgres        192.168.1.0/24          md5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑postgresql.conf:</span></span><br><span class="line"><span class="comment"># wal_level = replica</span></span><br><span class="line"><span class="comment"># max_wal_senders = 10</span></span><br><span class="line"><span class="comment"># wal_keep_size = 64</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行物理备份</span></span><br><span class="line">pg_basebackup -h localhost -U postgres -D /backup/postgresql -Fp -Xs -P</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复物理备份</span></span><br><span class="line">systemctl stop postgresql</span><br><span class="line"><span class="built_in">rm</span> -rf /var/lib/postgresql/13/main/*</span><br><span class="line"><span class="built_in">cp</span> -R /backup/postgresql/* /var/lib/postgresql/13/main/</span><br><span class="line"><span class="built_in">chown</span> -R postgres:postgres /var/lib/postgresql/13/main</span><br><span class="line"><span class="built_in">chmod</span> 700 /var/lib/postgresql/13/main</span><br><span class="line">systemctl start postgresql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-PostgreSQL监控和维护"><a href="#2-6-PostgreSQL监控和维护" class="headerlink" title="2.6 PostgreSQL监控和维护"></a>2.6 PostgreSQL监控和维护</h3><h4 id="设置监控脚本-1"><a href="#设置监控脚本-1" class="headerlink" title="设置监控脚本"></a>设置监控脚本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># /usr/local/bin/pgsql_monitor.sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查PostgreSQL状态</span></span><br><span class="line"><span class="built_in">sudo</span> -u postgres psql -c <span class="string">&quot;SELECT 1&quot;</span> &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"><span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;PostgreSQL is down!&quot;</span> | mail -s <span class="string">&quot;PostgreSQL Alert&quot;</span> admin@example.com</span><br><span class="line">    systemctl restart postgresql</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;PostgreSQL is running&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查连接数</span></span><br><span class="line">CONN_COUNT=$(<span class="built_in">sudo</span> -u postgres psql -t -c <span class="string">&quot;SELECT count(*) FROM pg_stat_activity&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$CONN_COUNT</span> -gt 50 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;High connection count: <span class="variable">$CONN_COUNT</span>&quot;</span> | mail -s <span class="string">&quot;PostgreSQL Connection Alert&quot;</span> admin@example.com</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查长时间运行的查询</span></span><br><span class="line"><span class="built_in">sudo</span> -u postgres psql -t -c <span class="string">&quot;SELECT pid, now() - query_start AS duration, query FROM pg_stat_activity WHERE state = &#x27;active&#x27; AND now() - query_start &gt; &#x27;5 minutes&#x27;::interval&quot;</span> | <span class="keyword">while</span> <span class="built_in">read</span> line</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ ! -z <span class="string">&quot;<span class="variable">$line</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;Long running query: <span class="variable">$line</span>&quot;</span> | mail -s <span class="string">&quot;PostgreSQL Performance Alert&quot;</span> admin@example.com</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>设置定时任务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x /usr/local/bin/pgsql_monitor.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*/5 * * * * root /usr/local/bin/pgsql_monitor.sh&quot;</span> &gt; /etc/cron.d/pgsql_monitor</span><br></pre></td></tr></table></figure>
+
+<h4 id="维护任务"><a href="#维护任务" class="headerlink" title="维护任务"></a>维护任务</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 清理死亡事务和回收空间</span></span><br><span class="line">VACUUM;  </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 分析表统计信息</span></span><br><span class="line">ANALYZE;  </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 完全清理并回收空间</span></span><br><span class="line">VACUUM <span class="keyword">FULL</span>;  <span class="comment">-- 注意：会锁表</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 自动清理配置</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> autovacuum <span class="operator">=</span> <span class="keyword">on</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> autovacuum_vacuum_threshold <span class="operator">=</span> <span class="number">50</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> autovacuum_analyze_threshold <span class="operator">=</span> <span class="number">50</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> autovacuum_vacuum_scale_factor <span class="operator">=</span> <span class="number">0.1</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SYSTEM</span> <span class="keyword">SET</span> autovacuum_analyze_scale_factor <span class="operator">=</span> <span class="number">0.05</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 重新加载配置</span></span><br><span class="line"><span class="keyword">SELECT</span> pg_reload_conf();</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-PostgreSQL安全加固"><a href="#2-7-PostgreSQL安全加固" class="headerlink" title="2.7 PostgreSQL安全加固"></a>2.7 PostgreSQL安全加固</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># postgresql.conf安全设置</span></span><br><span class="line"><span class="attr">ssl</span> = <span class="literal">on</span>                                 <span class="comment"># 启用SSL</span></span><br><span class="line"><span class="attr">ssl_cert_file</span> = <span class="string">&#x27;server.crt&#x27;</span>             <span class="comment"># SSL证书</span></span><br><span class="line"><span class="attr">ssl_key_file</span> = <span class="string">&#x27;server.key&#x27;</span>              <span class="comment"># SSL私钥</span></span><br><span class="line"><span class="attr">password_encryption</span> = scram-sha-<span class="number">256</span>      <span class="comment"># 使用更安全的密码哈希</span></span><br><span class="line"><span class="attr">log_connections</span> = <span class="literal">on</span>                     <span class="comment"># 记录连接</span></span><br><span class="line"><span class="attr">log_disconnections</span> = <span class="literal">on</span>                  <span class="comment"># 记录断开连接</span></span><br><span class="line"><span class="attr">log_statement</span> = <span class="string">&#x27;ddl&#x27;</span>                    <span class="comment"># 记录数据定义语言命令</span></span><br></pre></td></tr></table></figure>
+
+<p>配置防火墙只允许指定IP访问PostgreSQL：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW配置</span></span><br><span class="line">ufw allow from 192.168.1.0/24 to any port 5432</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld配置</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=192.168.1.0/24 port port=5432 protocol=tcp accept&#x27;</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-数据库常见问题排查"><a href="#3-数据库常见问题排查" class="headerlink" title="3. 数据库常见问题排查"></a>3. 数据库常见问题排查</h2><h3 id="3-1-MySQL常见问题"><a href="#3-1-MySQL常见问题" class="headerlink" title="3.1 MySQL常见问题"></a>3.1 MySQL常见问题</h3><h4 id="连接问题"><a href="#连接问题" class="headerlink" title="连接问题"></a>连接问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查MySQL是否运行</span></span><br><span class="line">systemctl status mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查MySQL监听端口</span></span><br><span class="line">netstat -tuln | grep 3306</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查防火墙规则</span></span><br><span class="line">iptables -L -n | grep 3306</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查错误日志</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/mysql/error.log</span><br></pre></td></tr></table></figure>
+
+<h4 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看当前进程</span></span><br><span class="line"><span class="keyword">SHOW</span> PROCESSLIST;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看表状态</span></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS <span class="keyword">FROM</span> database_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看服务器状态变量</span></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;Com_%&#x27;</span>;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;Innodb_buffer_pool_%&#x27;</span>;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;Threads_%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看查询缓存统计</span></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> STATUS <span class="keyword">LIKE</span> <span class="string">&#x27;Qcache_%&#x27;</span>;  <span class="comment">-- MySQL 5.7及更早版本</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 显示索引使用情况</span></span><br><span class="line"><span class="keyword">SHOW</span> INDEX <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<h4 id="磁盘空间问题"><a href="#磁盘空间问题" class="headerlink" title="磁盘空间问题"></a>磁盘空间问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查MySQL数据目录大小</span></span><br><span class="line"><span class="built_in">du</span> -sh /var/lib/mysql/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查单个数据库大小</span></span><br><span class="line"><span class="built_in">du</span> -sh /var/lib/mysql/database_name/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从MySQL内部查看数据库大小</span></span><br><span class="line">SELECT table_schema, ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS <span class="string">&quot;Size (MB)&quot;</span> FROM information_schema.tables GROUP BY table_schema;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-PostgreSQL常见问题"><a href="#3-2-PostgreSQL常见问题" class="headerlink" title="3.2 PostgreSQL常见问题"></a>3.2 PostgreSQL常见问题</h3><h4 id="连接问题-1"><a href="#连接问题-1" class="headerlink" title="连接问题"></a>连接问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查PostgreSQL是否运行</span></span><br><span class="line">systemctl status postgresql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查监听端口</span></span><br><span class="line">netstat -tuln | grep 5432</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查pg_hba.conf中的访问控制</span></span><br><span class="line">grep -v <span class="string">&quot;^#&quot;</span> /etc/postgresql/13/main/pg_hba.conf | grep -v <span class="string">&quot;^$&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查错误日志</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/postgresql/postgresql-13-main.log</span><br></pre></td></tr></table></figure>
+
+<h4 id="性能问题-1"><a href="#性能问题-1" class="headerlink" title="性能问题"></a>性能问题</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看当前活动连接</span></span><br><span class="line"><span class="keyword">SELECT</span> pid, usename, datname, state, query, now() <span class="operator">-</span> query_start <span class="keyword">AS</span> duration</span><br><span class="line"><span class="keyword">FROM</span> pg_stat_activity <span class="keyword">WHERE</span> state <span class="operator">=</span> <span class="string">&#x27;active&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看慢查询</span></span><br><span class="line"><span class="keyword">SELECT</span> pid, now() <span class="operator">-</span> query_start <span class="keyword">AS</span> duration, query </span><br><span class="line"><span class="keyword">FROM</span> pg_stat_activity </span><br><span class="line"><span class="keyword">WHERE</span> state <span class="operator">=</span> <span class="string">&#x27;active&#x27;</span> <span class="keyword">AND</span> now() <span class="operator">-</span> query_start <span class="operator">&gt;</span> <span class="string">&#x27;1 minute&#x27;</span>::<span class="type">interval</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看表访问统计</span></span><br><span class="line"><span class="keyword">SELECT</span> schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch</span><br><span class="line"><span class="keyword">FROM</span> pg_stat_user_tables;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看索引使用情况</span></span><br><span class="line"><span class="keyword">SELECT</span> schemaname, relname, indexrelname, idx_scan, idx_tup_read, idx_tup_fetch</span><br><span class="line"><span class="keyword">FROM</span> pg_stat_user_indexes;</span><br></pre></td></tr></table></figure>
+
+<h4 id="磁盘空间问题-1"><a href="#磁盘空间问题-1" class="headerlink" title="磁盘空间问题"></a>磁盘空间问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查数据目录大小</span></span><br><span class="line"><span class="built_in">du</span> -sh /var/lib/postgresql/13/main/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从PostgreSQL内部查看数据库大小</span></span><br><span class="line">SELECT pg_database.datname, pg_size_pretty(pg_database_size(pg_database.datname)) AS size FROM pg_database;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看表大小</span></span><br><span class="line">SELECT nspname || <span class="string">&#x27;.&#x27;</span> || relname AS <span class="string">&quot;relation&quot;</span>, pg_size_pretty(pg_total_relation_size(C.oid)) AS <span class="string">&quot;total_size&quot;</span></span><br><span class="line">FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)</span><br><span class="line">WHERE nspname NOT IN (<span class="string">&#x27;pg_catalog&#x27;</span>, <span class="string">&#x27;information_schema&#x27;</span>)</span><br><span class="line">AND C.relkind &lt;&gt; <span class="string">&#x27;i&#x27;</span> AND nspname !~ <span class="string">&#x27;^pg_toast&#x27;</span></span><br><span class="line">ORDER BY pg_total_relation_size(C.oid) DESC LIMIT 20;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-高可用和水平扩展"><a href="#4-高可用和水平扩展" class="headerlink" title="4. 高可用和水平扩展"></a>4. 高可用和水平扩展</h2><h3 id="4-1-MySQL主从复制"><a href="#4-1-MySQL主从复制" class="headerlink" title="4.1 MySQL主从复制"></a>4.1 MySQL主从复制</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主服务器配置 (my.cnf)</span></span><br><span class="line"><span class="attr">server-id</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">log_bin</span> = mysql-bin</span><br><span class="line"><span class="attr">binlog_format</span> = ROW</span><br><span class="line"><span class="attr">binlog_do_db</span> = database_name  <span class="comment"># 可选，指定要复制的数据库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从服务器配置 (my.cnf)</span></span><br><span class="line"><span class="attr">server-id</span> = <span class="number">2</span></span><br><span class="line"><span class="attr">relay_log</span> = mysql-relay-bin</span><br></pre></td></tr></table></figure>
+
+<p>在主服务器上创建复制用户：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;repl&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"><span class="keyword">GRANT</span> REPLICATION SLAVE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;repl&#x27;</span>@<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看主服务器状态</span></span><br><span class="line"><span class="keyword">SHOW</span> MASTER STATUS;</span><br></pre></td></tr></table></figure>
+
+<p>在从服务器上配置复制：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER <span class="keyword">TO</span></span><br><span class="line">  MASTER_HOST<span class="operator">=</span><span class="string">&#x27;master_ip&#x27;</span>,</span><br><span class="line">  MASTER_USER<span class="operator">=</span><span class="string">&#x27;repl&#x27;</span>,</span><br><span class="line">  MASTER_PASSWORD<span class="operator">=</span><span class="string">&#x27;password&#x27;</span>,</span><br><span class="line">  MASTER_LOG_FILE<span class="operator">=</span><span class="string">&#x27;mysql-bin.000001&#x27;</span>,  <span class="comment">-- 从SHOW MASTER STATUS获取</span></span><br><span class="line">  MASTER_LOG_POS<span class="operator">=</span><span class="number">1234</span>;                 <span class="comment">-- 从SHOW MASTER STATUS获取</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 启动复制</span></span><br><span class="line"><span class="keyword">START</span> SLAVE;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 检查复制状态</span></span><br><span class="line"><span class="keyword">SHOW</span> SLAVE STATUS\G</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-PostgreSQL主从复制"><a href="#4-2-PostgreSQL主从复制" class="headerlink" title="4.2 PostgreSQL主从复制"></a>4.2 PostgreSQL主从复制</h3><p>在主服务器上配置 (postgresql.conf):</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">listen_addresses</span> = <span class="string">&#x27;*&#x27;</span></span><br><span class="line"><span class="attr">wal_level</span> = replica</span><br><span class="line"><span class="attr">max_wal_senders</span> = <span class="number">10</span></span><br><span class="line"><span class="attr">max_replication_slots</span> = <span class="number">10</span></span><br><span class="line"><span class="attr">wal_keep_size</span> = <span class="number">64</span></span><br></pre></td></tr></table></figure>
+
+<p>在主服务器上编辑 pg_hba.conf:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host    replication     replica         replica_ip/32           md5</span><br></pre></td></tr></table></figure>
+
+<p>创建复制用户：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> ROLE replica <span class="keyword">WITH</span> REPLICATION LOGIN PASSWORD <span class="string">&#x27;password&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在从服务器上进行基础备份：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 停止从服务器</span></span><br><span class="line">systemctl stop postgresql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清空数据目录</span></span><br><span class="line"><span class="built_in">rm</span> -rf /var/lib/postgresql/13/main/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 基础备份</span></span><br><span class="line">pg_basebackup -h master_ip -U replica -D /var/lib/postgresql/13/main -P -v -X stream</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建recovery.conf (PostgreSQL 12及以前)或standby.signal (PostgreSQL 13+)</span></span><br><span class="line"><span class="comment"># PostgreSQL 13+:</span></span><br><span class="line"><span class="built_in">touch</span> /var/lib/postgresql/13/main/standby.signal</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑postgresql.conf</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;primary_conninfo = &#x27;host=master_ip port=5432 user=replica password=password&#x27;&quot;</span> &gt;&gt; /var/lib/postgresql/13/main/postgresql.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;recovery_target_timeline = &#x27;latest&#x27;&quot;</span> &gt;&gt; /var/lib/postgresql/13/main/postgresql.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置权限</span></span><br><span class="line"><span class="built_in">chown</span> -R postgres:postgres /var/lib/postgresql/13/main</span><br><span class="line"><span class="built_in">chmod</span> 700 /var/lib/postgresql/13/main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动从服务器</span></span><br><span class="line">systemctl start postgresql</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-数据库性能调优最佳实践"><a href="#5-数据库性能调优最佳实践" class="headerlink" title="5. 数据库性能调优最佳实践"></a>5. 数据库性能调优最佳实践</h2><h3 id="5-1-硬件配置建议"><a href="#5-1-硬件配置建议" class="headerlink" title="5.1 硬件配置建议"></a>5.1 硬件配置建议</h3><ol>
+<li><p><strong>存储</strong>：</p>
+<ul>
+<li>数据库文件使用SSD存储</li>
+<li>单独磁盘挂载点用于数据、日志和备份</li>
+<li>RAID 10配置平衡性能和冗余</li>
+</ul>
+</li>
+<li><p><strong>内存</strong>：</p>
+<ul>
+<li>足够大的内存以容纳活跃数据集</li>
+<li>MySQL: 服务器内存的70-80%分配给InnoDB缓冲池</li>
+<li>PostgreSQL: 服务器内存的25%分配给共享缓冲区，75%留给文件系统缓存</li>
+</ul>
+</li>
+<li><p><strong>CPU</strong>：</p>
+<ul>
+<li>多核CPU以支持并行查询和并发连接</li>
+<li>较高的单核性能有助于提高查询性能</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-2-索引优化"><a href="#5-2-索引优化" class="headerlink" title="5.2 索引优化"></a>5.2 索引优化</h3><ol>
+<li><p><strong>有效索引</strong>：</p>
+<ul>
+<li>为频繁出现在WHERE、JOIN、ORDER BY和GROUP BY子句中的列创建索引</li>
+<li>将选择性最高的列放在复合索引的最前面</li>
+<li>避免创建重叠的索引</li>
+<li>定期检查和删除未使用的索引</li>
+</ul>
+</li>
+<li><p><strong>索引类型选择</strong>：</p>
+<ul>
+<li>MySQL: 考虑使用哈希索引、全文索引或空间索引</li>
+<li>PostgreSQL: 考虑B-tree、Hash、GiST、SP-GiST、GIN或BRIN索引</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-3-查询优化"><a href="#5-3-查询优化" class="headerlink" title="5.3 查询优化"></a>5.3 查询优化</h3><ol>
+<li><p><strong>查询重写</strong>：</p>
+<ul>
+<li>只选择必要的列（避免<code>SELECT *</code>）</li>
+<li>使用精确的WHERE条件减少扫描的数据量</li>
+<li>避免使用函数应用在索引列上</li>
+<li>考虑使用LIMIT限制结果集大小</li>
+</ul>
+</li>
+<li><p><strong>JOIN优化</strong>：</p>
+<ul>
+<li>选择正确的JOIN类型（INNER、LEFT、RIGHT）</li>
+<li>连接条件应该使用索引</li>
+<li>按从小到大的顺序连接表</li>
+<li>避免不必要的子查询，使用JOIN代替</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-4-连接池和应用侧优化"><a href="#5-4-连接池和应用侧优化" class="headerlink" title="5.4 连接池和应用侧优化"></a>5.4 连接池和应用侧优化</h3><ol>
+<li><p><strong>使用连接池</strong>：</p>
+<ul>
+<li>例如： PgBouncer (PostgreSQL)、ProxySQL (MySQL)</li>
+<li>减少频繁创建和销毁连接的开销</li>
+<li>合理设置最小和最大连接数</li>
+</ul>
+</li>
+<li><p><strong>批处理操作</strong>：</p>
+<ul>
+<li>使用批量INSERT而不是多个单行INSERT</li>
+<li>对于大量数据加载，考虑使用LOAD DATA或COPY命令</li>
+<li>事务优化：批量提交多个更改</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文详细介绍了MySQL和PostgreSQL两大主流开源数据库的安装配置、性能优化、备份恢复和安全加固。数据库作为应用程序的核心组件，其性能和可靠性对整个系统的影响至关重要。通过合理的配置优化、定期的维护管理和适当的监控机制，可以确保数据库系统稳定、高效地运行。</p>
+<p>无论是选择MySQL还是PostgreSQL，都应该根据具体的应用需求和业务特点，选择合适的配置方案和优化策略。同时，保持良好的备份习惯和安全实践，可以有效防范数据丢失和安全风险。 </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># 服务器</a>
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+              <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/24/vps/Docker%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86/" rel="prev" title="Docker容器管理完全指南">
+                  <i class="fa fa-angle-left"></i> Docker容器管理完全指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/23/%E6%95%99%E7%A8%8B/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" rel="next" title="黑苹果折腾指南">
+                  黑苹果折腾指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

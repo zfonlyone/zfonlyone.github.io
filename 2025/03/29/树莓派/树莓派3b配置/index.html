@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="树莓派3B配置完全指南本文详细记录树莓派3B的安装配置过程，包括系统安装、基础设置、常用服务配置和优化技巧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派3B配置指南">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/29/%E6%A0%91%E8%8E%93%E6%B4%BE/%E6%A0%91%E8%8E%93%E6%B4%BE3b%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="树莓派3B配置完全指南本文详细记录树莓派3B的安装配置过程，包括系统安装、基础设置、常用服务配置和优化技巧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zfonlyone.github.io/img/20250329-173153.png">
+<meta property="article:published_time" content="2025-03-29T02:00:01.000Z">
+<meta property="article:modified_time" content="2025-03-29T09:00:02.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="树莓派">
+<meta property="article:tag" content="配置">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="嵌入式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zfonlyone.github.io/img/20250329-173153.png">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/29/%E6%A0%91%E8%8E%93%E6%B4%BE/%E6%A0%91%E8%8E%93%E6%B4%BE3b%E9%85%8D%E7%BD%AE/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/29/%E6%A0%91%E8%8E%93%E6%B4%BE/%E6%A0%91%E8%8E%93%E6%B4%BE3b%E9%85%8D%E7%BD%AE/","path":"2025/03/29/树莓派/树莓派3b配置/","title":"树莓派3B配置指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>树莓派3B配置指南 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%91%E8%8E%93%E6%B4%BE3B%E9%85%8D%E7%BD%AE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">树莓派3B配置完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">系统安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">选择合适的系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E7%83%A7%E5%BD%95%E5%99%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用官方烧录器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E6%AC%A1%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">首次启动配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.2.</span> <span class="nav-text">配置镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E4%B8%BA%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">更换为国内镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">确认系统版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Debian-12-Bookworm-%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">Debian 12 (Bookworm) 系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Debian-11-Bullseye-%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">Debian 11 (Bullseye) 系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">更新软件包列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F%E6%BA%90%E9%80%89%E9%A1%B9"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">阿里云镜像源选项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AESSH"><span class="nav-number">1.3.</span> <span class="nav-text">配置SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9SSH%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.3.1.</span> <span class="nav-text">修改SSH端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%81%E7%94%A8root%E7%99%BB%E5%BD%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">禁用root登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95"><span class="nav-number">1.3.3.</span> <span class="nav-text">配置密钥登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEVNC"><span class="nav-number">1.4.</span> <span class="nav-text">配置VNC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8VNC%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.1.</span> <span class="nav-text">启用VNC服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEVNC%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">配置VNC服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%88%86%E8%BE%A8%E7%8E%87"><span class="nav-number">1.4.3.</span> <span class="nav-text">配置分辨率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">配置代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Clash-for-Linux"><span class="nav-number">1.5.1.</span> <span class="nav-text">安装Clash for Linux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.6.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E9%A2%91%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.6.1.</span> <span class="nav-text">超频设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="nav-number">1.6.2.</span> <span class="nav-text">内存分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%A9%E5%BA%A6%E7%9B%91%E6%8E%A7"><span class="nav-number">1.6.3.</span> <span class="nav-text">温度监控</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BA%94%E7%94%A8%E5%AE%89%E8%A3%85"><span class="nav-number">1.7.</span> <span class="nav-text">常用应用安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AE%89%E8%A3%85"><span class="nav-number">1.7.1.</span> <span class="nav-text">Docker安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7Web%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.7.2.</span> <span class="nav-text">轻量级Web服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AA%92%E4%BD%93%E4%B8%AD%E5%BF%83"><span class="nav-number">1.7.3.</span> <span class="nav-text">媒体中心</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%9C%9F%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.8.</span> <span class="nav-text">定期维护</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="nav-number">1.8.1.</span> <span class="nav-text">自动更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.8.2.</span> <span class="nav-text">备份系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.8.3.</span> <span class="nav-text">监控系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="nav-number">1.9.</span> <span class="nav-text">参考资源</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/29/%E6%A0%91%E8%8E%93%E6%B4%BE/%E6%A0%91%E8%8E%93%E6%B4%BE3b%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="树莓派3B配置指南 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          树莓派3B配置指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-29 10:00:01 / 修改时间：17:00:02" itemprop="dateCreated datePublished" datetime="2025-03-29T10:00:01+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-29 17:00:02" itemprop="dateModified" datetime="2025-03-29T17:00:02+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/" itemprop="url" rel="index"><span itemprop="name">树莓派</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="树莓派3B配置完全指南"><a href="#树莓派3B配置完全指南" class="headerlink" title="树莓派3B配置完全指南"></a>树莓派3B配置完全指南</h1><p>本文详细记录树莓派3B的安装配置过程，包括系统安装、基础设置、常用服务配置和优化技巧。</p>
+<span id="more"></span>
+
+<h2 id="系统安装"><a href="#系统安装" class="headerlink" title="系统安装"></a>系统安装</h2><h3 id="选择合适的系统"><a href="#选择合适的系统" class="headerlink" title="选择合适的系统"></a>选择合适的系统</h3><p>树莓派支持多种操作系统，针对不同需求可以选择:</p>
+<ul>
+<li><strong>Raspberry Pi OS</strong>(原Raspbian): 官方支持的系统，基于Debian开发</li>
+<li><strong>Ubuntu Server</strong>: 适合作为服务器使用</li>
+<li><strong>RetroPie</strong>: 游戏模拟器系统</li>
+<li><strong>OpenMediaVault</strong>: NAS系统</li>
+</ul>
+<p>本文以Raspberry Pi OS为例进行配置。</p>
+<h3 id="使用官方烧录器"><a href="#使用官方烧录器" class="headerlink" title="使用官方烧录器"></a>使用官方烧录器</h3><ol>
+<li>下载<a target="_blank" rel="noopener" href="https://www.raspberrypi.org/software/">Raspberry Pi Imager</a></li>
+<li>将SD卡插入电脑</li>
+<li>打开烧录工具，选择操作系统</li>
+<li>点击高级选项(⚙️)进行预配置:<ul>
+<li>设置主机名</li>
+<li>启用SSH</li>
+<li>设置用户名和密码</li>
+<li>配置WiFi连接</li>
+<li>设置时区和键盘布局</li>
+</ul>
+</li>
+</ol>
+<p><img src="/img/20250329-173153.png" alt="树莓派烧录器高级选项界面"></p>
+<ol start="5">
+<li>点击”写入”按钮开始烧录</li>
+<li>烧录完成后，将SD卡插入树莓派，通电启动</li>
+</ol>
+<blockquote>
+<p><strong>注意</strong>：若无显示器，一定要在烧录前预先配置WiFi和SSH，否则将无法远程连接树莓派。</p>
+</blockquote>
+<h3 id="首次启动配置"><a href="#首次启动配置" class="headerlink" title="首次启动配置"></a>首次启动配置</h3><ol>
+<li><p>如果有显示器，连接后按照引导完成初始设置</p>
+</li>
+<li><p>如果无显示器，通过SSH远程连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 替换IP为实际分配给树莓派的IP地址</span></span><br><span class="line">ssh pi@raspberry.local</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">ssh pi@192.168.1.xxx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>首次登录后立即更新系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt full-upgrade -y</span><br><span class="line"><span class="built_in">sudo</span> reboot</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="配置镜像源"><a href="#配置镜像源" class="headerlink" title="配置镜像源"></a>配置镜像源</h2><p>默认的软件源在国内访问较慢，建议更换为国内镜像源。</p>
+<h3 id="更换为国内镜像源"><a href="#更换为国内镜像源" class="headerlink" title="更换为国内镜像源"></a>更换为国内镜像源</h3><h4 id="确认系统版本"><a href="#确认系统版本" class="headerlink" title="确认系统版本"></a>确认系统版本</h4><p>在配置镜像源前，首先确认你的系统版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前系统版本</span></span><br><span class="line"><span class="built_in">cat</span> /etc/os-release</span><br></pre></td></tr></table></figure>
+
+<h4 id="Debian-12-Bookworm-系统"><a href="#Debian-12-Bookworm-系统" class="headerlink" title="Debian 12 (Bookworm) 系统"></a>Debian 12 (Bookworm) 系统</h4><p>如果你使用的是最新的Raspberry Pi OS (Debian 12 Bookworm)版本，请按以下步骤配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份原配置</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list.bak</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑sources.list文件</span></span><br><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>替换为清华大学镜像源:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Raspberry Pi OS Bookworm 清华源</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ bookworm main contrib non-free non-free-firmware</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ bookworm main contrib non-free non-free-firmware</span><br></pre></td></tr></table></figure>
+
+<p>或中科大源:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Raspberry Pi OS Bookworm 中科大源</span><br><span class="line">deb https://mirrors.ustc.edu.cn/raspbian/raspbian/ bookworm main contrib non-free non-free-firmware</span><br></pre></td></tr></table></figure>
+
+<p>编辑raspi.list:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure>
+
+<p>内容替换为(清华源):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/raspberrypi/debian/ bookworm main</span><br></pre></td></tr></table></figure>
+
+<p>或中科大源:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ bookworm main</span><br></pre></td></tr></table></figure>
+
+<h4 id="Debian-11-Bullseye-系统"><a href="#Debian-11-Bullseye-系统" class="headerlink" title="Debian 11 (Bullseye) 系统"></a>Debian 11 (Bullseye) 系统</h4><p>如果你使用的是老版本的Raspberry Pi OS (Debian 11 Bullseye)，请配置:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑sources.list文件</span></span><br><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>替换为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 清华源</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ bullseye main contrib non-free rpi</span><br><span class="line"># 或中科大源</span><br><span class="line"># deb https://mirrors.ustc.edu.cn/raspbian/raspbian/ bullseye main contrib non-free rpi</span><br></pre></td></tr></table></figure>
+
+<p>编辑raspi.list:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure>
+
+<p>内容替换为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 清华源</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/raspberrypi/debian/ bullseye main</span><br><span class="line"># 或中科大源</span><br><span class="line"># deb https://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ bullseye main</span><br></pre></td></tr></table></figure>
+
+<h4 id="更新软件包列表"><a href="#更新软件包列表" class="headerlink" title="更新软件包列表"></a>更新软件包列表</h4><p>配置完成后，更新软件包列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<h4 id="阿里云镜像源选项"><a href="#阿里云镜像源选项" class="headerlink" title="阿里云镜像源选项"></a>阿里云镜像源选项</h4><p>除了清华源和中科大源，还可以使用阿里云镜像源：</p>
+<p>对于Bookworm(sources.list):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.aliyun.com/raspbian/raspbian/ bookworm main contrib non-free non-free-firmware</span><br></pre></td></tr></table></figure>
+
+<p>对于Bookworm(raspi.list):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.aliyun.com/raspberrypi/debian/ bookworm main</span><br></pre></td></tr></table></figure>
+
+<p>更多镜像源相关信息可以参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/raspbian/">清华大学开源软件镜像站</a></li>
+<li><a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/raspbian.html">中国科学技术大学开源软件镜像站</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/">阿里云开源镜像站</a></li>
+</ul>
+<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>SSH是远程管理树莓派的主要方式，加强其安全性十分重要。</p>
+<h3 id="修改SSH端口"><a href="#修改SSH端口" class="headerlink" title="修改SSH端口"></a>修改SSH端口</h3><p>编辑SSH配置文件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>找到<code>#Port 22</code>一行，取消注释并修改为非默认端口:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Port 2222  # 改为任意非常用端口</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁用root登录"><a href="#禁用root登录" class="headerlink" title="禁用root登录"></a>禁用root登录</h3><p>在同一个配置文件中，确保以下设置:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin no</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置密钥登录"><a href="#配置密钥登录" class="headerlink" title="配置密钥登录"></a>配置密钥登录</h3><ol>
+<li><p>在本地电脑生成SSH密钥对：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在你的电脑上运行</span></span><br><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将公钥上传到树莓派：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在你的电脑上运行</span></span><br><span class="line">ssh-copy-id -i ~/.ssh/id_ed25519.pub -p 2222 pi@raspberry.local</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>禁用密码登录（确认密钥登录正常后操作）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在树莓派上编辑配置</span></span><br><span class="line"><span class="built_in">sudo</span> nano /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>修改或添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication no</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启SSH服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart sshd</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="配置VNC"><a href="#配置VNC" class="headerlink" title="配置VNC"></a>配置VNC</h2><p>VNC允许你远程访问树莓派的图形界面。</p>
+<h3 id="启用VNC服务"><a href="#启用VNC服务" class="headerlink" title="启用VNC服务"></a>启用VNC服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> raspi-config</span><br></pre></td></tr></table></figure>
+
+<p>选择<code>Interface Options</code> -&gt; <code>VNC</code> -&gt; <code>Yes</code></p>
+<h3 id="配置VNC服务器"><a href="#配置VNC服务器" class="headerlink" title="配置VNC服务器"></a>配置VNC服务器</h3><p>编辑VNC配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /root/.vnc/config.d/vncserver-x11</span><br></pre></td></tr></table></figure>
+
+<p>修改以下内容以增强安全性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 更改默认端口 (默认5900)</span><br><span class="line">$ cat &gt;&gt; /root/.vnc/config.d/vncserver-x11 &lt;&lt; EOF</span><br><span class="line">rfbport=5901</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># 禁用VNC的HTTP服务</span><br><span class="line">$ cat &gt;&gt; /root/.vnc/config.d/vncserver-x11 &lt;&lt; EOF</span><br><span class="line">httpd=0</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>重启VNC服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart vncserver-x11-serviced</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置分辨率"><a href="#配置分辨率" class="headerlink" title="配置分辨率"></a>配置分辨率</h3><p>如果没有显示器连接，需要设置虚拟分辨率：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /boot/config.txt</span><br></pre></td></tr></table></figure>
+
+<p>添加以下行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">framebuffer_width=1920</span><br><span class="line">framebuffer_height=1080</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置代理"><a href="#配置代理" class="headerlink" title="配置代理"></a>配置代理</h2><p>使用Clash for Linux可以让树莓派获得更好的网络体验。</p>
+<h3 id="安装Clash-for-Linux"><a href="#安装Clash-for-Linux" class="headerlink" title="安装Clash for Linux"></a>安装Clash for Linux</h3><ol>
+<li><p>下载安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://raw.githubusercontent.com/nelvko/clash-for-linux-install/main/install.sh</span><br><span class="line"><span class="built_in">chmod</span> +x install.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ./install.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置Clash：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将你的Clash配置文件上传到</span></span><br><span class="line">~/.config/clash/config.yaml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> clash</span><br><span class="line"><span class="built_in">sudo</span> systemctl start clash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置系统代理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时设置</span></span><br><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:7890</span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久设置</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export http_proxy=http://127.0.0.1:7890&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export https_proxy=http://127.0.0.1:7890&#x27;</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="超频设置"><a href="#超频设置" class="headerlink" title="超频设置"></a>超频设置</h3><p>适度超频可提升性能，编辑配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /boot/config.txt</span><br></pre></td></tr></table></figure>
+
+<p>添加或修改以下内容（根据需要调整）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 超频设置</span><br><span class="line">over_voltage=4</span><br><span class="line">arm_freq=1300</span><br><span class="line">gpu_freq=500</span><br></pre></td></tr></table></figure>
+
+<h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><p>可以根据需要调整分配给GPU的内存：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 如果主要用于命令行/服务器</span><br><span class="line">gpu_mem=16</span><br><span class="line"></span><br><span class="line"># 如果需要运行图形界面/多媒体应用</span><br><span class="line">gpu_mem=128</span><br></pre></td></tr></table></figure>
+
+<h3 id="温度监控"><a href="#温度监控" class="headerlink" title="温度监控"></a>温度监控</h3><p>安装工具监控CPU温度：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y lm-sensors</span><br></pre></td></tr></table></figure>
+
+<p>查看温度：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sensors</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">vcgencmd measure_temp</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用应用安装"><a href="#常用应用安装" class="headerlink" title="常用应用安装"></a>常用应用安装</h2><h3 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h3><p>Docker可以方便地运行各种应用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Docker</span></span><br><span class="line">curl -sSL https://get.docker.com | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加当前用户到docker组</span></span><br><span class="line"><span class="built_in">sudo</span> usermod -aG docker <span class="variable">$USER</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用权限更改（需注销重新登录）</span></span><br><span class="line">newgrp docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试Docker安装</span></span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h3 id="轻量级Web服务器"><a href="#轻量级Web服务器" class="headerlink" title="轻量级Web服务器"></a>轻量级Web服务器</h3><p>安装Nginx：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nginx</span><br><span class="line"><span class="built_in">sudo</span> systemctl start nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="媒体中心"><a href="#媒体中心" class="headerlink" title="媒体中心"></a>媒体中心</h3><p>安装Kodi媒体中心：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y kodi</span><br></pre></td></tr></table></figure>
+
+<h2 id="定期维护"><a href="#定期维护" class="headerlink" title="定期维护"></a>定期维护</h2><h3 id="自动更新"><a href="#自动更新" class="headerlink" title="自动更新"></a>自动更新</h3><p>设置自动更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y unattended-upgrades</span><br><span class="line"><span class="built_in">sudo</span> dpkg-reconfigure unattended-upgrades</span><br></pre></td></tr></table></figure>
+
+<h3 id="备份系统"><a href="#备份系统" class="headerlink" title="备份系统"></a>备份系统</h3><p>备份整个SD卡：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在另一台Linux电脑上</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/mmcblk0 of=raspberrypi_backup.img bs=4M status=progress</span><br></pre></td></tr></table></figure>
+
+<h3 id="监控系统"><a href="#监控系统" class="headerlink" title="监控系统"></a>监控系统</h3><p>安装基本监控工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y htop iotop</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.raspberrypi.org/documentation/">树莓派官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://shumeipai.nxez.com/">树莓派中文社区</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nelvko/clash-for-linux-install">Clash for Linux</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag"># 树莓派</a>
+              <a href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag"># 配置</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/29/%E6%95%99%E7%A8%8B/Next%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="prev" title="Next主题使用指南">
+                  <i class="fa fa-angle-left"></i> Next主题使用指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/29/%E6%95%99%E7%A8%8B/blog/" rel="next" title="Hexo + Next主题博客搭建教程">
+                  Hexo + Next主题博客搭建教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

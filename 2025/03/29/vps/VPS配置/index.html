@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AI 生成 VPS基础配置指南本文介绍VPS服务器的基础配置，包括用户管理、安全加固、服务管理和代理设置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPS配置">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/29/vps/VPS%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="AI 生成 VPS基础配置指南本文介绍VPS服务器的基础配置，包括用户管理、安全加固、服务管理和代理设置。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-28T22:00:01.000Z">
+<meta property="article:modified_time" content="2025-03-28T22:00:01.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="vps">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="server">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/29/vps/VPS%E9%85%8D%E7%BD%AE/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/29/vps/VPS%E9%85%8D%E7%BD%AE/","path":"2025/03/29/vps/VPS配置/","title":"VPS配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VPS配置 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#VPS%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">VPS基础配置指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%94%A8%E6%88%B7"><span class="nav-number">1.1.1.</span> <span class="nav-text">添加新用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">用户权限管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">修改密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-number">1.2.</span> <span class="nav-text">配置软件源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ubuntu-Debian%E8%BD%AF%E4%BB%B6%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">Ubuntu&#x2F;Debian软件源配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-22-04%EF%BC%88Jammy%EF%BC%89%E9%98%BF%E9%87%8C%E4%BA%91%E6%BA%90%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Ubuntu 22.04（Jammy）阿里云源示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Debian-12%EF%BC%88Bookworm%EF%BC%89%E6%B8%85%E5%8D%8E%E6%BA%90%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">Debian 12（Bookworm）清华源示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-RHEL%E8%BD%AF%E4%BB%B6%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">CentOS&#x2F;RHEL软件源配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CentOS-7-%E9%98%BF%E9%87%8C%E4%BA%91%E6%BA%90"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">CentOS 7 阿里云源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CentOS-8-Stream-RHEL-8-%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">CentOS 8 Stream&#x2F;RHEL 8 源配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%95%9C%E5%83%8F%E6%BA%90%E5%88%97%E8%A1%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">常用镜像源列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%80%89%E6%8B%A9%E6%9C%80%E5%BF%AB%E7%9A%84%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.2.4.</span> <span class="nav-text">自动选择最快的镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-Debian"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Ubuntu&#x2F;Debian</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CentOS-RHEL"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">CentOS&#x2F;RHEL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">文件权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%9D%83%E9%99%90%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">基本权限命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%96%87%E4%BB%B6%E7%9A%84%E6%8E%A8%E8%8D%90%E6%9D%83%E9%99%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">重要文件的推荐权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">SSH安全配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9SSH%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.4.1.</span> <span class="nav-text">修改SSH端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%81%E7%94%A8root%E7%99%BB%E5%BD%95"><span class="nav-number">1.4.2.</span> <span class="nav-text">禁用root登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AESSH%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95"><span class="nav-number">1.4.3.</span> <span class="nav-text">设置SSH密钥登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">服务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#systemd%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.1.</span> <span class="nav-text">systemd服务管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1%E6%97%A5%E5%BF%97"><span class="nav-number">1.5.2.</span> <span class="nav-text">查看服务日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89systemd%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.5.3.</span> <span class="nav-text">创建自定义systemd服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">代理服务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AE%80%E5%8D%95HTTP%E4%BB%A3%E7%90%86-Squid"><span class="nav-number">1.6.1.</span> <span class="nav-text">1. 简单HTTP代理 - Squid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Shadowsocks%E4%BB%A3%E7%90%86"><span class="nav-number">1.6.2.</span> <span class="nav-text">2. Shadowsocks代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-V2Ray%E4%BB%A3%E7%90%86"><span class="nav-number">1.6.3.</span> <span class="nav-text">3. V2Ray代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA"><span class="nav-number">1.7.</span> <span class="nav-text">基本安全加固</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE-UFW"><span class="nav-number">1.7.1.</span> <span class="nav-text">防火墙配置 (UFW)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE-firewalld"><span class="nav-number">1.7.2.</span> <span class="nav-text">防火墙配置 (firewalld)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0"><span class="nav-number">1.7.3.</span> <span class="nav-text">自动安全更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E6%89%A9%E5%B1%95"><span class="nav-number">1.8.</span> <span class="nav-text">进阶扩展</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/29/vps/VPS%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="VPS配置 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VPS配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-29 06:00:01" itemprop="dateCreated datePublished" datetime="2025-03-29T06:00:01+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-29 06:00:01" itemprop="dateModified" datetime="2025-03-29T06:00:01+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vps/" itemprop="url" rel="index"><span itemprop="name">vps</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>AI 生成</p>
+<h1 id="VPS基础配置指南"><a href="#VPS基础配置指南" class="headerlink" title="VPS基础配置指南"></a>VPS基础配置指南</h1><p>本文介绍VPS服务器的基础配置，包括用户管理、安全加固、服务管理和代理设置。</p>
+<span id="more"></span>
+<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><h3 id="添加新用户"><a href="#添加新用户" class="headerlink" title="添加新用户"></a>添加新用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建新用户</span></span><br><span class="line">adduser username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用useradd（需手动设置更多参数）</span></span><br><span class="line">useradd -m -s /bin/bash username</span><br><span class="line">passwd username</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户权限管理"><a href="#用户权限管理" class="headerlink" title="用户权限管理"></a>用户权限管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将用户添加到sudo组</span></span><br><span class="line">usermod -aG <span class="built_in">sudo</span> username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或在CentOS中添加到wheel组</span></span><br><span class="line">usermod -aG wheel username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑sudoers文件</span></span><br><span class="line">visudo</span><br><span class="line"><span class="comment"># 添加: username ALL=(ALL:ALL) ALL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改自己的密码</span></span><br><span class="line">passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改其他用户密码（需要root权限）</span></span><br><span class="line">passwd username</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置软件源"><a href="#配置软件源" class="headerlink" title="配置软件源"></a>配置软件源</h2><p>软件源是系统获取软件包的地址，配置合适的软件源可以加快软件安装和更新速度。</p>
+<h3 id="Ubuntu-Debian软件源配置"><a href="#Ubuntu-Debian软件源配置" class="headerlink" title="Ubuntu&#x2F;Debian软件源配置"></a>Ubuntu&#x2F;Debian软件源配置</h3><p>Ubuntu&#x2F;Debian的软件源配置文件位于<code>/etc/apt/sources.list</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份原配置</span></span><br><span class="line"><span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑源配置文件</span></span><br><span class="line">vim /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<h4 id="Ubuntu-22-04（Jammy）阿里云源示例"><a href="#Ubuntu-22-04（Jammy）阿里云源示例" class="headerlink" title="Ubuntu 22.04（Jammy）阿里云源示例"></a>Ubuntu 22.04（Jammy）阿里云源示例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<h4 id="Debian-12（Bookworm）清华源示例"><a href="#Debian-12（Bookworm）清华源示例" class="headerlink" title="Debian 12（Bookworm）清华源示例"></a>Debian 12（Bookworm）清华源示例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware</span><br></pre></td></tr></table></figure>
+
+<p>更新软件包列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade</span><br></pre></td></tr></table></figure>
+
+<h3 id="CentOS-RHEL软件源配置"><a href="#CentOS-RHEL软件源配置" class="headerlink" title="CentOS&#x2F;RHEL软件源配置"></a>CentOS&#x2F;RHEL软件源配置</h3><h4 id="CentOS-7-阿里云源"><a href="#CentOS-7-阿里云源" class="headerlink" title="CentOS 7 阿里云源"></a>CentOS 7 阿里云源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份原repo文件</span></span><br><span class="line"><span class="built_in">mv</span> /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载阿里云repo文件</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除并重建缓存</span></span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+
+<h4 id="CentOS-8-Stream-RHEL-8-源配置"><a href="#CentOS-8-Stream-RHEL-8-源配置" class="headerlink" title="CentOS 8 Stream&#x2F;RHEL 8 源配置"></a>CentOS 8 Stream&#x2F;RHEL 8 源配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 备份原配置</span></span><br><span class="line"><span class="built_in">mv</span> /etc/yum.repos.d/CentOS-Stream-BaseOS.repo /etc/yum.repos.d/CentOS-Stream-BaseOS.repo.backup</span><br><span class="line"><span class="built_in">mv</span> /etc/yum.repos.d/CentOS-Stream-AppStream.repo /etc/yum.repos.d/CentOS-Stream-AppStream.repo.backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载新的repo文件</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Stream-BaseOS.repo https://mirrors.aliyun.com/repo/CentOS-Stream-8-BaseOS.repo</span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Stream-AppStream.repo https://mirrors.aliyun.com/repo/CentOS-Stream-8-AppStream.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新缓存</span></span><br><span class="line">dnf clean all</span><br><span class="line">dnf makecache</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用镜像源列表"><a href="#常用镜像源列表" class="headerlink" title="常用镜像源列表"></a>常用镜像源列表</h3><table>
+<thead>
+<tr>
+<th>国家&#x2F;地区</th>
+<th>镜像源名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中国大陆</td>
+<td>阿里云</td>
+<td>mirrors.aliyun.com</td>
+</tr>
+<tr>
+<td>中国大陆</td>
+<td>清华源</td>
+<td>mirrors.tuna.tsinghua.edu.cn</td>
+</tr>
+<tr>
+<td>中国大陆</td>
+<td>中科大</td>
+<td>mirrors.ustc.edu.cn</td>
+</tr>
+<tr>
+<td>国际</td>
+<td>官方源</td>
+<td>archive.ubuntu.com (Ubuntu) &#x2F; deb.debian.org (Debian)</td>
+</tr>
+</tbody></table>
+<h3 id="自动选择最快的镜像源"><a href="#自动选择最快的镜像源" class="headerlink" title="自动选择最快的镜像源"></a>自动选择最快的镜像源</h3><h4 id="Ubuntu-Debian"><a href="#Ubuntu-Debian" class="headerlink" title="Ubuntu&#x2F;Debian"></a>Ubuntu&#x2F;Debian</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装netselect-apt</span></span><br><span class="line">apt install netselect-apt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动选择最快的源并生成sources.list</span></span><br><span class="line">netselect-apt -n -o /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<h4 id="CentOS-RHEL"><a href="#CentOS-RHEL" class="headerlink" title="CentOS&#x2F;RHEL"></a>CentOS&#x2F;RHEL</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装yum-plugin-fastestmirror</span></span><br><span class="line">yum install yum-plugin-fastestmirror</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用插件，编辑/etc/yum/pluginconf.d/fastestmirror.conf</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;enabled=1&quot;</span> &gt; /etc/yum/pluginconf.d/fastestmirror.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除缓存</span></span><br><span class="line">yum clean all</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件权限管理"><a href="#文件权限管理" class="headerlink" title="文件权限管理"></a>文件权限管理</h2><h3 id="基本权限命令"><a href="#基本权限命令" class="headerlink" title="基本权限命令"></a>基本权限命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更改文件所有者</span></span><br><span class="line"><span class="built_in">chown</span> user:group filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归更改目录及其内容的所有者</span></span><br><span class="line"><span class="built_in">chown</span> -R user:group directory</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更改文件权限</span></span><br><span class="line"><span class="built_in">chmod</span> 755 filename  <span class="comment"># rwxr-xr-x</span></span><br><span class="line"><span class="built_in">chmod</span> 644 filename  <span class="comment"># rw-r--r--</span></span><br><span class="line"><span class="built_in">chmod</span> 600 filename  <span class="comment"># rw-------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归更改目录权限</span></span><br><span class="line"><span class="built_in">chmod</span> -R 755 directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="重要文件的推荐权限"><a href="#重要文件的推荐权限" class="headerlink" title="重要文件的推荐权限"></a>重要文件的推荐权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSH密钥</span></span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/id_rsa</span><br><span class="line"><span class="built_in">chmod</span> 644 ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="built_in">chmod</span> 644 ~/.ssh/authorized_keys</span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 网站目录（假设用户是www-data）</span></span><br><span class="line"><span class="built_in">chown</span> -R www-data:www-data /var/www/html</span><br><span class="line"><span class="built_in">chmod</span> -R 755 /var/www/html</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSH安全配置"><a href="#SSH安全配置" class="headerlink" title="SSH安全配置"></a>SSH安全配置</h2><h3 id="修改SSH端口"><a href="#修改SSH端口" class="headerlink" title="修改SSH端口"></a>修改SSH端口</h3><p>编辑<code>/etc/ssh/sshd_config</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用vim编辑</span></span><br><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到并修改端口</span></span><br><span class="line"><span class="comment"># Port 22</span></span><br><span class="line">Port 2222  <span class="comment"># 改为非标准端口</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存后重启SSH服务</span></span><br><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁用root登录"><a href="#禁用root登录" class="headerlink" title="禁用root登录"></a>禁用root登录</h3><p>编辑<code>/etc/ssh/sshd_config</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到并修改</span></span><br><span class="line">PermitRootLogin no</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只允许特定用户登录</span></span><br><span class="line">AllowUsers username1 username2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用密钥认证</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存后重启SSH服务</span></span><br><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置SSH密钥登录"><a href="#设置SSH密钥登录" class="headerlink" title="设置SSH密钥登录"></a>设置SSH密钥登录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在本地生成密钥对</span></span><br><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将公钥上传到服务器</span></span><br><span class="line">ssh-copy-id -i ~/.ssh/id_ed25519.pub username@server_ip</span><br><span class="line"><span class="comment"># 或手动添加到authorized_keys</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub | ssh username@server_ip <span class="string">&quot;mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><h3 id="systemd服务管理"><a href="#systemd服务管理" class="headerlink" title="systemd服务管理"></a>systemd服务管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">systemctl start service-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">systemctl stop service-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line">systemctl restart service-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看服务状态</span></span><br><span class="line">systemctl status service-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> service-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用开机启动</span></span><br><span class="line">systemctl <span class="built_in">disable</span> service-name</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看服务日志"><a href="#查看服务日志" class="headerlink" title="查看服务日志"></a>查看服务日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看服务日志</span></span><br><span class="line">journalctl -u service-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看最近的日志</span></span><br><span class="line">journalctl -u service-name -n 100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时查看日志</span></span><br><span class="line">journalctl -u service-name -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看特定时间段的日志</span></span><br><span class="line">journalctl -u service-name --since <span class="string">&quot;2023-01-01&quot;</span> --<span class="keyword">until</span> <span class="string">&quot;2023-01-02 03:00&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建自定义systemd服务"><a href="#创建自定义systemd服务" class="headerlink" title="创建自定义systemd服务"></a>创建自定义systemd服务</h3><p>创建文件 <code>/etc/systemd/system/myapp.service</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=My Custom Application</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=simple</span><br><span class="line"><span class="attr">User</span>=myuser</span><br><span class="line"><span class="attr">WorkingDirectory</span>=/opt/myapp</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/bin/python3 /opt/myapp/app.py</span><br><span class="line"><span class="attr">Restart</span>=<span class="literal">on</span>-failure</span><br><span class="line"><span class="attr">RestartSec</span>=<span class="number">5</span></span><br><span class="line"><span class="attr">StandardOutput</span>=syslog</span><br><span class="line"><span class="attr">StandardError</span>=syslog</span><br><span class="line"><span class="attr">SyslogIdentifier</span>=myapp</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>启用并启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> myapp</span><br><span class="line">systemctl start myapp</span><br></pre></td></tr></table></figure>
+
+<h2 id="代理服务配置"><a href="#代理服务配置" class="headerlink" title="代理服务配置"></a>代理服务配置</h2><h3 id="1-简单HTTP代理-Squid"><a href="#1-简单HTTP代理-Squid" class="headerlink" title="1. 简单HTTP代理 - Squid"></a>1. 简单HTTP代理 - Squid</h3><p>安装Squid：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line">apt update</span><br><span class="line">apt install squid</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS/RHEL</span></span><br><span class="line">yum install squid</span><br></pre></td></tr></table></figure>
+
+<p>基本配置 (<code>/etc/squid/squid.conf</code>)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 设置允许访问的网络</span><br><span class="line">acl localnet src 192.168.1.0/24</span><br><span class="line">http_access allow localnet</span><br><span class="line">http_access allow localhost</span><br><span class="line">http_access deny all</span><br><span class="line"></span><br><span class="line"># 设置监听端口</span><br><span class="line">http_port 3128</span><br><span class="line"></span><br><span class="line"># 保存并重启</span><br><span class="line">systemctl restart squid</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Shadowsocks代理"><a href="#2-Shadowsocks代理" class="headerlink" title="2. Shadowsocks代理"></a>2. Shadowsocks代理</h3><p>安装Shadowsocks：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用pip安装</span></span><br><span class="line">pip install shadowsocks</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用包管理器</span></span><br><span class="line">apt install shadowsocks-libev  <span class="comment"># Debian/Ubuntu</span></span><br></pre></td></tr></table></figure>
+
+<p>创建配置文件 <code>/etc/shadowsocks.json</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;server&quot;</span><span class="punctuation">:</span><span class="string">&quot;0.0.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;server_port&quot;</span><span class="punctuation">:</span><span class="number">8388</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span><span class="string">&quot;your_password&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;timeout&quot;</span><span class="punctuation">:</span><span class="number">300</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span><span class="string">&quot;aes-256-gcm&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;fast_open&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>创建systemd服务 <code>/etc/systemd/system/shadowsocks.service</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Shadowsocks Server</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=simple</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/bin/ssserver -c /etc/shadowsocks.json</span><br><span class="line"><span class="attr">Restart</span>=<span class="literal">on</span>-failure</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> shadowsocks</span><br><span class="line">systemctl start shadowsocks</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-V2Ray代理"><a href="#3-V2Ray代理" class="headerlink" title="3. V2Ray代理"></a>3. V2Ray代理</h3><p><a href="../vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B.md">详细配置请参考《V2Ray配置教程》</a></p>
+<h2 id="基本安全加固"><a href="#基本安全加固" class="headerlink" title="基本安全加固"></a>基本安全加固</h2><h3 id="防火墙配置-UFW"><a href="#防火墙配置-UFW" class="headerlink" title="防火墙配置 (UFW)"></a>防火墙配置 (UFW)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装UFW</span></span><br><span class="line">apt install ufw</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认拒绝入站，允许出站</span></span><br><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许SSH（假设SSH端口已更改为2222）</span></span><br><span class="line">ufw allow 2222/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许Web服务</span></span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用防火墙</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<h3 id="防火墙配置-firewalld"><a href="#防火墙配置-firewalld" class="headerlink" title="防火墙配置 (firewalld)"></a>防火墙配置 (firewalld)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装firewalld（CentOS/RHEL常用）</span></span><br><span class="line">yum install firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动并设置开机启动</span></span><br><span class="line">systemctl start firewalld</span><br><span class="line">systemctl <span class="built_in">enable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加服务或端口</span></span><br><span class="line">firewall-cmd --permanent --add-service=http</span><br><span class="line">firewall-cmd --permanent --add-service=https</span><br><span class="line">firewall-cmd --permanent --add-port=2222/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除默认的SSH服务（如果已更改SSH端口）</span></span><br><span class="line">firewall-cmd --permanent --remove-service=ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载配置</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动安全更新"><a href="#自动安全更新" class="headerlink" title="自动安全更新"></a>自动安全更新</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line">apt install unattended-upgrades</span><br><span class="line">dpkg-reconfigure unattended-upgrades</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS/RHEL</span></span><br><span class="line">yum install yum-cron</span><br><span class="line">systemctl <span class="built_in">enable</span> yum-cron</span><br><span class="line">systemctl start yum-cron</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶扩展"><a href="#进阶扩展" class="headerlink" title="进阶扩展"></a>进阶扩展</h2><ul>
+<li><a href="../linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md">Linux用户权限进阶</a></li>
+<li><a href="../linux/SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE.md">SSH安全最佳实践</a></li>
+<li><a href="../linux/Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE.md">防火墙高级配置</a></li>
+<li><a href="../vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B.md">V2Ray配置教程</a></li>
+<li><a href="../vps/%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE.md">网站服务器配置</a></li>
+</ul>
+<p>本文只涵盖了VPS配置的基础内容，更多高级主题请参考上述链接的专门文章。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/vps/" rel="tag"># vps</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/server/" rel="tag"># server</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/29/vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" rel="prev" title="V2Ray配置教程">
+                  <i class="fa fa-angle-left"></i> V2Ray配置教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/29/%E6%95%99%E7%A8%8B/Next%E4%B8%BB%E9%A2%98%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="next" title="Next主题使用指南">
+                  Next主题使用指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hexo博客GitHub部署与源码管理完全指南本文详细介绍如何将Hexo博客部署到GitHub Pages，如何管理博客源码，以及解决常见的部署问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo博客GitHub部署与源码管理完全指南">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/29/%E6%95%99%E7%A8%8B/Hexo%E5%8D%9A%E5%AE%A2GitHub%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="Hexo博客GitHub部署与源码管理完全指南本文详细介绍如何将Hexo博客部署到GitHub Pages，如何管理博客源码，以及解决常见的部署问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-29T11:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-29T11:00:00.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="博客部署">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/29/%E6%95%99%E7%A8%8B/Hexo%E5%8D%9A%E5%AE%A2GitHub%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/29/%E6%95%99%E7%A8%8B/Hexo%E5%8D%9A%E5%AE%A2GitHub%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/","path":"2025/03/29/教程/Hexo博客GitHub部署指南/","title":"Hexo博客GitHub部署与源码管理完全指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo博客GitHub部署与源码管理完全指南 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo%E5%8D%9A%E5%AE%A2GitHub%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%BA%90%E7%A0%81%E7%AE%A1%E7%90%86%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">Hexo博客GitHub部署与源码管理完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%83%A8%E7%BD%B2Hexo%E5%8D%9A%E5%AE%A2%E5%88%B0GitHub-Pages"><span class="nav-number">1.1.</span> <span class="nav-text">一、部署Hexo博客到GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%E6%8F%92%E4%BB%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 安装部署插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E9%83%A8%E7%BD%B2%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 配置部署信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%89%A7%E8%A1%8C%E9%83%A8%E7%BD%B2%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 执行部署命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%88%9B%E5%BB%BA%E7%8B%AC%E7%AB%8B%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E5%8D%9A%E5%AE%A2%E6%BA%90%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">二、创建独立仓库管理博客源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8GitHub%E4%B8%8A%E5%88%9B%E5%BB%BA%E6%96%B0%E4%BB%93%E5%BA%93"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 在GitHub上创建新仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0Git%E4%BB%93%E5%BA%93"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 配置本地Git仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%97%A5%E5%B8%B8%E6%9B%B4%E6%96%B0%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 日常更新流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%86%B3GitHub%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">三、解决GitHub连接问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8SSH%E6%96%B9%E5%BC%8F%E9%83%A8%E7%BD%B2"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 使用SSH方式部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AEGit%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 配置Git代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 手动部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 错误排查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">四、多设备同步使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8%E6%96%B0%E8%AE%BE%E5%A4%87%E4%B8%8A%E5%85%8B%E9%9A%86%E6%BA%90%E7%A0%81%E4%BB%93%E5%BA%93"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 在新设备上克隆源码仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E7%AB%A0%E5%92%8C%E4%BF%AE%E6%94%B9"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 创建新文章和修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%8E%A8%E9%80%81%E6%9B%B4%E6%94%B9%E5%92%8C%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. 推送更改和部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.5.</span> <span class="nav-text">五、常见问题与解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%83%A8%E7%BD%B2%E5%90%8E%E7%BD%91%E7%AB%99%E6%B2%A1%E6%9C%89%E6%9B%B4%E6%96%B0"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 部署后网站没有更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BB%E9%A2%98%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 主题无法显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 图片显示问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/29/%E6%95%99%E7%A8%8B/Hexo%E5%8D%9A%E5%AE%A2GitHub%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo博客GitHub部署与源码管理完全指南 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo博客GitHub部署与源码管理完全指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-29 19:00:00" itemprop="dateCreated datePublished" datetime="2025-03-29T19:00:00+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-29 19:00:00" itemprop="dateModified" datetime="2025-03-29T19:00:00+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Hexo博客GitHub部署与源码管理完全指南"><a href="#Hexo博客GitHub部署与源码管理完全指南" class="headerlink" title="Hexo博客GitHub部署与源码管理完全指南"></a>Hexo博客GitHub部署与源码管理完全指南</h1><p>本文详细介绍如何将Hexo博客部署到GitHub Pages，如何管理博客源码，以及解决常见的部署问题。</p>
+<span id="more"></span>
+
+<h2 id="一、部署Hexo博客到GitHub-Pages"><a href="#一、部署Hexo博客到GitHub-Pages" class="headerlink" title="一、部署Hexo博客到GitHub Pages"></a>一、部署Hexo博客到GitHub Pages</h2><h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><p>在部署之前，确保你已经：</p>
+<ul>
+<li>安装了Node.js、Git和Hexo</li>
+<li>已经初始化了Hexo博客</li>
+<li>在GitHub上创建了名为<code>username.github.io</code>的仓库（用你的GitHub用户名替换username）</li>
+</ul>
+<h3 id="2-安装部署插件"><a href="#2-安装部署插件" class="headerlink" title="2. 安装部署插件"></a>2. 安装部署插件</h3><p>Hexo提供了方便的Git部署插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-配置部署信息"><a href="#3-配置部署信息" class="headerlink" title="3. 配置部署信息"></a>3. 配置部署信息</h3><p>修改Hexo根目录下的<code>_config.yml</code>文件，找到并编辑<code>deploy</code>部分：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/username/username.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>记得将<code>username</code>替换为你的GitHub用户名。</p>
+<h3 id="4-执行部署命令"><a href="#4-执行部署命令" class="headerlink" title="4. 执行部署命令"></a>4. 执行部署命令</h3><p>使用以下命令部署博客：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>或者使用简写形式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>执行后，Hexo会将生成的静态文件推送到你的GitHub仓库。</p>
+<h2 id="二、创建独立仓库管理博客源码"><a href="#二、创建独立仓库管理博客源码" class="headerlink" title="二、创建独立仓库管理博客源码"></a>二、创建独立仓库管理博客源码</h2><p>当你部署Hexo到GitHub Pages时，默认只会上传编译后的静态文件（在<code>public</code>目录中）。为了管理和备份完整的博客源码，我们需要创建一个独立的仓库。</p>
+<h3 id="1-在GitHub上创建新仓库"><a href="#1-在GitHub上创建新仓库" class="headerlink" title="1. 在GitHub上创建新仓库"></a>1. 在GitHub上创建新仓库</h3><ol>
+<li>登录GitHub</li>
+<li>点击右上角”+”图标 → “New repository”</li>
+<li>设置仓库名称，如<code>hexo_next_blog</code></li>
+<li>添加描述（可选）：”Hexo博客源码”</li>
+<li>选择公开或私有（推荐设为私有以保护源码）</li>
+<li>不要初始化仓库（不添加README、.gitignore等）</li>
+<li>点击”Create repository”创建仓库</li>
+</ol>
+<h3 id="2-配置本地Git仓库"><a href="#2-配置本地Git仓库" class="headerlink" title="2. 配置本地Git仓库"></a>2. 配置本地Git仓库</h3><p>在本地博客根目录下执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化Git仓库（如果尚未初始化）</span></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建适当的.gitignore文件</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;public/&quot;</span> &gt;&gt; .gitignore</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;db.json&quot;</span> &gt;&gt; .gitignore</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;.deploy_git/&quot;</span> &gt;&gt; .gitignore</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;node_modules/&quot;</span> &gt;&gt; .gitignore</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加所有文件到暂存区</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交更改</span></span><br><span class="line">git commit -m <span class="string">&quot;初始化博客源码&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加远程仓库（替换username为你的GitHub用户名）</span></span><br><span class="line">git remote add origin https://github.com/username/hexo_next_blog.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送到GitHub</span></span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<p>执行完成后，你的完整博客源码就备份到了GitHub上。</p>
+<h3 id="3-日常更新流程"><a href="#3-日常更新流程" class="headerlink" title="3. 日常更新流程"></a>3. 日常更新流程</h3><p>每次修改博客后，使用以下步骤更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 保存源码更改</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;更新博客内容：[简短描述]&quot;</span></span><br><span class="line">git push origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 部署博客到GitHub Pages</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>这样，你既更新了源码备份，又部署了最新版本的博客。</p>
+<h2 id="三、解决GitHub连接问题"><a href="#三、解决GitHub连接问题" class="headerlink" title="三、解决GitHub连接问题"></a>三、解决GitHub连接问题</h2><p>在部署过程中，经常会遇到无法连接GitHub的问题，特别是在某些网络环境下。以下是常见解决方案：</p>
+<h3 id="1-使用SSH方式部署"><a href="#1-使用SSH方式部署" class="headerlink" title="1. 使用SSH方式部署"></a>1. 使用SSH方式部署</h3><p>SSH方式通常比HTTPS更稳定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 生成SSH密钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;你的邮箱地址&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 查看并复制公钥</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="comment"># Windows下可使用：</span></span><br><span class="line"><span class="comment"># type C:\Users\用户名\.ssh\id_rsa.pub</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 将公钥添加到GitHub账户</span></span><br><span class="line"><span class="comment"># GitHub网站 → Settings → SSH and GPG keys → New SSH key</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 修改_config.yml中的仓库地址</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置Git代理"><a href="#2-配置Git代理" class="headerlink" title="2. 配置Git代理"></a>2. 配置Git代理</h3><p>如果你有代理工具（如Clash、V2Ray等）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置HTTP代理</span></span><br><span class="line">git config --global http.proxy http://127.0.0.1:端口号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置HTTPS代理</span></span><br><span class="line">git config --global https.proxy http://127.0.0.1:端口号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如需取消代理设置</span></span><br><span class="line">git config --global --<span class="built_in">unset</span> http.proxy</span><br><span class="line">git config --global --<span class="built_in">unset</span> https.proxy</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-手动部署"><a href="#3-手动部署" class="headerlink" title="3. 手动部署"></a>3. 手动部署</h3><p>如果自动部署持续失败，可以尝试手动部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 生成静态文件</span></span><br><span class="line">hexo generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 手动克隆GitHub Pages仓库到另一个目录</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/username/username.github.io.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 复制public目录中的所有文件到克隆的仓库中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 在仓库目录中执行</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;手动部署网站&quot;</span></span><br><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-错误排查"><a href="#4-错误排查" class="headerlink" title="4. 错误排查"></a>4. 错误排查</h3><p>如果遇到”Error: Spawn failed”等错误：</p>
+<ul>
+<li>检查网络连接</li>
+<li>验证Git是否正确安装并在PATH中</li>
+<li>检查GitHub认证是否有效（可能需要使用个人访问令牌替代密码）</li>
+<li>检查防火墙设置</li>
+</ul>
+<h2 id="四、多设备同步使用"><a href="#四、多设备同步使用" class="headerlink" title="四、多设备同步使用"></a>四、多设备同步使用</h2><p>如何在多台电脑上同步使用你的Hexo博客？</p>
+<h3 id="1-在新设备上克隆源码仓库"><a href="#1-在新设备上克隆源码仓库" class="headerlink" title="1. 在新设备上克隆源码仓库"></a>1. 在新设备上克隆源码仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 克隆你的源码仓库</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/username/hexo_next_blog.git</span><br><span class="line"><span class="built_in">cd</span> hexo_next_blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装所有依赖</span></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建新文章和修改"><a href="#2-创建新文章和修改" class="headerlink" title="2. 创建新文章和修改"></a>2. 创建新文章和修改</h3><p>正常使用Hexo命令创建和编辑文章：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;新文章标题&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-推送更改和部署"><a href="#3-推送更改和部署" class="headerlink" title="3. 推送更改和部署"></a>3. 推送更改和部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提交源码更改</span></span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;更新：添加新文章&quot;</span></span><br><span class="line">git push origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署到GitHub Pages</span></span><br><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、常见问题与解决方案"><a href="#五、常见问题与解决方案" class="headerlink" title="五、常见问题与解决方案"></a>五、常见问题与解决方案</h2><h3 id="1-部署后网站没有更新"><a href="#1-部署后网站没有更新" class="headerlink" title="1. 部署后网站没有更新"></a>1. 部署后网站没有更新</h3><ul>
+<li>检查<code>.deploy_git</code>目录是否存在并包含最新内容</li>
+<li>确认部署配置中的仓库和分支是否正确</li>
+<li>尝试清除缓存：<code>hexo clean</code></li>
+</ul>
+<h3 id="2-主题无法显示"><a href="#2-主题无法显示" class="headerlink" title="2. 主题无法显示"></a>2. 主题无法显示</h3><ul>
+<li>检查主题是否正确安装</li>
+<li>如果使用Git子模块方式安装主题，确保源码仓库也包含子模块</li>
+<li>检查<code>_config.yml</code>中的主题设置</li>
+</ul>
+<h3 id="3-图片显示问题"><a href="#3-图片显示问题" class="headerlink" title="3. 图片显示问题"></a>3. 图片显示问题</h3><ul>
+<li>考虑使用相对路径引用图片</li>
+<li>使用<code>hexo-asset-image</code>插件管理图片</li>
+<li>将图片放在<code>source/images</code>目录下使用绝对路径引用</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过本文的指南，你应该能够顺利地：</p>
+<ol>
+<li>将Hexo博客部署到GitHub Pages</li>
+<li>使用独立仓库管理博客源码</li>
+<li>解决常见的GitHub连接问题</li>
+<li>在多台设备上同步使用博客</li>
+</ol>
+<p>这种双仓库管理方式（一个仓库存放部署文件，一个仓库存放源码）是目前最流行的Hexo博客管理方法，它既保证了网站的稳定运行，又保障了源码的安全备份。 </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/" rel="tag"># 博客部署</a>
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/29/AI/AI%E7%94%9F%E6%88%90%E6%96%87%E7%AB%A0%E8%A7%84%E8%8C%83/" rel="prev" title="AI生成文章规范指南">
+                  <i class="fa fa-angle-left"></i> AI生成文章规范指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/31/%E6%95%99%E7%A8%8B/git%E5%90%88%E5%B9%B6%E6%95%99%E7%A8%8B/" rel="next" title="git合并教程">
+                  git合并教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

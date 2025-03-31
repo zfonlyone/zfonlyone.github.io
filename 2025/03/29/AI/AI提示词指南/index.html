@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AI提示词完全指南本文详细介绍AI提示词(Prompt)的编写技巧、常用模板以及在Cursor等开发工具中的规范用法，帮助你更高效地与AI模型交互。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI提示词完全指南">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/29/AI/AI%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="AI提示词完全指南本文详细介绍AI提示词(Prompt)的编写技巧、常用模板以及在Cursor等开发工具中的规范用法，帮助你更高效地与AI模型交互。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-29T10:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-29T10:00:00.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="提示词">
+<meta property="article:tag" content="Prompt">
+<meta property="article:tag" content="Cursor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/29/AI/AI%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8C%87%E5%8D%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/29/AI/AI%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8C%87%E5%8D%97/","path":"2025/03/29/AI/AI提示词指南/","title":"AI提示词完全指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AI提示词完全指南 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AI%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">AI提示词完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.1.</span> <span class="nav-text">提示词基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8F%90%E7%A4%BA%E8%AF%8D-Prompt"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是提示词(Prompt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.2.</span> <span class="nav-text">提示词工程的核心原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.</span> <span class="nav-text">常用提示词模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C%E7%B1%BB"><span class="nav-number">1.2.1.</span> <span class="nav-text">内容创作类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%92%B0%E5%86%99%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">文章撰写模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E6%84%8F%E6%95%85%E4%BA%8B%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">创意故事模板</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91%E7%B1%BB"><span class="nav-number">1.2.2.</span> <span class="nav-text">技术开发类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">代码实现模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">代码优化模板</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/29/AI/AI%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AI提示词完全指南 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI提示词完全指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-29 18:00:00" itemprop="dateCreated datePublished" datetime="2025-03-29T18:00:00+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-29 18:00:00" itemprop="dateModified" datetime="2025-03-29T18:00:00+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="AI提示词完全指南"><a href="#AI提示词完全指南" class="headerlink" title="AI提示词完全指南"></a>AI提示词完全指南</h1><p>本文详细介绍AI提示词(Prompt)的编写技巧、常用模板以及在Cursor等开发工具中的规范用法，帮助你更高效地与AI模型交互。</p>
+<span id="more"></span>
+
+<h2 id="提示词基础知识"><a href="#提示词基础知识" class="headerlink" title="提示词基础知识"></a>提示词基础知识</h2><h3 id="什么是提示词-Prompt"><a href="#什么是提示词-Prompt" class="headerlink" title="什么是提示词(Prompt)"></a>什么是提示词(Prompt)</h3><p>提示词是我们与AI模型交流的指令，通过精心设计的提示词，可以引导AI完成特定任务。好的提示词能显著提高AI输出的质量和相关性。</p>
+<h3 id="提示词工程的核心原则"><a href="#提示词工程的核心原则" class="headerlink" title="提示词工程的核心原则"></a>提示词工程的核心原则</h3><ol>
+<li><strong>明确性</strong>: 清晰表达你的需求和预期</li>
+<li><strong>具体性</strong>: 提供具体的上下文和约束</li>
+<li><strong>结构化</strong>: 采用易于理解的结构</li>
+<li><strong>迭代优化</strong>: 根据结果不断调整提示词</li>
+</ol>
+<h2 id="常用提示词模板"><a href="#常用提示词模板" class="headerlink" title="常用提示词模板"></a>常用提示词模板</h2><h3 id="内容创作类"><a href="#内容创作类" class="headerlink" title="内容创作类"></a>内容创作类</h3><h4 id="文章撰写模板"><a href="#文章撰写模板" class="headerlink" title="文章撰写模板"></a>文章撰写模板</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">请以[专家身份]撰写一篇关于[主题]的文章，包含以下部分:</span><br><span class="line">1. 引言：介绍[主题]的重要性和相关背景</span><br><span class="line">2. [小标题1]：详细探讨[方面1]</span><br><span class="line">3. [小标题2]：详细探讨[方面2]</span><br><span class="line">4. [小标题3]：详细探讨[方面3]</span><br><span class="line">5. 结论：总结要点并提供未来展望</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">- 使用[专业/通俗]的语言风格</span><br><span class="line">- 文章长度约[字数]字</span><br><span class="line">- 引用可靠的信息来源</span><br><span class="line">- 加入实用的例子和数据支持观点</span><br></pre></td></tr></table></figure>
+
+<h4 id="创意故事模板"><a href="#创意故事模板" class="headerlink" title="创意故事模板"></a>创意故事模板</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">请创作一个[题材类型]的短篇故事，具有以下元素:</span><br><span class="line">- 主角: [角色描述]</span><br><span class="line">- 背景设定: [时间和地点]</span><br><span class="line">- 核心冲突: [冲突描述]</span><br><span class="line">- 故事风格: [风格要求]</span><br><span class="line">- 故事长度: 约[字数]字</span><br><span class="line"></span><br><span class="line">请保持故事情节连贯，包含起承转合，并在结尾处提供一个[意外转折/温馨结局/开放式结局]。</span><br></pre></td></tr></table></figure>
+
+<h3 id="技术开发类"><a href="#技术开发类" class="headerlink" title="技术开发类"></a>技术开发类</h3><h4 id="代码实现模板"><a href="#代码实现模板" class="headerlink" title="代码实现模板"></a>代码实现模板</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请帮我使用[编程语言]实现[功能描述]。需求如下：</span><br><span class="line">1. 输入: [描述输入格式和范围]</span><br><span class="line">2. 输出: [描述期望的输出]</span><br><span class="line">3. 约束条件: [描述时间/空间复杂度要求]</span><br><span class="line">4. 额外要求: [其他任何特殊要求]</span><br><span class="line"></span><br><span class="line">请提供完整的代码实现，并解释关键部分的设计思路。也请提供一个使用示例。</span><br></pre></td></tr></table></figure>
+
+<h4 id="代码优化模板"><a href="#代码优化模板" class="headerlink" title="代码优化模板"></a>代码优化模板</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">请帮我优化以下代码:</span><br><span class="line"></span><br><span class="line">```[编程语言]</span><br><span class="line">[此处粘贴你的代码]</span><br></pre></td></tr></table></figure>
+
+<p>优化目标:</p>
+<ol>
+<li>提高性能</li>
+<li>增强可读性</li>
+<li>改进代码结构</li>
+<li>遵循[语言]的最佳实践</li>
+</ol>
+<p>请解释你的优化思路和具体改动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 分析评估类</span><br><span class="line"></span><br><span class="line">#### 问题分析模板</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请对[问题描述]进行深入分析，内容应包括：</p>
+<ol>
+<li>问题的根本原因</li>
+<li>可能的解决方案（至少3种）</li>
+<li>每种解决方案的优缺点对比</li>
+<li>推荐方案及实施建议</li>
+</ol>
+<p>请基于[专业领域]知识，给出详细的分析和可操作的建议。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 产品评估模板</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请对[产品名称]进行全面评估，从以下方面：</p>
+<ol>
+<li>产品优势和创新点</li>
+<li>存在的问题和局限性</li>
+<li>与竞品的比较分析</li>
+<li>适用人群和场景</li>
+<li>改进建议</li>
+</ol>
+<p>评估应当客观公正，基于事实和数据，避免主观偏见。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Cursor专用提示词规范</span><br><span class="line"></span><br><span class="line">[Cursor](https://cursor.sh/)是一款基于AI的代码编辑器，针对它的特性，可以使用以下特定提示词格式获得最佳效果。</span><br><span class="line"></span><br><span class="line">### 项目开发规范提示词</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>根据我的描述先列出详细计划，然后给出执行步骤计划，软件开发规范，所有文件保存为md文件，完成后开始按步骤进行，每执行完一项任务更新当前全部任务进度，如果任务意外终止后继续任务读取任务进度，从上一次成功执行的记录点恢复，继续任务。</p>
+<p>[在这里描述你的项目需求]</p>
+<p>请按照以下规范进行开发：</p>
+<ol>
+<li>代码架构: [MVC&#x2F;MVVM等]</li>
+<li>文件命名: [命名规则]</li>
+<li>代码风格: [编码风格]</li>
+<li>注释要求: [注释规范]</li>
+<li>测试要求: [测试规范]</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 代码生成提示词</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请帮我生成[功能描述]的完整代码。</p>
+<p>技术要求：</p>
+<ul>
+<li>语言：[编程语言]</li>
+<li>框架：[框架名称]</li>
+<li>版本：[版本号]</li>
+<li>依赖项：[主要依赖]</li>
+</ul>
+<p>功能细节：</p>
+<ol>
+<li>[功能点1]</li>
+<li>[功能点2]</li>
+<li>[功能点3]</li>
+</ol>
+<p>代码结构需包含：</p>
+<ul>
+<li>合理的错误处理</li>
+<li>清晰的注释</li>
+<li>遵循[编码规范]</li>
+<li>考虑[性能&#x2F;安全&#x2F;可扩展性]因素</li>
+</ul>
+<p>生成代码后，请简要解释核心实现原理。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 代码修复提示词</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>以下代码存在问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[有问题的代码]</span><br></pre></td></tr></table></figure>
+
+<p>错误信息：<br>[错误提示&#x2F;问题描述]</p>
+<p>请帮我修复这段代码，并解释：</p>
+<ol>
+<li>问题的根本原因</li>
+<li>修复方法的原理</li>
+<li>如何避免类似问题</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### AI辅助编程步骤规划</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我需要开发[项目&#x2F;功能描述]。请帮我规划开发步骤：</p>
+<ol>
+<li>需求分析：帮我分析并明确需求要点</li>
+<li>技术选型：推荐适合的技术栈和工具</li>
+<li>架构设计：设计系统整体架构</li>
+<li>组件划分：将系统分解为可实现的组件</li>
+<li>实现步骤：按优先级列出实现步骤</li>
+<li>测试计划：制定测试策略和用例</li>
+</ol>
+<p>请基于[编程经验&#x2F;最佳实践]给出专业建议。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 高级提示词技巧</span><br><span class="line"></span><br><span class="line">### 链式思考提示词(Chain-of-Thought)</span><br><span class="line"></span><br><span class="line">通过要求AI逐步思考，获得更深入的分析：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请对[问题]进行分析。在给出最终答案前，请先：</p>
+<ol>
+<li>列出解决此问题需要考虑的所有关键因素</li>
+<li>对每个因素进行详细分析</li>
+<li>说明这些因素如何相互影响</li>
+<li>基于以上分析，逐步推导出结论</li>
+<li>最后给出清晰的总结和建议</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 角色扮演提示词</span><br><span class="line"></span><br><span class="line">让AI扮演特定角色，获得专业视角：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请以[专业角色，如资深软件架构师]的身份，评估[项目&#x2F;代码&#x2F;设计]。请考虑：</p>
+<ol>
+<li>从[专业角色]视角看，最突出的优点和问题是什么</li>
+<li>基于[专业领域]的最佳实践，应如何改进</li>
+<li>未来可能面临的挑战和应对策略</li>
+</ol>
+<p>请保持专业、批判性思维，并提供具体、可行的建议。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 对比分析提示词</span><br><span class="line"></span><br><span class="line">要求AI从多个角度进行对比：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请对[选项A]和[选项B]进行全面对比分析：</p>
+<ol>
+<li>各自的核心优势</li>
+<li>主要局限性</li>
+<li>适用场景对比</li>
+<li>成本效益分析</li>
+<li>未来发展趋势</li>
+</ol>
+<p>请使用表格形式呈现关键对比点，并在最后给出基于[具体情境]的推荐选择。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 提示词优化实践</span><br><span class="line"></span><br><span class="line">### 迭代优化法</span><br><span class="line"></span><br><span class="line">如果初始结果不理想，可以这样优化：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我对之前的回答有几点补充要求：</p>
+<ol>
+<li>请更[具体&#x2F;深入&#x2F;简洁]地说明[具体部分]</li>
+<li>关于[某点]，请提供更多[例子&#x2F;数据&#x2F;分析]</li>
+<li>请重新组织[某部分]的结构，使其更[有逻辑&#x2F;易于理解]</li>
+<li>增加对[新角度&#x2F;因素]的考虑</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 输出格式控制</span><br><span class="line"></span><br><span class="line">指定输出格式获得结构化内容：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请以下列格式回答问题[问题内容]：</p>
+<ol>
+<li>简要总结（50字以内）</li>
+<li>详细分析<br>a. [方面1]<br>b. [方面2]<br>c. [方面3]</li>
+<li>实践建议（列表形式）</li>
+<li>常见误区（列表形式）</li>
+<li>参考资源（如有）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Cursor代码开发完整流程示例</span><br><span class="line"></span><br><span class="line">以下是在Cursor中开发一个简单Web应用的完整提示词流程：</span><br><span class="line"></span><br><span class="line">### 1. 项目初始化</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我需要使用React和Node.js开发一个简单的待办事项应用。</p>
+<p>请按照以下步骤帮我规划并实施：</p>
+<ol>
+<li>列出项目结构和文件组织</li>
+<li>创建前端React应用的基础结构</li>
+<li>设计简洁的UI组件</li>
+<li>实现基本的CRUD功能</li>
+<li>创建Node.js后端API</li>
+<li>连接前后端</li>
+</ol>
+<p>请先给出完整的项目计划和文件结构，然后我们逐步实现每个部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2. 前端组件开发</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>现在请帮我实现待办事项应用的前端核心组件：</p>
+<ol>
+<li>TodoList.js - 显示所有待办事项的主组件</li>
+<li>TodoItem.js - 单个待办事项组件</li>
+<li>AddTodo.js - 添加新待办事项的表单组件</li>
+</ol>
+<p>要求：</p>
+<ul>
+<li>使用函数式组件和Hooks</li>
+<li>包含基本状态管理</li>
+<li>实现添加、标记完成、删除功能</li>
+<li>使用简洁的CSS样式</li>
+</ul>
+<p>请为每个组件提供完整代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3. 后端API实现</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请为待办事项应用实现Node.js后端API：</p>
+<ol>
+<li>设置Express服务器</li>
+<li>创建以下API端点：<ul>
+<li>GET &#x2F;api&#x2F;todos - 获取所有待办事项</li>
+<li>POST &#x2F;api&#x2F;todos - 创建新待办事项</li>
+<li>PUT &#x2F;api&#x2F;todos&#x2F;:id - 更新待办事项状态</li>
+<li>DELETE &#x2F;api&#x2F;todos&#x2F;:id - 删除待办事项</li>
+</ul>
+</li>
+<li>实现简单的内存存储（不需要数据库）</li>
+<li>添加基本的错误处理</li>
+</ol>
+<p>请提供完整的server.js文件代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 4. 前后端连接</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请帮我实现前端与后端API的连接：</p>
+<ol>
+<li>在React应用中创建api.js文件，使用fetch或axios实现API调用</li>
+<li>修改TodoList组件，从后端加载数据</li>
+<li>更新添加、更新和删除功能，使其与后端交互</li>
+<li>添加基本的加载状态和错误处理</li>
+</ol>
+<p>请提供所有需要修改的文件的代码。</p>
+<pre><code>
+## 总结
+
+掌握提示词编写技巧能极大提高与AI合作的效率。关键是要清晰表达你的需求，提供足够的上下文，并根据结果不断优化你的提示词。对于使用Cursor等开发工具的用户，采用规范化的提示词格式，可以更高效地利用AI辅助完成开发任务。
+
+记住：好的提示词是一个迭代优化的过程，通过不断实践和改进，你会逐渐找到最适合自己工作流程的提示词模式。
+
+## 参考资源
+
+- [OpenAI Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering)
+- [Cursor官方文档](https://cursor.sh/docs)
+- [Anthropic Claude Prompt Design](https://www.anthropic.com/index/prompting-guide)
+- [Prompt Engineering in the Workplace](https://hbr.org/2023/08/prompt-engineering-will-transform-ai-and-the-workplace) 
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D/" rel="tag"># 提示词</a>
+              <a href="/tags/Prompt/" rel="tag"># Prompt</a>
+              <a href="/tags/Cursor/" rel="tag"># Cursor</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/29/%E6%95%99%E7%A8%8B/cursor%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="prev" title="cursor使用指南">
+                  <i class="fa fa-angle-left"></i> cursor使用指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/29/AI/AI%E7%94%9F%E6%88%90%E6%96%87%E7%AB%A0%E8%A7%84%E8%8C%83/" rel="next" title="AI生成文章规范指南">
+                  AI生成文章规范指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

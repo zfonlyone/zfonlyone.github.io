@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="常用git分支管理命令，掌握这些命令可以帮助开发者更高效地进行团队协作和项目管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git合并教程">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/31/%E6%95%99%E7%A8%8B/git%E5%90%88%E5%B9%B6%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="常用git分支管理命令，掌握这些命令可以帮助开发者更高效地进行团队协作和项目管理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg">
+<meta property="article:published_time" content="2025-03-31T11:27:15.000Z">
+<meta property="article:modified_time" content="2025-03-31T11:27:15.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="开发工具">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="版本控制">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/31/%E6%95%99%E7%A8%8B/git%E5%90%88%E5%B9%B6%E6%95%99%E7%A8%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/31/%E6%95%99%E7%A8%8B/git%E5%90%88%E5%B9%B6%E6%95%99%E7%A8%8B/","path":"2025/03/31/教程/git合并教程/","title":"git合并教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>git合并教程 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">名词解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%88%86%E6%94%AF"><span class="nav-number">2.</span> <span class="nav-text">新建分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E7%89%B9%E5%AE%9A%E6%8F%90%E4%BA%A4%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF"><span class="nav-number">2.2.</span> <span class="nav-text">从特定提交创建分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="nav-number">2.3.</span> <span class="nav-text">从远程分支创建本地分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-number">3.</span> <span class="nav-text">切换分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%88%87%E6%8D%A2"><span class="nav-number">3.1.</span> <span class="nav-text">基本切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%88%87%E6%8D%A2"><span class="nav-number">3.2.</span> <span class="nav-text">强制切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E4%BF%AE%E6%94%B9%E5%B9%B6%E5%88%87%E6%8D%A2"><span class="nav-number">3.3.</span> <span class="nav-text">保留修改并切换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6"><span class="nav-number">4.</span> <span class="nav-text">分支合并</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E8%BF%9B%E5%90%88%E5%B9%B6%EF%BC%88Fast-forward%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">快进合并（Fast-forward）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%BF%AB%E8%BF%9B%E5%90%88%E5%B9%B6%EF%BC%88No-fast-forward%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">非快进合并（No-fast-forward）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%90%88%E5%B9%B6%E5%86%B2%E7%AA%81"><span class="nav-number">4.3.</span> <span class="nav-text">处理合并冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E7%AD%96%E7%95%A5%E9%80%89%E9%A1%B9"><span class="nav-number">4.4.</span> <span class="nav-text">合并策略选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E5%90%88%E5%B9%B6"><span class="nav-number">4.5.</span> <span class="nav-text">撤销合并</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">5.</span> <span class="nav-text">删除分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="nav-number">5.1.</span> <span class="nav-text">删除本地分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF"><span class="nav-number">5.2.</span> <span class="nav-text">删除远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E8%BF%87%E6%97%B6%E7%9A%84%E8%BF%9C%E7%A8%8B%E8%B7%9F%E8%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">5.3.</span> <span class="nav-text">清理过时的远程跟踪分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E6%8A%80%E5%B7%A7"><span class="nav-number">6.</span> <span class="nav-text">高级分支管理技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E9%87%8D%E5%91%BD%E5%90%8D"><span class="nav-number">6.1.</span> <span class="nav-text">分支重命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%86%E6%94%AF%E4%BF%A1%E6%81%AF"><span class="nav-number">6.2.</span> <span class="nav-text">查看分支信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E6%94%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-number">6.3.</span> <span class="nav-text">基于分支的工作流</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/31/%E6%95%99%E7%A8%8B/git%E5%90%88%E5%B9%B6%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="git合并教程 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git合并教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-31 19:27:15" itemprop="dateCreated datePublished" datetime="2025-03-31T19:27:15+08:00">2025-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-31 19:27:15" itemprop="dateModified" datetime="2025-03-31T19:27:15+08:00">2025-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">技术教程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>常用git分支管理命令，掌握这些命令可以帮助开发者更高效地进行团队协作和项目管理。</p>
+<span id="more"></span>
+
+<h1 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h1><p><img src="https://www.runoob.com/wp-content/uploads/2015/02/git-command.jpg" alt="Git命令速查表" title="Git命令速查表"></p>
+<ul>
+<li><p><strong>拉取（Pull）</strong>：从远程仓库获取最新代码并合并到本地分支。命令为 <code>git pull</code>，相当于 <code>git fetch</code> 和 <code>git merge</code> 的组合。</p>
+</li>
+<li><p><strong>推送（Push）</strong>：将本地仓库的提交发送到远程仓库。命令为 <code>git push [远程仓库名] [分支名]</code>。</p>
+</li>
+<li><p><strong>变基（Rebase）</strong>：将一个分支的修改融合到另一个分支，但不同于合并，变基会重写提交历史，使其更加线性和整洁。命令为 <code>git rebase [目标分支]</code>。</p>
+</li>
+<li><p><strong>挑拣（Cherry-pick）</strong>：选择特定的提交应用到当前分支，而不是合并整个分支。命令为 <code>git cherry-pick [提交哈希]</code>。</p>
+</li>
+<li><p><strong>暂存（Stage&#x2F;Add）</strong>：将修改的文件加入到下一次提交的暂存区。命令为 <code>git add [文件名]</code>。</p>
+</li>
+<li><p><strong>提交（Commit）</strong>：将暂存区的修改保存为一个新的提交。命令为 <code>git commit -m &quot;提交信息&quot;</code>。</p>
+</li>
+<li><p><strong>签出（Checkout）</strong>：切换到指定分支或恢复指定文件。命令为 <code>git checkout [分支名/文件名]</code>。</p>
+</li>
+<li><p><strong>合并（Merge）</strong>：将指定分支的内容合并到当前分支。命令为 <code>git merge [分支名]</code>。</p>
+</li>
+<li><p><strong>冲突（Conflict）</strong>：当两个分支修改了同一文件的同一部分时，Git无法自动合并而产生的状态。</p>
+</li>
+<li><p><strong>远程仓库（Remote）</strong>：存储在网络服务器上的Git仓库，可以与多人共享。</p>
+</li>
+</ul>
+<h1 id="新建分支"><a href="#新建分支" class="headerlink" title="新建分支"></a>新建分支</h1><p>新建分支是开发新功能或修复bug的常用方式，它可以让你在不影响主分支的情况下进行开发。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建新分支但不切换</span></span><br><span class="line">git branch [分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建新分支并立即切换</span></span><br><span class="line">git checkout -b [分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Git 2.23版本后的新命令，作用同上</span></span><br><span class="line">git switch -c [分支名]</span><br></pre></td></tr></table></figure>
+
+<h2 id="从特定提交创建分支"><a href="#从特定提交创建分支" class="headerlink" title="从特定提交创建分支"></a>从特定提交创建分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从特定的提交创建分支</span></span><br><span class="line">git branch [分支名] [提交哈希]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并切换到该分支</span></span><br><span class="line">git checkout -b [分支名] [提交哈希]</span><br></pre></td></tr></table></figure>
+
+<h2 id="从远程分支创建本地分支"><a href="#从远程分支创建本地分支" class="headerlink" title="从远程分支创建本地分支"></a>从远程分支创建本地分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 跟踪远程分支</span></span><br><span class="line">git checkout -b [本地分支名] origin/[远程分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者使用更简洁的方式</span></span><br><span class="line">git checkout --track origin/[远程分支名]</span><br></pre></td></tr></table></figure>
+
+<h1 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h1><p>在不同分支间切换是Git日常工作流的重要组成部分。</p>
+<h2 id="基本切换"><a href="#基本切换" class="headerlink" title="基本切换"></a>基本切换</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 传统方式切换分支</span></span><br><span class="line">git checkout [分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Git 2.23版本后的新命令</span></span><br><span class="line">git switch [分支名]</span><br></pre></td></tr></table></figure>
+
+<h2 id="强制切换"><a href="#强制切换" class="headerlink" title="强制切换"></a>强制切换</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 强制切换，丢弃当前未提交的修改</span></span><br><span class="line">git checkout -f [分支名]</span><br></pre></td></tr></table></figure>
+
+<h2 id="保留修改并切换"><a href="#保留修改并切换" class="headerlink" title="保留修改并切换"></a>保留修改并切换</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暂存当前修改</span></span><br><span class="line">git stash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换分支</span></span><br><span class="line">git checkout [分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在新分支应用之前的修改</span></span><br><span class="line">git stash apply</span><br></pre></td></tr></table></figure>
+
+<h1 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h1><p>分支合并是团队协作中最常见的操作之一，用于整合不同分支上的修改。</p>
+<h2 id="快进合并（Fast-forward）"><a href="#快进合并（Fast-forward）" class="headerlink" title="快进合并（Fast-forward）"></a>快进合并（Fast-forward）</h2><p>当目标分支是当前分支的直接后继时，Git会执行快进合并。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到目标分支（通常是主分支）</span></span><br><span class="line">git checkout main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并开发分支</span></span><br><span class="line">git merge feature-branch</span><br></pre></td></tr></table></figure>
+
+<h2 id="非快进合并（No-fast-forward）"><a href="#非快进合并（No-fast-forward）" class="headerlink" title="非快进合并（No-fast-forward）"></a>非快进合并（No-fast-forward）</h2><p>保留分支历史记录的合并方式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge --no-ff feature-branch</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理合并冲突"><a href="#处理合并冲突" class="headerlink" title="处理合并冲突"></a>处理合并冲突</h2><p>当两个分支修改了同一文件的同一部分时，会产生合并冲突。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 合并时发生冲突</span></span><br><span class="line">git merge feature-branch</span><br><span class="line"><span class="comment"># (出现冲突提示)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看冲突文件</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动编辑冲突文件，解决冲突</span></span><br><span class="line"><span class="comment"># 冲突标记通常如下：</span></span><br><span class="line"><span class="comment"># &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span></span><br><span class="line"><span class="comment"># 当前分支的代码</span></span><br><span class="line"><span class="comment"># =======</span></span><br><span class="line"><span class="comment"># 要合并分支的代码</span></span><br><span class="line"><span class="comment"># &gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-branch</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决冲突后，标记为已解决</span></span><br><span class="line">git add [冲突文件]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完成合并</span></span><br><span class="line">git commit</span><br></pre></td></tr></table></figure>
+
+<h2 id="合并策略选项"><a href="#合并策略选项" class="headerlink" title="合并策略选项"></a>合并策略选项</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用&#x27;ours&#x27;策略，保留当前分支的修改</span></span><br><span class="line">git merge -s ours feature-branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用&#x27;theirs&#x27;策略，保留要合并分支的修改</span></span><br><span class="line">git merge -X theirs feature-branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩合并，将所有提交压缩为一个</span></span><br><span class="line">git merge --squash feature-branch</span><br></pre></td></tr></table></figure>
+
+<h2 id="撤销合并"><a href="#撤销合并" class="headerlink" title="撤销合并"></a>撤销合并</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果合并后还未推送，可以使用reset撤销</span></span><br><span class="line">git reset --hard HEAD~1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果已经推送，可以使用revert撤销合并</span></span><br><span class="line">git revert -m 1 [合并提交的哈希]</span><br></pre></td></tr></table></figure>
+
+<h1 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h1><p>在分支合并完成后，通常需要删除不再使用的分支以保持仓库整洁。</p>
+<h2 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除已合并的分支</span></span><br><span class="line">git branch -d [分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除未合并的分支</span></span><br><span class="line">git branch -D [分支名]</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push origin --delete [分支名]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者使用更简洁的语法</span></span><br><span class="line">git push origin :[分支名]</span><br></pre></td></tr></table></figure>
+
+<h2 id="清理过时的远程跟踪分支"><a href="#清理过时的远程跟踪分支" class="headerlink" title="清理过时的远程跟踪分支"></a>清理过时的远程跟踪分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出已经不存在于远程的本地分支引用</span></span><br><span class="line">git remote prune origin --dry-run</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理这些引用</span></span><br><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure>
+
+<h1 id="高级分支管理技巧"><a href="#高级分支管理技巧" class="headerlink" title="高级分支管理技巧"></a>高级分支管理技巧</h1><h2 id="分支重命名"><a href="#分支重命名" class="headerlink" title="分支重命名"></a>分支重命名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重命名当前分支</span></span><br><span class="line">git branch -m [新名称]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重命名指定分支</span></span><br><span class="line">git branch -m [旧名称] [新名称]</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看分支信息"><a href="#查看分支信息" class="headerlink" title="查看分支信息"></a>查看分支信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有分支</span></span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分支详细信息</span></span><br><span class="line">git branch -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看已合并到当前分支的分支</span></span><br><span class="line">git branch --merged</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看未合并到当前分支的分支</span></span><br><span class="line">git branch --no-merged</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于分支的工作流"><a href="#基于分支的工作流" class="headerlink" title="基于分支的工作流"></a>基于分支的工作流</h2><ol>
+<li><strong>Git Flow</strong>：使用master、develop、feature、release和hotfix分支</li>
+<li><strong>GitHub Flow</strong>：简化的工作流，主要使用master和feature分支</li>
+<li><strong>GitLab Flow</strong>：结合了上述两种方法的优点，增加了环境分支</li>
+</ol>
+<p>掌握这些Git分支管理命令，将大大提高团队协作效率和代码质量。在实际项目中灵活运用这些技巧，能够更好地管理版本和解决冲突问题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" rel="tag"># 开发工具</a>
+              <a href="/tags/Git/" rel="tag"># Git</a>
+              <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" rel="tag"># 版本控制</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/29/%E6%95%99%E7%A8%8B/Hexo%E5%8D%9A%E5%AE%A2GitHub%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/" rel="prev" title="Hexo博客GitHub部署与源码管理完全指南">
+                  <i class="fa fa-angle-left"></i> Hexo博客GitHub部署与源码管理完全指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

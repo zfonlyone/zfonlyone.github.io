@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AI 生成 Linux防火墙高级配置防火墙是Linux服务器安全的第一道防线，能有效控制进出服务器的网络流量。本文详细介绍三种主流Linux防火墙工具的配置与使用：UFW、firewalld和iptables。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux防火墙高级配置">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/28/linux/Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="AI 生成 Linux防火墙高级配置防火墙是Linux服务器安全的第一道防线，能有效控制进出服务器的网络流量。本文详细介绍三种主流Linux防火墙工具的配置与使用：UFW、firewalld和iptables。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-27T16:00:01.000Z">
+<meta property="article:modified_time" content="2025-03-27T16:00:01.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="firewall">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/28/linux/Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/28/linux/Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/","path":"2025/03/28/linux/Linux防火墙配置/","title":"Linux防火墙高级配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux防火墙高级配置 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">Linux防火墙高级配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-UFW-Uncomplicated-Firewall"><span class="nav-number">1.1.</span> <span class="nav-text">1. UFW (Uncomplicated Firewall)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 安装与基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 基本规则管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E9%AB%98%E7%BA%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 高级规则配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 应用配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 日志管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-firewalld"><span class="nav-number">1.2.</span> <span class="nav-text">2. firewalld</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 安装与基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%8C%BA%E5%9F%9F%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 区域管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 服务管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E7%AB%AF%E5%8F%A3%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 端口和协议管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-IP%E7%AE%A1%E7%90%86%E4%B8%8E%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 IP管理与端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E9%AB%98%E7%BA%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 高级规则配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E9%85%8D%E7%BD%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 配置持久化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-iptables"><span class="nav-number">1.3.</span> <span class="nav-text">3. iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%B7%BB%E5%8A%A0%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 添加基本规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E9%AB%98%E7%BA%A7%E8%A7%84%E5%88%99%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 高级规则配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E4%BF%9D%E5%AD%98%E5%92%8C%E6%81%A2%E5%A4%8D%E8%A7%84%E5%88%99"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 保存和恢复规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%98%B2%E7%81%AB%E5%A2%99%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.4.</span> <span class="nav-text">4. 防火墙最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E9%BB%98%E8%AE%A4%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 默认拒绝策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%85%81%E8%AE%B8%E5%B7%B2%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 允许已建立的连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%8F%AA%E5%BC%80%E6%94%BE%E5%BF%85%E8%A6%81%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 只开放必要端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E9%99%90%E5%88%B6SSH%E8%AE%BF%E9%97%AE"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 限制SSH访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E4%BB%85%E5%85%81%E8%AE%B8%E7%89%B9%E5%AE%9AIP%E8%AE%BF%E9%97%AE%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 仅允许特定IP访问管理服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E8%AE%B0%E5%BD%95%E8%A2%AB%E6%8B%92%E7%BB%9D%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6 记录被拒绝的连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E5%AE%9A%E6%9C%9F%E5%AE%A1%E8%AE%A1%E9%98%B2%E7%81%AB%E5%A2%99%E8%A7%84%E5%88%99"><span class="nav-number">1.4.7.</span> <span class="nav-text">4.7 定期审计防火墙规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E6%B5%8B%E8%AF%95%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.4.8.</span> <span class="nav-text">4.8 使用工具测试防火墙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%B8%B8%E8%A7%81%E9%98%B2%E7%81%AB%E5%A2%99%E5%9C%BA%E6%99%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">5. 常见防火墙场景配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 Web服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 数据库服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 负载均衡器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-VPN%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 VPN服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.5.</span> <span class="nav-text">5.5 邮件服务器配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">1.6.</span> <span class="nav-text">6. 故障排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E8%BF%9E%E6%8E%A5%E8%A2%AB%E6%8B%92%E7%BB%9D"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 连接被拒绝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 网络服务无法启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E8%A7%84%E5%88%99%E4%B8%8D%E7%94%9F%E6%95%88"><span class="nav-number">1.6.3.</span> <span class="nav-text">6.3 规则不生效</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/28/linux/Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux防火墙高级配置 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux防火墙高级配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-28 00:00:01" itemprop="dateCreated datePublished" datetime="2025-03-28T00:00:01+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-28 00:00:01" itemprop="dateModified" datetime="2025-03-28T00:00:01+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>AI 生成</p>
+<h1 id="Linux防火墙高级配置"><a href="#Linux防火墙高级配置" class="headerlink" title="Linux防火墙高级配置"></a>Linux防火墙高级配置</h1><p>防火墙是Linux服务器安全的第一道防线，能有效控制进出服务器的网络流量。本文详细介绍三种主流Linux防火墙工具的配置与使用：UFW、firewalld和iptables。</p>
+<span id="more"></span>
+
+<h2 id="1-UFW-Uncomplicated-Firewall"><a href="#1-UFW-Uncomplicated-Firewall" class="headerlink" title="1. UFW (Uncomplicated Firewall)"></a>1. UFW (Uncomplicated Firewall)</h2><p>UFW是Ubuntu&#x2F;Debian系统默认的防火墙配置工具，提供了简单易用的命令行界面，适合初学者使用。</p>
+<h3 id="1-1-安装与基本使用"><a href="#1-1-安装与基本使用" class="headerlink" title="1.1 安装与基本使用"></a>1.1 安装与基本使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装UFW</span></span><br><span class="line">apt update</span><br><span class="line">apt install ufw</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查UFW状态</span></span><br><span class="line">ufw status</span><br><span class="line">ufw status verbose  <span class="comment"># 查看详细状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用/禁用UFW</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br><span class="line">ufw <span class="built_in">disable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置所有规则（恢复默认设置）</span></span><br><span class="line">ufw reset</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-基本规则管理"><a href="#1-2-基本规则管理" class="headerlink" title="1.2 基本规则管理"></a>1.2 基本规则管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认策略</span></span><br><span class="line">ufw default deny incoming  <span class="comment"># 拒绝所有入站连接</span></span><br><span class="line">ufw default allow outgoing  <span class="comment"># 允许所有出站连接</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许特定服务</span></span><br><span class="line">ufw allow ssh       <span class="comment"># 允许SSH (22端口)</span></span><br><span class="line">ufw allow http      <span class="comment"># 允许HTTP (80端口)</span></span><br><span class="line">ufw allow https     <span class="comment"># 允许HTTPS (443端口)</span></span><br><span class="line">ufw allow 8080/tcp  <span class="comment"># 允许TCP 8080端口</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拒绝规则</span></span><br><span class="line">ufw deny http</span><br><span class="line">ufw deny from 192.168.1.100  <span class="comment"># 拒绝特定IP的所有连接</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除规则</span></span><br><span class="line">ufw delete allow http</span><br><span class="line">ufw delete deny from 192.168.1.100</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-高级规则配置"><a href="#1-3-高级规则配置" class="headerlink" title="1.3 高级规则配置"></a>1.3 高级规则配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许特定IP访问特定端口</span></span><br><span class="line">ufw allow from 192.168.1.0/24 to any port 22</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许特定IP范围访问</span></span><br><span class="line">ufw allow from 10.0.0.0/8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许特定网络接口</span></span><br><span class="line">ufw allow <span class="keyword">in</span> on eth0 to any port 80</span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制连接速率（防止DoS攻击）</span></span><br><span class="line">ufw <span class="built_in">limit</span> ssh  <span class="comment"># 限制SSH连接尝试次数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许端口范围</span></span><br><span class="line">ufw allow 5000:5010/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加注释（Ubuntu 18.04+）</span></span><br><span class="line">ufw allow http comment <span class="string">&quot;Allow HTTP traffic&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-应用配置文件"><a href="#1-4-应用配置文件" class="headerlink" title="1.4 应用配置文件"></a>1.4 应用配置文件</h3><p>UFW允许通过应用配置文件简化规则管理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看可用的应用配置</span></span><br><span class="line">ufw app list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看应用详情</span></span><br><span class="line">ufw app info OpenSSH</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许应用</span></span><br><span class="line">ufw allow OpenSSH</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-日志管理"><a href="#1-5-日志管理" class="headerlink" title="1.5 日志管理"></a>1.5 日志管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启日志</span></span><br><span class="line">ufw logging on</span><br><span class="line">ufw logging medium  <span class="comment"># 设置日志级别 (low|medium|high|full)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭日志</span></span><br><span class="line">ufw logging off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/ufw.log</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-firewalld"><a href="#2-firewalld" class="headerlink" title="2. firewalld"></a>2. firewalld</h2><p>firewalld是CentOS&#x2F;RHEL 7+和Fedora的默认防火墙管理工具，采用区域（zone）概念组织规则。</p>
+<h3 id="2-1-安装与基本使用"><a href="#2-1-安装与基本使用" class="headerlink" title="2.1 安装与基本使用"></a>2.1 安装与基本使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装firewalld</span></span><br><span class="line">yum install firewalld</span><br><span class="line">dnf install firewalld  <span class="comment"># Fedora/CentOS 8+</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动和启用服务</span></span><br><span class="line">systemctl start firewalld</span><br><span class="line">systemctl <span class="built_in">enable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查状态</span></span><br><span class="line">firewall-cmd --state</span><br><span class="line">firewall-cmd --list-all  <span class="comment"># 列出默认区域的所有规则</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-区域管理"><a href="#2-2-区域管理" class="headerlink" title="2.2 区域管理"></a>2.2 区域管理</h3><p>firewalld使用区域（zone）来组织不同的网络环境规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有区域</span></span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看默认区域</span></span><br><span class="line">firewall-cmd --get-default-zone</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置默认区域</span></span><br><span class="line">firewall-cmd --set-default-zone=home</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看特定区域详情</span></span><br><span class="line">firewall-cmd --zone=public --list-all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将网络接口分配到区域</span></span><br><span class="line">firewall-cmd --zone=trusted --change-interface=eth0 --permanent</span><br></pre></td></tr></table></figure>
+
+<p>常用区域：</p>
+<ul>
+<li><code>public</code>: 公共区域，默认拒绝入站连接，但允许特定服务</li>
+<li><code>trusted</code>: 信任区域，允许所有连接</li>
+<li><code>home</code>: 家庭区域，允许选择的服务</li>
+<li><code>drop</code>: 丢弃区域，丢弃所有入站连接，无回应</li>
+</ul>
+<h3 id="2-3-服务管理"><a href="#2-3-服务管理" class="headerlink" title="2.3 服务管理"></a>2.3 服务管理</h3><p>firewalld预定义了许多常见服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有可用服务</span></span><br><span class="line">firewall-cmd --get-services</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在默认区域添加服务</span></span><br><span class="line">firewall-cmd --add-service=http</span><br><span class="line">firewall-cmd --permanent --add-service=https</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在特定区域添加服务</span></span><br><span class="line">firewall-cmd --zone=home --add-service=samba</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除服务</span></span><br><span class="line">firewall-cmd --remove-service=http</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询服务状态</span></span><br><span class="line">firewall-cmd --query-service=ssh</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-端口和协议管理"><a href="#2-4-端口和协议管理" class="headerlink" title="2.4 端口和协议管理"></a>2.4 端口和协议管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加端口</span></span><br><span class="line">firewall-cmd --add-port=8080/tcp</span><br><span class="line">firewall-cmd --permanent --add-port=8443/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加端口范围</span></span><br><span class="line">firewall-cmd --add-port=5000-5100/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加协议</span></span><br><span class="line">firewall-cmd --add-protocol=icmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除端口</span></span><br><span class="line">firewall-cmd --remove-port=8080/tcp</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-IP管理与端口转发"><a href="#2-5-IP管理与端口转发" class="headerlink" title="2.5 IP管理与端口转发"></a>2.5 IP管理与端口转发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许特定IP或网络</span></span><br><span class="line">firewall-cmd --add-source=192.168.1.0/24 --zone=trusted</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁止特定IP或网络</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=10.1.1.1 reject&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 端口转发（将外部80端口转发到内部8080端口）</span></span><br><span class="line">firewall-cmd --add-forward-port=port=80:proto=tcp:toport=8080</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将外部端口转发到其他主机</span></span><br><span class="line">firewall-cmd --add-forward-port=port=80:proto=tcp:toport=8080:toaddr=10.0.0.10</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-高级规则配置"><a href="#2-6-高级规则配置" class="headerlink" title="2.6 高级规则配置"></a>2.6 高级规则配置</h3><p>富规则（Rich Rules）提供更复杂的规则配置能力：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许特定IP访问特定端口</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=192.168.1.10 port port=22 protocol=tcp accept&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制连接速率</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule service name=http limit value=10/m accept&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拒绝特定IP访问特定服务</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=192.168.1.11 service name=http reject&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加日志规则</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule service name=ssh log prefix=&quot;SSH connection: &quot; level=&quot;notice&quot; limit value=&quot;3/m&quot; accept&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-配置持久化"><a href="#2-7-配置持久化" class="headerlink" title="2.7 配置持久化"></a>2.7 配置持久化</h3><p>默认情况下，firewall-cmd的更改在重启后会丢失：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使更改永久生效</span></span><br><span class="line">firewall-cmd --runtime-to-permanent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接添加永久规则</span></span><br><span class="line">firewall-cmd --permanent --add-service=http</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载规则（应用永久规则到运行时）</span></span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-iptables"><a href="#3-iptables" class="headerlink" title="3. iptables"></a>3. iptables</h2><p>iptables是Linux内核的包过滤功能接口，功能强大但配置复杂。虽然UFW和firewalld在底层使用iptables，但直接使用iptables可以实现更复杂的规则。</p>
+<h3 id="3-1-基本概念"><a href="#3-1-基本概念" class="headerlink" title="3.1 基本概念"></a>3.1 基本概念</h3><p>iptables使用表（tables）和链（chains）组织规则：</p>
+<p>主要表：</p>
+<ul>
+<li><code>filter</code>: 默认表，用于过滤数据包</li>
+<li><code>nat</code>: 用于网络地址转换</li>
+<li><code>mangle</code>: 用于特殊包修改</li>
+<li><code>raw</code>: 用于配置豁免连接跟踪</li>
+</ul>
+<p>主要链：</p>
+<ul>
+<li><code>INPUT</code>: 处理发往本机的包</li>
+<li><code>OUTPUT</code>: 处理本机发出的包</li>
+<li><code>FORWARD</code>: 处理通过本机转发的包</li>
+<li><code>PREROUTING</code>: 用于NAT表，包进入路由前</li>
+<li><code>POSTROUTING</code>: 用于NAT表，包通过路由后</li>
+</ul>
+<h3 id="3-2-基本操作"><a href="#3-2-基本操作" class="headerlink" title="3.2 基本操作"></a>3.2 基本操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看规则</span></span><br><span class="line">iptables -L              <span class="comment"># 查看filter表规则</span></span><br><span class="line">iptables -t nat -L       <span class="comment"># 查看nat表规则</span></span><br><span class="line">iptables -L --line-numbers  <span class="comment"># 显示规则编号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清除规则</span></span><br><span class="line">iptables -F              <span class="comment"># 清除所有规则</span></span><br><span class="line">iptables -t nat -F       <span class="comment"># 清除nat表规则</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置默认策略</span></span><br><span class="line">iptables -P INPUT DROP   <span class="comment"># 默认丢弃入站包</span></span><br><span class="line">iptables -P OUTPUT ACCEPT  <span class="comment"># 默认接受出站包</span></span><br><span class="line">iptables -P FORWARD DROP   <span class="comment"># 默认丢弃转发包</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-添加基本规则"><a href="#3-3-添加基本规则" class="headerlink" title="3.3 添加基本规则"></a>3.3 添加基本规则</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许已建立的连接和相关连接</span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许本地回环接口</span></span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许SSH连接</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许HTTP和HTTPS</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拒绝特定IP</span></span><br><span class="line">iptables -A INPUT -s 192.168.1.100 -j DROP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许特定网段访问特定端口</span></span><br><span class="line">iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 3306 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录丢弃的包</span></span><br><span class="line">iptables -A INPUT -j LOG --log-prefix <span class="string">&quot;IPTables-Dropped: &quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-高级规则配置"><a href="#3-4-高级规则配置" class="headerlink" title="3.4 高级规则配置"></a>3.4 高级规则配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 限制连接速率（防止暴力破解）</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --<span class="built_in">set</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 4 -j DROP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 端口转发</span></span><br><span class="line">iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080</span><br><span class="line"></span><br><span class="line"><span class="comment"># 源地址转换（NAT）</span></span><br><span class="line">iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span><br><span class="line"></span><br><span class="line"><span class="comment"># 丢弃无效包</span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate INVALID -j DROP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 防止SYN洪水攻击</span></span><br><span class="line">iptables -A INPUT -p tcp --syn -m <span class="built_in">limit</span> --<span class="built_in">limit</span> 1/s --limit-burst 3 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --syn -j DROP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将特定流量分流到特定用户空间程序</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 80 -j NFQUEUE --queue-num 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-保存和恢复规则"><a href="#3-5-保存和恢复规则" class="headerlink" title="3.5 保存和恢复规则"></a>3.5 保存和恢复规则</h3><p>iptables规则在重启后会丢失，需要保存：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br><span class="line">ip6tables-save &gt; /etc/iptables/rules.v6</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS/RHEL</span></span><br><span class="line">iptables-save &gt; /etc/sysconfig/iptables</span><br><span class="line">ip6tables-save &gt; /etc/sysconfig/ip6tables</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动恢复规则</span></span><br><span class="line">iptables-restore &lt; /etc/iptables/rules.v4</span><br></pre></td></tr></table></figure>
+
+<p>安装iptables-persistent自动保存和恢复规则（Debian&#x2F;Ubuntu）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install iptables-persistent</span><br><span class="line">netfilter-persistent save  <span class="comment"># 保存当前规则</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-防火墙最佳实践"><a href="#4-防火墙最佳实践" class="headerlink" title="4. 防火墙最佳实践"></a>4. 防火墙最佳实践</h2><p>无论使用哪种防火墙工具，以下都是推荐的最佳实践：</p>
+<h3 id="4-1-默认拒绝策略"><a href="#4-1-默认拒绝策略" class="headerlink" title="4.1 默认拒绝策略"></a>4.1 默认拒绝策略</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW</span></span><br><span class="line">ufw default deny incoming</span><br><span class="line">ufw default allow outgoing</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld</span></span><br><span class="line">firewall-cmd --set-default-zone=drop  <span class="comment"># 然后添加需要的服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables</span></span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line">iptables -P FORWARD DROP</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-允许已建立的连接"><a href="#4-2-允许已建立的连接" class="headerlink" title="4.2 允许已建立的连接"></a>4.2 允许已建立的连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iptables</span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在UFW和firewalld中，这是默认行为</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-只开放必要端口"><a href="#4-3-只开放必要端口" class="headerlink" title="4.3 只开放必要端口"></a>4.3 只开放必要端口</h3><p>仅开放服务所需的最少端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 常见开放端口</span></span><br><span class="line">22/tcp (SSH)</span><br><span class="line">80/tcp, 443/tcp (HTTP/HTTPS)</span><br><span class="line">25/tcp, 465/tcp, 587/tcp (SMTP)</span><br><span class="line">110/tcp, 995/tcp (POP3)</span><br><span class="line">143/tcp, 993/tcp (IMAP)</span><br><span class="line">3306/tcp (MySQL)</span><br><span class="line">5432/tcp (PostgreSQL)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-限制SSH访问"><a href="#4-4-限制SSH访问" class="headerlink" title="4.4 限制SSH访问"></a>4.4 限制SSH访问</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用UFW限制SSH连接尝试</span></span><br><span class="line">ufw <span class="built_in">limit</span> ssh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用firewalld限制SSH连接</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule service name=ssh limit value=3/m accept&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用iptables限制SSH连接</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --<span class="built_in">set</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 3 -j DROP</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5-仅允许特定IP访问管理服务"><a href="#4-5-仅允许特定IP访问管理服务" class="headerlink" title="4.5 仅允许特定IP访问管理服务"></a>4.5 仅允许特定IP访问管理服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW允许特定IP访问MySQL</span></span><br><span class="line">ufw allow from 192.168.1.0/24 to any port 3306</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld允许特定IP访问PostgreSQL</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=192.168.1.0/24 port port=5432 protocol=tcp accept&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables允许特定IP访问Redis</span></span><br><span class="line">iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 6379 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 6379 -j DROP</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-6-记录被拒绝的连接"><a href="#4-6-记录被拒绝的连接" class="headerlink" title="4.6 记录被拒绝的连接"></a>4.6 记录被拒绝的连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW启用日志</span></span><br><span class="line">ufw logging on</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld启用日志</span></span><br><span class="line">firewall-cmd --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=&quot;0.0.0.0/0&quot; port port=80 protocol=tcp log prefix=&quot;HTTP connection: &quot; level=&quot;notice&quot; limit value=&quot;3/m&quot; accept&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables启用日志</span></span><br><span class="line">iptables -A INPUT -j LOG --log-prefix <span class="string">&quot;IPTables-Dropped: &quot;</span> --log-level 4</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-7-定期审计防火墙规则"><a href="#4-7-定期审计防火墙规则" class="headerlink" title="4.7 定期审计防火墙规则"></a>4.7 定期审计防火墙规则</h3><p>定期检查和更新防火墙规则：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前规则</span></span><br><span class="line">ufw status numbered</span><br><span class="line">firewall-cmd --list-all</span><br><span class="line">iptables -L -n -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找未使用的规则</span></span><br><span class="line"><span class="comment"># 可通过分析连接和日志确定</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试规则变更后的连通性</span></span><br><span class="line">nc -zv &lt;server-ip&gt; &lt;port&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-8-使用工具测试防火墙"><a href="#4-8-使用工具测试防火墙" class="headerlink" title="4.8 使用工具测试防火墙"></a>4.8 使用工具测试防火墙</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用nmap扫描开放端口</span></span><br><span class="line">nmap -sS -p 1-65535 your_server_ip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用netcat测试端口连通性</span></span><br><span class="line">nc -zv your_server_ip 22</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-常见防火墙场景配置"><a href="#5-常见防火墙场景配置" class="headerlink" title="5. 常见防火墙场景配置"></a>5. 常见防火墙场景配置</h2><h3 id="5-1-Web服务器配置"><a href="#5-1-Web服务器配置" class="headerlink" title="5.1 Web服务器配置"></a>5.1 Web服务器配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW配置</span></span><br><span class="line">ufw allow 80/tcp</span><br><span class="line">ufw allow 443/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld配置</span></span><br><span class="line">firewall-cmd --permanent --add-service=http</span><br><span class="line">firewall-cmd --permanent --add-service=https</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables配置</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-数据库服务器配置"><a href="#5-2-数据库服务器配置" class="headerlink" title="5.2 数据库服务器配置"></a>5.2 数据库服务器配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW配置</span></span><br><span class="line">ufw allow from 192.168.1.0/24 to any port 3306  <span class="comment"># MySQL</span></span><br><span class="line">ufw allow from 192.168.1.0/24 to any port 5432  <span class="comment"># PostgreSQL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld配置</span></span><br><span class="line">firewall-cmd --permanent --add-rich-rule=<span class="string">&#x27;rule family=ipv4 source address=192.168.1.0/24 port port=3306 protocol=tcp accept&#x27;</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables配置</span></span><br><span class="line">iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 3306 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 3306 -j DROP</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-负载均衡器配置"><a href="#5-3-负载均衡器配置" class="headerlink" title="5.3 负载均衡器配置"></a>5.3 负载均衡器配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW端口转发</span></span><br><span class="line">ufw route allow proto tcp from any to any port 80</span><br><span class="line">ufw route allow proto tcp from any to any port 443</span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld端口转发</span></span><br><span class="line">firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=8080:toaddr=10.0.0.10</span><br><span class="line">firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=8443:toaddr=10.0.0.10</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables负载均衡配置</span></span><br><span class="line">iptables -t nat -A PREROUTING -p tcp --dport 80 -m state --state NEW -m statistic --mode nth --every 3 --packet 0 -j DNAT --to-destination 10.0.0.10:80</span><br><span class="line">iptables -t nat -A PREROUTING -p tcp --dport 80 -m state --state NEW -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 10.0.0.11:80</span><br><span class="line">iptables -t nat -A PREROUTING -p tcp --dport 80 -m state --state NEW -j DNAT --to-destination 10.0.0.12:80</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-VPN服务器配置"><a href="#5-4-VPN服务器配置" class="headerlink" title="5.4 VPN服务器配置"></a>5.4 VPN服务器配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OpenVPN服务器 (UFW)</span></span><br><span class="line">ufw allow 1194/udp</span><br><span class="line"></span><br><span class="line"><span class="comment"># WireGuard VPN (firewalld)</span></span><br><span class="line">firewall-cmd --permanent --add-port=51820/udp</span><br><span class="line">firewall-cmd --permanent --add-masquerade</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># L2TP/IPsec VPN (iptables)</span></span><br><span class="line">iptables -A INPUT -p udp --dport 500 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p udp --dport 4500 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p esp -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-5-邮件服务器配置"><a href="#5-5-邮件服务器配置" class="headerlink" title="5.5 邮件服务器配置"></a>5.5 邮件服务器配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UFW配置</span></span><br><span class="line">ufw allow 25/tcp  <span class="comment"># SMTP</span></span><br><span class="line">ufw allow 465/tcp <span class="comment"># SMTPS</span></span><br><span class="line">ufw allow 587/tcp <span class="comment"># Submission</span></span><br><span class="line">ufw allow 110/tcp <span class="comment"># POP3</span></span><br><span class="line">ufw allow 995/tcp <span class="comment"># POP3S</span></span><br><span class="line">ufw allow 143/tcp <span class="comment"># IMAP</span></span><br><span class="line">ufw allow 993/tcp <span class="comment"># IMAPS</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># firewalld配置</span></span><br><span class="line">firewall-cmd --permanent --add-service=smtp</span><br><span class="line">firewall-cmd --permanent --add-service=smtps</span><br><span class="line">firewall-cmd --permanent --add-service=imap</span><br><span class="line">firewall-cmd --permanent --add-service=imaps</span><br><span class="line">firewall-cmd --permanent --add-service=pop3</span><br><span class="line">firewall-cmd --permanent --add-service=pop3s</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-故障排查"><a href="#6-故障排查" class="headerlink" title="6. 故障排查"></a>6. 故障排查</h2><h3 id="6-1-连接被拒绝"><a href="#6-1-连接被拒绝" class="headerlink" title="6.1 连接被拒绝"></a>6.1 连接被拒绝</h3><p>检查防火墙是否阻止连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看UFW日志</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/ufw.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看firewalld拒绝的连接</span></span><br><span class="line">journalctl -xn -u firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看iptables日志</span></span><br><span class="line">grep IPTables /var/log/syslog</span><br></pre></td></tr></table></figure>
+
+<p>临时禁用防火墙测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时禁用UFW</span></span><br><span class="line">ufw <span class="built_in">disable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 临时禁用firewalld</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 临时清除iptables规则</span></span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-网络服务无法启动"><a href="#6-2-网络服务无法启动" class="headerlink" title="6.2 网络服务无法启动"></a>6.2 网络服务无法启动</h3><p>检查是否是因为端口被占用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查端口占用情况</span></span><br><span class="line">ss -tulpn | grep &lt;port&gt;</span><br><span class="line">netstat -tulpn | grep &lt;port&gt;</span><br><span class="line">lsof -i :&lt;port&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-规则不生效"><a href="#6-3-规则不生效" class="headerlink" title="6.3 规则不生效"></a>6.3 规则不生效</h3><p>检查规则顺序和冲突：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看UFW规则顺序</span></span><br><span class="line">ufw status numbered</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看iptables规则详情</span></span><br><span class="line">iptables -L -v -n --line-numbers</span><br></pre></td></tr></table></figure>
+
+<p>确保规则已永久保存：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># firewalld规则持久化</span></span><br><span class="line">firewall-cmd --runtime-to-permanent</span><br><span class="line"></span><br><span class="line"><span class="comment"># iptables规则保存</span></span><br><span class="line">iptables-save &gt; /etc/iptables/rules.v4</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>选择合适的防火墙工具并正确配置是Linux服务器安全的关键步骤：</p>
+<ul>
+<li><strong>UFW</strong>: 适合初学者和简单场景，Ubuntu&#x2F;Debian系统首选</li>
+<li><strong>firewalld</strong>: 适合中等复杂度场景，CentOS&#x2F;RHEL系统首选</li>
+<li><strong>iptables</strong>: 适合复杂场景和高级用户，提供最大灵活性</li>
+</ul>
+<p>无论选择哪种工具，都应遵循”最小权限原则”，只开放必要的端口，并定期审计和更新规则。正确配置的防火墙能有效保护服务器免受网络攻击，是服务器安全体系的重要组成部分。 </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/security/" rel="tag"># security</a>
+              <a href="/tags/firewall/" rel="tag"># firewall</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/23/%E6%95%99%E7%A8%8B/%E9%BB%91%E8%8B%B9%E6%9E%9C%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/" rel="prev" title="黑苹果折腾指南">
+                  <i class="fa fa-angle-left"></i> 黑苹果折腾指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/28/linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="next" title="Linux用户权限进阶管理">
+                  Linux用户权限进阶管理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

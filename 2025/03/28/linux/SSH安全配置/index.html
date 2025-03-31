@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AI 生成 SSH安全配置最佳实践SSH (Secure Shell) 是系统管理员远程管理服务器的主要工具，也是服务器最容易受到攻击的入口之一。本文将详细介绍如何加固 SSH 服务，提高服务器安全性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH安全最佳实践">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/28/linux/SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="AI 生成 SSH安全配置最佳实践SSH (Secure Shell) 是系统管理员远程管理服务器的主要工具，也是服务器最容易受到攻击的入口之一。本文将详细介绍如何加固 SSH 服务，提高服务器安全性。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-27T18:00:01.000Z">
+<meta property="article:modified_time" content="2025-03-27T18:00:01.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="ssh">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/28/linux/SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/28/linux/SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/","path":"2025/03/28/linux/SSH安全配置/","title":"SSH安全最佳实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SSH安全最佳实践 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.</span> <span class="nav-text">SSH安全配置最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基本安全配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 更改默认端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%A6%81%E7%94%A8-root-%E7%99%BB%E5%BD%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 禁用 root 登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E9%99%90%E5%88%B6%E7%99%BB%E5%BD%95%E7%94%A8%E6%88%B7"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 限制登录用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E7%A6%81%E7%94%A8%E5%AF%86%E7%A0%81%E8%AE%A4%E8%AF%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 禁用密码认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E9%85%8D%E7%BD%AE%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 配置超时设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%AB%98%E7%BA%A7%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">2. 高级安全配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%BC%BA%E5%8C%96%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 强化加密算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%99%90%E5%88%B6-SSH-%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 限制 SSH 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%A6%81%E7%94%A8-X11-%E8%BD%AC%E5%8F%91"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 禁用 X11 转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E7%A6%81%E7%94%A8-TCP-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 禁用 TCP 端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E7%A6%81%E7%94%A8-Agent-%E8%BD%AC%E5%8F%91"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 禁用 Agent 转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E7%A6%81%E7%94%A8-GSSAPI-%E8%AE%A4%E8%AF%81"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 禁用 GSSAPI 认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E4%BD%BF%E7%94%A8-chroot-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 使用 chroot 环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81"><span class="nav-number">1.3.</span> <span class="nav-text">3. 使用密钥认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 生成密钥对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%B8%8A%E4%BC%A0%E5%85%AC%E9%92%A5%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 上传公钥到服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%B5%8B%E8%AF%95%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 测试密钥登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8-SSH-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4. 使用 SSH 配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%88%9B%E5%BB%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 创建客户端配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A4%9A%E5%9B%A0%E7%B4%A0%E8%AE%A4%E8%AF%81"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 服务器多因素认证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">5. 防火墙配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E4%BD%BF%E7%94%A8-UFW-Ubuntu-Debian"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 使用 UFW (Ubuntu&#x2F;Debian)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E4%BD%BF%E7%94%A8-firewalld-CentOS-RHEL"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 使用 firewalld (CentOS&#x2F;RHEL)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E4%BD%BF%E7%94%A8-iptables"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 使用 iptables</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%97%A5%E5%BF%97%E5%AE%A1%E8%AE%A1"><span class="nav-number">1.6.</span> <span class="nav-text">6. 监控与日志审计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%9F%A5%E7%9C%8B-SSH-%E6%97%A5%E5%BF%97"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 查看 SSH 日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E4%BD%BF%E7%94%A8-Fail2Ban"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 使用 Fail2Ban</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E8%AE%BE%E7%BD%AE%E7%99%BB%E5%BD%95%E9%80%9A%E7%9F%A5"><span class="nav-number">1.6.3.</span> <span class="nav-text">6.3 设置登录通知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%8E%92%E6%9F%A5"><span class="nav-number">1.7.</span> <span class="nav-text">7. 常见问题与排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E7%99%BB%E5%BD%95%E7%BC%93%E6%85%A2"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 登录缓慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 密钥认证失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E9%98%B2%E7%81%AB%E5%A2%99%E9%98%BB%E6%AD%A2"><span class="nav-number">1.7.3.</span> <span class="nav-text">7.3 防火墙阻止</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-SSH-%E5%B7%A5%E5%85%B7%E4%B8%8E%E6%89%A9%E5%B1%95"><span class="nav-number">1.8.</span> <span class="nav-text">8. SSH 工具与扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-WinSCP-%E4%B8%8E-PuTTY-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1 WinSCP 与 PuTTY 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-%E4%BD%BF%E7%94%A8-SSH-%E9%9A%A7%E9%81%93"><span class="nav-number">1.8.2.</span> <span class="nav-text">8.2 使用 SSH 隧道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-%E5%85%8D%E5%AF%86%E7%A0%81%E4%BD%BF%E7%94%A8-sudo"><span class="nav-number">1.8.3.</span> <span class="nav-text">8.3 免密码使用 sudo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.9.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="nav-number">1.10.</span> <span class="nav-text">参考资源</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/28/linux/SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SSH安全最佳实践 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SSH安全最佳实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-28 02:00:01" itemprop="dateCreated datePublished" datetime="2025-03-28T02:00:01+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-28 02:00:01" itemprop="dateModified" datetime="2025-03-28T02:00:01+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>AI 生成</p>
+<h1 id="SSH安全配置最佳实践"><a href="#SSH安全配置最佳实践" class="headerlink" title="SSH安全配置最佳实践"></a>SSH安全配置最佳实践</h1><p>SSH (Secure Shell) 是系统管理员远程管理服务器的主要工具，也是服务器最容易受到攻击的入口之一。本文将详细介绍如何加固 SSH 服务，提高服务器安全性。</p>
+<span id="more"></span>
+
+<h2 id="1-基本安全配置"><a href="#1-基本安全配置" class="headerlink" title="1. 基本安全配置"></a>1. 基本安全配置</h2><h3 id="1-1-更改默认端口"><a href="#1-1-更改默认端口" class="headerlink" title="1.1 更改默认端口"></a>1.1 更改默认端口</h3><p>默认的 22 端口是黑客首先尝试的目标，更改为非标准端口可以减少被扫描的概率。</p>
+<p>编辑 <code>/etc/ssh/sshd_config</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认为 Port 22</span></span><br><span class="line">Port 2222  <span class="comment"># 更改为非标准端口</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-禁用-root-登录"><a href="#1-2-禁用-root-登录" class="headerlink" title="1.2 禁用 root 登录"></a>1.2 禁用 root 登录</h3><p>禁止直接使用 root 账户登录系统，降低系统被入侵的风险。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 禁止root直接登录</span></span><br><span class="line">PermitRootLogin no</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-限制登录用户"><a href="#1-3-限制登录用户" class="headerlink" title="1.3 限制登录用户"></a>1.3 限制登录用户</h3><p>只允许特定用户通过 SSH 登录系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定允许登录的用户</span></span><br><span class="line">AllowUsers user1 user2 admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或指定允许登录的用户组</span></span><br><span class="line">AllowGroups ssh-users wheel</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-禁用密码认证"><a href="#1-4-禁用密码认证" class="headerlink" title="1.4 禁用密码认证"></a>1.4 禁用密码认证</h3><p>使用密钥认证替代密码认证，提高安全性：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用公钥认证</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用密码认证</span></span><br><span class="line">PasswordAuthentication no</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用空密码</span></span><br><span class="line">PermitEmptyPasswords no</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-配置超时设置"><a href="#1-5-配置超时设置" class="headerlink" title="1.5 配置超时设置"></a>1.5 配置超时设置</h3><p>设置会话超时，减少未活动会话的安全风险：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 认证超时时间（秒）</span></span><br><span class="line">LoginGraceTime 60</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户端无响应超时断开时间（秒）</span></span><br><span class="line">ClientAliveInterval 300</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户端无响应最大次数</span></span><br><span class="line">ClientAliveCountMax 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-高级安全配置"><a href="#2-高级安全配置" class="headerlink" title="2. 高级安全配置"></a>2. 高级安全配置</h2><h3 id="2-1-强化加密算法"><a href="#2-1-强化加密算法" class="headerlink" title="2.1 强化加密算法"></a>2.1 强化加密算法</h3><p>只允许使用强加密算法，提高连接安全性：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定密钥交换算法</span></span><br><span class="line">KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定加密算法</span></span><br><span class="line">Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定MAC算法</span></span><br><span class="line">MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-限制-SSH-版本"><a href="#2-2-限制-SSH-版本" class="headerlink" title="2.2 限制 SSH 版本"></a>2.2 限制 SSH 版本</h3><p>只允许使用 SSH 协议版本 2，禁用不安全的版本 1：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只使用SSH协议版本2</span></span><br><span class="line">Protocol 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-禁用-X11-转发"><a href="#2-3-禁用-X11-转发" class="headerlink" title="2.3 禁用 X11 转发"></a>2.3 禁用 X11 转发</h3><p>除非必要，禁用 X11 转发功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X11Forwarding no</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-禁用-TCP-端口转发"><a href="#2-4-禁用-TCP-端口转发" class="headerlink" title="2.4 禁用 TCP 端口转发"></a>2.4 禁用 TCP 端口转发</h3><p>如不需要端口转发功能，建议禁用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AllowTcpForwarding no</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-禁用-Agent-转发"><a href="#2-5-禁用-Agent-转发" class="headerlink" title="2.5 禁用 Agent 转发"></a>2.5 禁用 Agent 转发</h3><p>如不需要 SSH 代理转发功能，建议禁用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AllowAgentForwarding no</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-禁用-GSSAPI-认证"><a href="#2-6-禁用-GSSAPI-认证" class="headerlink" title="2.6 禁用 GSSAPI 认证"></a>2.6 禁用 GSSAPI 认证</h3><p>如不使用 Kerberos 认证，建议禁用 GSSAPI：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GSSAPIAuthentication no</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-使用-chroot-环境"><a href="#2-7-使用-chroot-环境" class="headerlink" title="2.7 使用 chroot 环境"></a>2.7 使用 chroot 环境</h3><p>对特定用户使用 chroot 限制其访问范围：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启chroot功能</span></span><br><span class="line">ChrootDirectory /path/to/chroot/%u</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许在chroot环境内使用SFTP</span></span><br><span class="line">ForceCommand internal-sftp</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-使用密钥认证"><a href="#3-使用密钥认证" class="headerlink" title="3. 使用密钥认证"></a>3. 使用密钥认证</h2><h3 id="3-1-生成密钥对"><a href="#3-1-生成密钥对" class="headerlink" title="3.1 生成密钥对"></a>3.1 生成密钥对</h3><p>在本地计算机上生成 SSH 密钥对：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推荐使用Ed25519算法 (更安全，密钥更短)</span></span><br><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用RSA算法 (兼容性更好，使用4096位)</span></span><br><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-上传公钥到服务器"><a href="#3-2-上传公钥到服务器" class="headerlink" title="3.2 上传公钥到服务器"></a>3.2 上传公钥到服务器</h3><p>方法一：使用 <code>ssh-copy-id</code> 工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server_ip -p 2222</span><br></pre></td></tr></table></figure>
+
+<p>方法二：手动上传</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先确保服务器上的 .ssh 目录存在</span></span><br><span class="line">ssh user@server_ip -p 2222 <span class="string">&quot;mkdir -p ~/.ssh&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传公钥</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub | ssh user@server_ip -p 2222 <span class="string">&quot;cat &gt;&gt; ~/.ssh/authorized_keys&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置正确的权限</span></span><br><span class="line">ssh user@server_ip -p 2222 <span class="string">&quot;chmod 700 ~/.ssh; chmod 600 ~/.ssh/authorized_keys&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-测试密钥登录"><a href="#3-3-测试密钥登录" class="headerlink" title="3.3 测试密钥登录"></a>3.3 测试密钥登录</h3><p>在配置完成后，确保密钥登录可用再禁用密码登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i ~/.ssh/id_ed25519 user@server_ip -p 2222</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-使用-SSH-配置文件"><a href="#4-使用-SSH-配置文件" class="headerlink" title="4. 使用 SSH 配置文件"></a>4. 使用 SSH 配置文件</h2><h3 id="4-1-创建客户端配置文件"><a href="#4-1-创建客户端配置文件" class="headerlink" title="4.1 创建客户端配置文件"></a>4.1 创建客户端配置文件</h3><p>在本地创建 <code>~/.ssh/config</code> 文件，简化 SSH 连接：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Host myserver</span><br><span class="line">    HostName server_ip_or_domain</span><br><span class="line">    Port 2222</span><br><span class="line">    User username</span><br><span class="line">    IdentityFile ~/.ssh/id_ed25519</span><br><span class="line">    IdentitiesOnly yes</span><br><span class="line">    ServerAliveInterval 60</span><br><span class="line">    ServerAliveCountMax 120</span><br></pre></td></tr></table></figure>
+
+<p>使用时只需：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-服务器多因素认证"><a href="#4-2-服务器多因素认证" class="headerlink" title="4.2 服务器多因素认证"></a>4.2 服务器多因素认证</h3><p>结合 Google Authenticator 实现双因素认证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Google Authenticator</span></span><br><span class="line">apt install libpam-google-authenticator  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">yum install google-authenticator         <span class="comment"># CentOS/RHEL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为用户配置</span></span><br><span class="line">google-authenticator</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑PAM配置 /etc/pam.d/sshd</span></span><br><span class="line">auth required pam_google_authenticator.so</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改SSH配置</span></span><br><span class="line">ChallengeResponseAuthentication <span class="built_in">yes</span></span><br><span class="line">AuthenticationMethods publickey,keyboard-interactive</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-防火墙配置"><a href="#5-防火墙配置" class="headerlink" title="5. 防火墙配置"></a>5. 防火墙配置</h2><h3 id="5-1-使用-UFW-Ubuntu-Debian"><a href="#5-1-使用-UFW-Ubuntu-Debian" class="headerlink" title="5.1 使用 UFW (Ubuntu&#x2F;Debian)"></a>5.1 使用 UFW (Ubuntu&#x2F;Debian)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装UFW</span></span><br><span class="line">apt update &amp;&amp; apt install ufw</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许SSH端口</span></span><br><span class="line">ufw allow 2222/tcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用UFW</span></span><br><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-使用-firewalld-CentOS-RHEL"><a href="#5-2-使用-firewalld-CentOS-RHEL" class="headerlink" title="5.2 使用 firewalld (CentOS&#x2F;RHEL)"></a>5.2 使用 firewalld (CentOS&#x2F;RHEL)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装firewalld</span></span><br><span class="line">yum install firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">systemctl start firewalld</span><br><span class="line">systemctl <span class="built_in">enable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许SSH端口</span></span><br><span class="line">firewall-cmd --permanent --add-port=2222/tcp</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-使用-iptables"><a href="#5-3-使用-iptables" class="headerlink" title="5.3 使用 iptables"></a>5.3 使用 iptables</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许SSH端口</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 2222 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存规则</span></span><br><span class="line">iptables-save &gt; /etc/iptables.rules</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-监控与日志审计"><a href="#6-监控与日志审计" class="headerlink" title="6. 监控与日志审计"></a>6. 监控与日志审计</h2><h3 id="6-1-查看-SSH-日志"><a href="#6-1-查看-SSH-日志" class="headerlink" title="6.1 查看 SSH 日志"></a>6.1 查看 SSH 日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看SSH登录日志</span></span><br><span class="line">journalctl -u sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/auth.log  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/secure    <span class="comment"># CentOS/RHEL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-使用-Fail2Ban"><a href="#6-2-使用-Fail2Ban" class="headerlink" title="6.2 使用 Fail2Ban"></a>6.2 使用 Fail2Ban</h3><p>Fail2Ban 可以监控登录失败次数，并自动封禁 IP 地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Fail2Ban</span></span><br><span class="line">apt install fail2ban  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">yum install fail2ban  <span class="comment"># CentOS/RHEL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建配置文件 /etc/fail2ban/jail.local</span></span><br><span class="line">[sshd]</span><br><span class="line">enabled = <span class="literal">true</span></span><br><span class="line">port = 2222</span><br><span class="line">filter = sshd</span><br><span class="line">logpath = /var/log/auth.log</span><br><span class="line">maxretry = 3</span><br><span class="line">bantime = 3600</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-设置登录通知"><a href="#6-3-设置登录通知" class="headerlink" title="6.3 设置登录通知"></a>6.3 设置登录通知</h3><p>配置 SSH 在用户登录时发送邮件通知：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装mailutils</span></span><br><span class="line">apt install mailutils  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建脚本 /etc/profile.d/ssh-login-alert.sh</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;ALERT=&quot;$(hostname) - $(date): SSH Login from $(who | head -1) $(w -i | grep -v USER | grep -v tty) $(ps -p $$ -o cmd --no-headers)&quot;</span></span><br><span class="line"><span class="string">echo &quot;$ALERT&quot; | mail -s &quot;SSH Login: $(hostname)&quot; your-email@example.com&#x27;</span> &gt; /etc/profile.d/ssh-login-alert.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置执行权限</span></span><br><span class="line"><span class="built_in">chmod</span> +x /etc/profile.d/ssh-login-alert.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-常见问题与排查"><a href="#7-常见问题与排查" class="headerlink" title="7. 常见问题与排查"></a>7. 常见问题与排查</h2><h3 id="7-1-登录缓慢"><a href="#7-1-登录缓慢" class="headerlink" title="7.1 登录缓慢"></a>7.1 登录缓慢</h3><p>如果 SSH 登录速度慢，可能原因：</p>
+<ol>
+<li><p>DNS 解析慢：禁用 DNS 解析</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UseDNS no</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GSSAPI 认证：禁用 GSSAPI</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GSSAPIAuthentication no</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="7-2-密钥认证失败"><a href="#7-2-密钥认证失败" class="headerlink" title="7.2 密钥认证失败"></a>7.2 密钥认证失败</h3><p>常见原因与解决方法：</p>
+<ol>
+<li><p>权限问题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 服务器上</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SELinux 限制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看SELinux上下文</span></span><br><span class="line"><span class="built_in">ls</span> -Z ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修复上下文</span></span><br><span class="line">restorecon -r ~/.ssh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确认密钥格式正确</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 密钥格式应为：</span></span><br><span class="line">ssh-rsa AAAAB3N.... user@host</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="7-3-防火墙阻止"><a href="#7-3-防火墙阻止" class="headerlink" title="7.3 防火墙阻止"></a>7.3 防火墙阻止</h3><p>确认防火墙允许 SSH 端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查防火墙状态</span></span><br><span class="line">ufw status  <span class="comment"># Ubuntu</span></span><br><span class="line">firewall-cmd --list-all  <span class="comment"># CentOS/RHEL</span></span><br><span class="line">iptables -L  <span class="comment"># 通用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-SSH-工具与扩展"><a href="#8-SSH-工具与扩展" class="headerlink" title="8. SSH 工具与扩展"></a>8. SSH 工具与扩展</h2><h3 id="8-1-WinSCP-与-PuTTY-配置"><a href="#8-1-WinSCP-与-PuTTY-配置" class="headerlink" title="8.1 WinSCP 与 PuTTY 配置"></a>8.1 WinSCP 与 PuTTY 配置</h3><p>Windows 用户可以通过配置 PuTTY 和 WinSCP 使用密钥认证：</p>
+<ol>
+<li>使用 PuTTYgen 转换密钥格式</li>
+<li>在 PuTTY&#x2F;WinSCP 连接设置中配置私钥</li>
+</ol>
+<h3 id="8-2-使用-SSH-隧道"><a href="#8-2-使用-SSH-隧道" class="headerlink" title="8.2 使用 SSH 隧道"></a>8.2 使用 SSH 隧道</h3><p>创建端口转发隧道：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地端口转发</span></span><br><span class="line">ssh -L 8080:internal_server:80 user@server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 远程端口转发</span></span><br><span class="line">ssh -R 8080:localhost:80 user@server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 动态端口转发 (SOCKS代理)</span></span><br><span class="line">ssh -D 1080 user@server</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-免密码使用-sudo"><a href="#8-3-免密码使用-sudo" class="headerlink" title="8.3 免密码使用 sudo"></a>8.3 免密码使用 sudo</h3><p>允许特定用户或组使用 sudo 而无需输入密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑sudoers文件</span></span><br><span class="line">visudo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加规则</span></span><br><span class="line">username ALL=(ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适当配置 SSH 安全设置对于服务器安全至关重要。通过本文介绍的最佳实践，你可以显著提高 SSH 服务的安全性，降低被攻击的风险。记住，安全是一个持续的过程，定期更新系统和审查安全策略同样重要。</p>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.openssh.com/manual.html">OpenSSH 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://infosec.mozilla.org/guidelines/openssh">Mozilla SSH 指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.fail2ban.org/wiki/index.php/Main_Page">Fail2Ban 文档</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/security/" rel="tag"># security</a>
+              <a href="/tags/ssh/" rel="tag"># ssh</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/28/linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="prev" title="Linux用户权限进阶管理">
+                  <i class="fa fa-angle-left"></i> Linux用户权限进阶管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/29/vps/%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/" rel="next" title="网站服务器配置完全指南">
+                  网站服务器配置完全指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

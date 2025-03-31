@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AI 生成 Linux用户权限进阶管理在Linux系统中，权限管理是系统安全的基础。本文将从基础概念到高级应用，全面介绍Linux的用户、组和文件权限管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux用户权限进阶管理">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/28/linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="AI 生成 Linux用户权限进阶管理在Linux系统中，权限管理是系统安全的基础。本文将从基础概念到高级应用，全面介绍Linux的用户、组和文件权限管理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-27T17:00:01.000Z">
+<meta property="article:modified_time" content="2025-03-27T17:00:01.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="security">
+<meta property="article:tag" content="permissions">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/28/linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/28/linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/","path":"2025/03/28/linux/Linux用户权限管理/","title":"Linux用户权限进阶管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux用户权限进阶管理 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E8%BF%9B%E9%98%B6%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">Linux用户权限进阶管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">1. 用户和组基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%94%A8%E6%88%B7%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 用户类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%94%A8%E6%88%B7%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 用户相关文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 用户管理命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E7%BB%84%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 组管理命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E5%9F%BA%E7%A1%80"><span class="nav-number">1.2.</span> <span class="nav-text">2. 文件权限基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E6%9D%83%E9%99%90%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 基本权限类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 查看文件权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%9B%B4%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 更改文件权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%9B%B4%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%80%E6%9C%89%E8%80%85%E5%92%8C%E7%BB%84"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 更改文件所有者和组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90"><span class="nav-number">1.3.</span> <span class="nav-text">3. 特殊权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SUID-Set-User-ID"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 SUID (Set User ID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-SGID-Set-Group-ID"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 SGID (Set Group ID)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Sticky-Bit"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Sticky Bit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%AB%98%E7%BA%A7%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4. 高级权限控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%88%97%E8%A1%A8-ACL"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 访问控制列表 (ACL)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-chattr%E5%92%8Clsattr"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 chattr和lsattr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-capabilities"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 capabilities</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">5. 用户权限的高级应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-sudo%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 sudo配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-RBAC%EF%BC%88%E5%9F%BA%E4%BA%8E%E8%A7%92%E8%89%B2%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%EF%BC%89"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 RBAC（基于角色的访问控制）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AppArmor-Ubuntu"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">AppArmor (Ubuntu)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SELinux-CentOS-RHEL"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">SELinux (CentOS&#x2F;RHEL)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-PAM-Pluggable-Authentication-Modules"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 PAM (Pluggable Authentication Modules)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90"><span class="nav-number">1.6.</span> <span class="nav-text">6. 文件系统权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%8C%82%E8%BD%BD%E9%80%89%E9%A1%B9"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 文件系统挂载选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8A%A0%E5%AF%86"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 文件系统加密</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E5%92%8C%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.7.</span> <span class="nav-text">7. 实用技巧和最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E6%9F%A5%E6%89%BE%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E6%96%87%E4%BB%B6"><span class="nav-number">1.7.1.</span> <span class="nav-text">7.1 查找特殊权限文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E6%81%A2%E5%A4%8D%E9%94%99%E8%AF%AF%E7%9A%84%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.7.2.</span> <span class="nav-text">7.2 恢复错误的权限设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E6%9C%80%E4%BD%B3%E5%AE%89%E5%85%A8%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.7.3.</span> <span class="nav-text">7.3 最佳安全实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.8.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/28/linux/Linux%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux用户权限进阶管理 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux用户权限进阶管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-28 01:00:01" itemprop="dateCreated datePublished" datetime="2025-03-28T01:00:01+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-28 01:00:01" itemprop="dateModified" datetime="2025-03-28T01:00:01+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>AI 生成</p>
+<h1 id="Linux用户权限进阶管理"><a href="#Linux用户权限进阶管理" class="headerlink" title="Linux用户权限进阶管理"></a>Linux用户权限进阶管理</h1><p>在Linux系统中，权限管理是系统安全的基础。本文将从基础概念到高级应用，全面介绍Linux的用户、组和文件权限管理。</p>
+<span id="more"></span>
+
+<h2 id="1-用户和组基础"><a href="#1-用户和组基础" class="headerlink" title="1. 用户和组基础"></a>1. 用户和组基础</h2><h3 id="1-1-用户类型"><a href="#1-1-用户类型" class="headerlink" title="1.1 用户类型"></a>1.1 用户类型</h3><p>Linux系统中有两种主要用户类型：</p>
+<ul>
+<li><strong>系统用户</strong>：UID通常小于1000，用于运行服务和守护进程</li>
+<li><strong>普通用户</strong>：UID通常从1000开始，用于日常登录和操作</li>
+</ul>
+<p>特殊用户：</p>
+<ul>
+<li><strong>root用户</strong>：超级管理员，UID为0，拥有系统的完全控制权</li>
+<li><strong>nobody用户</strong>：最小权限用户，通常用于运行不需要特殊权限的服务</li>
+</ul>
+<h3 id="1-2-用户相关文件"><a href="#1-2-用户相关文件" class="headerlink" title="1.2 用户相关文件"></a>1.2 用户相关文件</h3><ul>
+<li><code>/etc/passwd</code>：存储用户账号信息</li>
+<li><code>/etc/shadow</code>：存储用户密码信息（加密）</li>
+<li><code>/etc/group</code>：存储组信息</li>
+<li><code>/etc/gshadow</code>：存储组密码信息</li>
+<li><code>/etc/login.defs</code>：用户和组配置的默认值</li>
+<li><code>/etc/skel/</code>：新用户主目录的模板目录</li>
+</ul>
+<h3 id="1-3-用户管理命令"><a href="#1-3-用户管理命令" class="headerlink" title="1.3 用户管理命令"></a>1.3 用户管理命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建用户</span></span><br><span class="line">useradd username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建用户并设置主目录、shell等</span></span><br><span class="line">useradd -m -d /home/username -s /bin/bash -c <span class="string">&quot;Full Name&quot;</span> username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置或修改密码</span></span><br><span class="line">passwd username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改用户信息</span></span><br><span class="line">usermod -c <span class="string">&quot;New Full Name&quot;</span> username</span><br><span class="line">usermod -s /bin/zsh username  <span class="comment"># 更改shell</span></span><br><span class="line">usermod -L username  <span class="comment"># 锁定账号</span></span><br><span class="line">usermod -U username  <span class="comment"># 解锁账号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除用户</span></span><br><span class="line">userdel username</span><br><span class="line">userdel -r username  <span class="comment"># 同时删除用户的主目录</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-组管理命令"><a href="#1-4-组管理命令" class="headerlink" title="1.4 组管理命令"></a>1.4 组管理命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建新组</span></span><br><span class="line">groupadd groupname</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将用户添加到组</span></span><br><span class="line">usermod -aG groupname username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看用户所属的组</span></span><br><span class="line"><span class="built_in">groups</span> username</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改组信息</span></span><br><span class="line">groupmod -n newname oldname</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除组</span></span><br><span class="line">groupdel groupname</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-文件权限基础"><a href="#2-文件权限基础" class="headerlink" title="2. 文件权限基础"></a>2. 文件权限基础</h2><h3 id="2-1-基本权限类型"><a href="#2-1-基本权限类型" class="headerlink" title="2.1 基本权限类型"></a>2.1 基本权限类型</h3><p>Linux文件有三种基本权限：</p>
+<ul>
+<li><code>r</code> (read)：读取权限，数值为4</li>
+<li><code>w</code> (write)：写入权限，数值为2</li>
+<li><code>x</code> (execute)：执行权限，数值为1</li>
+</ul>
+<p>每个文件有三种权限级别：</p>
+<ul>
+<li>所有者权限 (user&#x2F;owner)</li>
+<li>组权限 (group)</li>
+<li>其他人权限 (others)</li>
+</ul>
+<h3 id="2-2-查看文件权限"><a href="#2-2-查看文件权限" class="headerlink" title="2.2 查看文件权限"></a>2.2 查看文件权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l filename</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-- 1 user group 4096 Jan 1 10:00 filename</span><br></pre></td></tr></table></figure>
+
+<p>权限说明：</p>
+<ul>
+<li>第1位：文件类型（<code>-</code>：普通文件，<code>d</code>：目录，<code>l</code>：链接，等）</li>
+<li>第2-4位：所有者权限</li>
+<li>第5-7位：组权限</li>
+<li>第8-10位：其他人权限</li>
+</ul>
+<h3 id="2-3-更改文件权限"><a href="#2-3-更改文件权限" class="headerlink" title="2.3 更改文件权限"></a>2.3 更改文件权限</h3><p>使用chmod命令更改文件权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数字表示法</span></span><br><span class="line"><span class="built_in">chmod</span> 750 filename  <span class="comment"># rwxr-x---</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 符号表示法</span></span><br><span class="line"><span class="built_in">chmod</span> u+x filename  <span class="comment"># 给所有者添加执行权限</span></span><br><span class="line"><span class="built_in">chmod</span> g-w filename  <span class="comment"># 移除组的写入权限</span></span><br><span class="line"><span class="built_in">chmod</span> o=r filename  <span class="comment"># 设置其他人只有读取权限</span></span><br><span class="line"><span class="built_in">chmod</span> a+x filename  <span class="comment"># 给所有人添加执行权限</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-更改文件所有者和组"><a href="#2-4-更改文件所有者和组" class="headerlink" title="2.4 更改文件所有者和组"></a>2.4 更改文件所有者和组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更改所有者</span></span><br><span class="line"><span class="built_in">chown</span> username filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更改组</span></span><br><span class="line"><span class="built_in">chgrp</span> groupname filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时更改所有者和组</span></span><br><span class="line"><span class="built_in">chown</span> username:groupname filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归更改目录和其内容</span></span><br><span class="line"><span class="built_in">chown</span> -R username:groupname directory</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-特殊权限"><a href="#3-特殊权限" class="headerlink" title="3. 特殊权限"></a>3. 特殊权限</h2><h3 id="3-1-SUID-Set-User-ID"><a href="#3-1-SUID-Set-User-ID" class="headerlink" title="3.1 SUID (Set User ID)"></a>3.1 SUID (Set User ID)</h3><p>当文件被执行时，进程将以文件所有者的权限运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置SUID</span></span><br><span class="line"><span class="built_in">chmod</span> u+s filename</span><br><span class="line"><span class="built_in">chmod</span> 4755 filename  <span class="comment"># 数字表示法</span></span><br></pre></td></tr></table></figure>
+
+<p>示例输出：<code>-rwsr-xr-x</code>（所有者执行位显示为<code>s</code>）</p>
+<p>适用场景：允许普通用户执行需要更高权限的命令，如<code>passwd</code>命令。</p>
+<h3 id="3-2-SGID-Set-Group-ID"><a href="#3-2-SGID-Set-Group-ID" class="headerlink" title="3.2 SGID (Set Group ID)"></a>3.2 SGID (Set Group ID)</h3><p>应用于文件：执行时进程将以文件所属组的权限运行。<br>应用于目录：在该目录中创建的新文件将继承目录的组。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置SGID</span></span><br><span class="line"><span class="built_in">chmod</span> g+s directory</span><br><span class="line"><span class="built_in">chmod</span> 2755 directory  <span class="comment"># 数字表示法</span></span><br></pre></td></tr></table></figure>
+
+<p>示例输出：<code>-rwxr-sr-x</code>（组执行位显示为<code>s</code>）</p>
+<p>适用场景：团队协作目录，确保所有文件属于同一个组。</p>
+<h3 id="3-3-Sticky-Bit"><a href="#3-3-Sticky-Bit" class="headerlink" title="3.3 Sticky Bit"></a>3.3 Sticky Bit</h3><p>主要应用于目录。设置后，只有文件所有者、目录所有者或root可以删除或重命名目录中的文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置Sticky Bit</span></span><br><span class="line"><span class="built_in">chmod</span> +t directory</span><br><span class="line"><span class="built_in">chmod</span> 1755 directory  <span class="comment"># 数字表示法</span></span><br></pre></td></tr></table></figure>
+
+<p>示例输出：<code>-rwxr-xr-t</code>（其他人执行位显示为<code>t</code>）</p>
+<p>适用场景：共享目录如<code>/tmp</code>，防止用户删除他人的文件。</p>
+<h2 id="4-高级权限控制"><a href="#4-高级权限控制" class="headerlink" title="4. 高级权限控制"></a>4. 高级权限控制</h2><h3 id="4-1-访问控制列表-ACL"><a href="#4-1-访问控制列表-ACL" class="headerlink" title="4.1 访问控制列表 (ACL)"></a>4.1 访问控制列表 (ACL)</h3><p>ACL提供了比传统权限更精细的控制，允许为特定用户或组设置权限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装ACL工具</span></span><br><span class="line">apt install acl  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">yum install acl  <span class="comment"># CentOS/RHEL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看文件的ACL</span></span><br><span class="line">getfacl filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置用户ACL</span></span><br><span class="line">setfacl -m u:username:rwx filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置组ACL</span></span><br><span class="line">setfacl -m g:groupname:rx filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除特定ACL</span></span><br><span class="line">setfacl -x u:username filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 递归设置目录ACL</span></span><br><span class="line">setfacl -R -m u:username:rwx directory</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置默认ACL（新创建的文件自动继承）</span></span><br><span class="line">setfacl -d -m u:username:rwx directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-chattr和lsattr"><a href="#4-2-chattr和lsattr" class="headerlink" title="4.2 chattr和lsattr"></a>4.2 chattr和lsattr</h3><p>chattr命令可以设置文件的特殊属性，如防止删除或修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置不可修改属性</span></span><br><span class="line">chattr +i filename  <span class="comment"># 文件不能被修改、删除、重命名或链接</span></span><br><span class="line">chattr +a filename  <span class="comment"># 只能追加内容，不能删除或修改现有内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看文件特殊属性</span></span><br><span class="line">lsattr filename</span><br></pre></td></tr></table></figure>
+
+<p>常用属性：</p>
+<ul>
+<li><code>i</code> (immutable)：不可变</li>
+<li><code>a</code> (append-only)：只追加</li>
+<li><code>s</code> (secure deletion)：安全删除</li>
+<li><code>u</code> (undeletable)：不可删除</li>
+</ul>
+<h3 id="4-3-capabilities"><a href="#4-3-capabilities" class="headerlink" title="4.3 capabilities"></a>4.3 capabilities</h3><p>capabilities允许将特定的root权限分配给普通用户程序，而不需要设置SUID位。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装capabilities工具</span></span><br><span class="line">apt install libcap2-bin  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">yum install libcap      <span class="comment"># CentOS/RHEL</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看文件capabilities</span></span><br><span class="line"><span class="built_in">getcap</span> /path/to/file</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置capabilities</span></span><br><span class="line"><span class="built_in">setcap</span> cap_net_raw+ep /path/to/program</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除capabilities</span></span><br><span class="line"><span class="built_in">setcap</span> -r /path/to/program</span><br></pre></td></tr></table></figure>
+
+<p>常用capabilities：</p>
+<ul>
+<li><code>cap_net_raw</code>：允许使用原始套接字</li>
+<li><code>cap_net_bind_service</code>：允许绑定小于1024的端口</li>
+<li><code>cap_sys_ptrace</code>：允许调试程序</li>
+<li><code>cap_sys_admin</code>：允许执行系统管理操作</li>
+</ul>
+<h2 id="5-用户权限的高级应用"><a href="#5-用户权限的高级应用" class="headerlink" title="5. 用户权限的高级应用"></a>5. 用户权限的高级应用</h2><h3 id="5-1-sudo配置"><a href="#5-1-sudo配置" class="headerlink" title="5.1 sudo配置"></a>5.1 sudo配置</h3><p>sudo允许普通用户以root或其他用户身份执行命令。</p>
+<p>基本配置（通过<code>visudo</code>编辑<code>/etc/sudoers</code>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 允许用户执行所有命令</span></span><br><span class="line">username ALL=(ALL) ALL</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许用户无需密码执行所有命令</span></span><br><span class="line">username ALL=(ALL) NOPASSWD: ALL</span><br><span class="line"></span><br><span class="line"><span class="comment"># 限制用户只能执行特定命令</span></span><br><span class="line">username ALL=(ALL) /bin/ls, /usr/bin/apt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许组内所有用户执行命令</span></span><br><span class="line">%admin ALL=(ALL) ALL</span><br></pre></td></tr></table></figure>
+
+<p>更高级的sudo配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 限制环境变量</span></span><br><span class="line">Defaults env_reset</span><br><span class="line">Defaults env_keep=<span class="string">&quot;HOME PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 锁定特定终端</span></span><br><span class="line">Defaults requiretty</span><br><span class="line"></span><br><span class="line"><span class="comment"># 密码尝试次数</span></span><br><span class="line">Defaults passwd_tries=3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 密码锁定时间</span></span><br><span class="line">Defaults passwd_timeout=5</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-RBAC（基于角色的访问控制）"><a href="#5-2-RBAC（基于角色的访问控制）" class="headerlink" title="5.2 RBAC（基于角色的访问控制）"></a>5.2 RBAC（基于角色的访问控制）</h3><p>通过AppArmor或SELinux实现更复杂的RBAC策略。</p>
+<h4 id="AppArmor-Ubuntu"><a href="#AppArmor-Ubuntu" class="headerlink" title="AppArmor (Ubuntu)"></a>AppArmor (Ubuntu)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查状态</span></span><br><span class="line">aa-status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑配置文件</span></span><br><span class="line">vim /etc/apparmor.d/usr.bin.example</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置示例</span></span><br><span class="line">profile example /usr/bin/example &#123;</span><br><span class="line">  /etc/example.conf r,</span><br><span class="line">  /var/log/example.log w,</span><br><span class="line">  deny /etc/shadow r,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载配置</span></span><br><span class="line">apparmor_parser -r /etc/apparmor.d/usr.bin.example</span><br></pre></td></tr></table></figure>
+
+<h4 id="SELinux-CentOS-RHEL"><a href="#SELinux-CentOS-RHEL" class="headerlink" title="SELinux (CentOS&#x2F;RHEL)"></a>SELinux (CentOS&#x2F;RHEL)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查状态</span></span><br><span class="line">sestatus</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置文件上下文</span></span><br><span class="line"><span class="built_in">chcon</span> -t httpd_sys_content_t /var/www/html/file.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建策略模块</span></span><br><span class="line">audit2allow -M mymodule -i /var/log/audit/audit.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载策略模块</span></span><br><span class="line">semodule -i mymodule.pp</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-PAM-Pluggable-Authentication-Modules"><a href="#5-3-PAM-Pluggable-Authentication-Modules" class="headerlink" title="5.3 PAM (Pluggable Authentication Modules)"></a>5.3 PAM (Pluggable Authentication Modules)</h3><p>PAM允许自定义认证机制。</p>
+<p>PAM配置示例（<code>/etc/pam.d/common-auth</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 设置密码尝试次数</span><br><span class="line">auth required pam_tally2.so deny=5 unlock_time=300</span><br><span class="line"></span><br><span class="line"># 设置密码复杂度要求</span><br><span class="line">password required pam_pwquality.so retry=3 minlen=8 difok=3</span><br></pre></td></tr></table></figure>
+
+<p>常用PAM模块：</p>
+<ul>
+<li><code>pam_unix</code>：传统Unix密码验证</li>
+<li><code>pam_ldap</code>：LDAP验证</li>
+<li><code>pam_google_authenticator</code>：双因素验证</li>
+<li><code>pam_limits</code>：资源限制控制</li>
+</ul>
+<h2 id="6-文件系统权限"><a href="#6-文件系统权限" class="headerlink" title="6. 文件系统权限"></a>6. 文件系统权限</h2><h3 id="6-1-文件系统挂载选项"><a href="#6-1-文件系统挂载选项" class="headerlink" title="6.1 文件系统挂载选项"></a>6.1 文件系统挂载选项</h3><p>通过挂载选项控制文件系统权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挂载分区并禁止执行程序</span></span><br><span class="line">mount -o noexec /dev/sdb1 /mnt/data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁止设置SUID位</span></span><br><span class="line">mount -o nosuid /dev/sdb1 /mnt/data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁止设置设备文件</span></span><br><span class="line">mount -o nodev /dev/sdb1 /mnt/data</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>/etc/fstab</code>使配置永久生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdb1 /mnt/data ext4 defaults,noexec,nosuid,nodev 0 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-文件系统加密"><a href="#6-2-文件系统加密" class="headerlink" title="6.2 文件系统加密"></a>6.2 文件系统加密</h3><p>使用LUKS加密敏感分区：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建加密容器</span></span><br><span class="line">cryptsetup luksFormat /dev/sdb1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开加密设备</span></span><br><span class="line">cryptsetup luksOpen /dev/sdb1 encrypted_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件系统</span></span><br><span class="line">mkfs.ext4 /dev/mapper/encrypted_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载</span></span><br><span class="line">mount /dev/mapper/encrypted_data /mnt/secure</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭</span></span><br><span class="line">umount /mnt/secure</span><br><span class="line">cryptsetup luksClose encrypted_data</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-实用技巧和最佳实践"><a href="#7-实用技巧和最佳实践" class="headerlink" title="7. 实用技巧和最佳实践"></a>7. 实用技巧和最佳实践</h2><h3 id="7-1-查找特殊权限文件"><a href="#7-1-查找特殊权限文件" class="headerlink" title="7.1 查找特殊权限文件"></a>7.1 查找特殊权限文件</h3><p>查找系统中设置了SUID的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -perm -4000 -<span class="built_in">ls</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>查找设置了SGID的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -perm -2000 -<span class="built_in">ls</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>查找设置了Sticky Bit的目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> d -perm -1000 -<span class="built_in">ls</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-恢复错误的权限设置"><a href="#7-2-恢复错误的权限设置" class="headerlink" title="7.2 恢复错误的权限设置"></a>7.2 恢复错误的权限设置</h3><p>如果不小心更改了系统文件的权限，可能导致系统问题。以下是一些恢复命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 恢复/bin目录的默认权限</span></span><br><span class="line"><span class="built_in">chmod</span> 755 /bin</span><br><span class="line"><span class="built_in">chmod</span> 755 /bin/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复sudoers文件</span></span><br><span class="line">pkexec <span class="built_in">chmod</span> 440 /etc/sudoers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复SSH密钥权限</span></span><br><span class="line"><span class="built_in">chmod</span> 700 ~/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 600 ~/.ssh/id_rsa</span><br><span class="line"><span class="built_in">chmod</span> 644 ~/.ssh/id_rsa.pub</span><br><span class="line"><span class="built_in">chmod</span> 644 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-3-最佳安全实践"><a href="#7-3-最佳安全实践" class="headerlink" title="7.3 最佳安全实践"></a>7.3 最佳安全实践</h3><ol>
+<li><p><strong>最小权限原则</strong>：授予完成任务所需的最小权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建专用服务用户，不赋予登录shell</span></span><br><span class="line">useradd -r -s /usr/sbin/nologin servicename</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>限制SUID文件</strong>：定期审查并限制SUID文件数量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 移除不必要的SUID权限</span></span><br><span class="line"><span class="built_in">chmod</span> u-s /path/to/program</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置正确的umask</strong>：控制新创建文件的默认权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在/etc/profile或~/.bashrc设置</span></span><br><span class="line"><span class="built_in">umask</span> 027  <span class="comment"># 新文件权限为750</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>定期安全审计</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找世界可写的文件</span></span><br><span class="line">find / -<span class="built_in">type</span> f -perm -o+w -not -path <span class="string">&quot;/proc/*&quot;</span> -<span class="built_in">ls</span> 2&gt;/dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找无主文件</span></span><br><span class="line">find / -nouser -o -nogroup -<span class="built_in">ls</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Linux权限系统设计精巧而强大，从基本的读&#x2F;写&#x2F;执行权限到高级的ACL、capabilities和强制访问控制，提供了全面的安全保障。掌握这些知识对于维护服务器安全、保护敏感数据和实现多用户协作至关重要。</p>
+<p>记住，权限管理是一个平衡的艺术—既要确保安全性，又要保持系统的可用性和灵活性。通过定期审计和持续改进，可以构建一个既安全又实用的Linux系统。 </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/security/" rel="tag"># security</a>
+              <a href="/tags/permissions/" rel="tag"># permissions</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/28/linux/Linux%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE/" rel="prev" title="Linux防火墙高级配置">
+                  <i class="fa fa-angle-left"></i> Linux防火墙高级配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/28/linux/SSH%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/" rel="next" title="SSH安全最佳实践">
+                  SSH安全最佳实践 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

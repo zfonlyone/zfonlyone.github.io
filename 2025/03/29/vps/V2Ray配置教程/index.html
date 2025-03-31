@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.ico">
+  <link rel="mask-icon" href="/img/favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"zfonlyone.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="AI 生成 V2Ray 配置完全指南V2Ray 是一个优秀的网络代理工具，支持多种协议，安全性高且功能丰富。本文将详细介绍 V2Ray 的安装、配置和使用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V2Ray配置教程">
+<meta property="og:url" content="https://zfonlyone.github.io/2025/03/29/vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="代码诗集">
+<meta property="og:description" content="AI 生成 V2Ray 配置完全指南V2Ray 是一个优秀的网络代理工具，支持多种协议，安全性高且功能丰富。本文将详细介绍 V2Ray 的安装、配置和使用方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-28T21:00:01.000Z">
+<meta property="article:modified_time" content="2025-03-28T21:00:01.000Z">
+<meta property="article:author" content="zfonlyone">
+<meta property="article:tag" content="AI生成">
+<meta property="article:tag" content="code">
+<meta property="article:tag" content="proxy">
+<meta property="article:tag" content="v2ray">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://zfonlyone.github.io/2025/03/29/vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://zfonlyone.github.io/2025/03/29/vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/","path":"2025/03/29/vps/V2Ray配置教程/","title":"V2Ray配置教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>V2Ray配置教程 | 代码诗集</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">代码诗集</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术与生活</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#V2Ray-%E9%85%8D%E7%BD%AE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">V2Ray 配置完全指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">2. 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E8%84%9A%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">官方脚本安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">手动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.3.</span> <span class="nav-text">Docker 安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">3. 基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-VMess-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 VMess 服务端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-VMess-WebSocket-TLS-%E6%8E%A8%E8%8D%90%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 VMess + WebSocket + TLS (推荐配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-VLESS-TCP-TLS-XTLS"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 VLESS + TCP + TLS + XTLS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE%E8%A7%A3%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">4. 常用协议解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-VMess"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 VMess</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-VLESS"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 VLESS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Shadowsocks"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 Shadowsocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Trojan"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 Trojan</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.5.</span> <span class="nav-text">5. 网络传输协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-TCP"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 TCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-WebSocket"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 WebSocket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-HTTP-2"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 HTTP&#x2F;2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-QUIC"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 QUIC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BC%AA%E8%A3%85%E4%B8%8E%E8%B7%AF%E7%94%B1"><span class="nav-number">1.6.</span> <span class="nav-text">6. 伪装与路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E7%BD%91%E7%AB%99%E4%BC%AA%E8%A3%85"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 网站伪装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E9%AB%98%E7%BA%A7%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 高级路由功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="nav-number">1.7.</span> <span class="nav-text">7. 常见问题与故障排除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="nav-number">1.7.1.</span> <span class="nav-text">连接问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.7.2.</span> <span class="nav-text">性能优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number">1.8.</span> <span class="nav-text">8. 服务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#systemd-%E7%AE%A1%E7%90%86"><span class="nav-number">1.8.1.</span> <span class="nav-text">systemd 管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%9F%A5%E7%9C%8B"><span class="nav-number">1.8.2.</span> <span class="nav-text">日志查看</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%AE%9A%E6%9C%9F%E7%BB%B4%E6%8A%A4"><span class="nav-number">1.9.</span> <span class="nav-text">9. 定期维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.10.</span> <span class="nav-text">10. 客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-macOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.10.1.</span> <span class="nav-text">Windows&#x2F;macOS 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.10.2.</span> <span class="nav-text">Android 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.10.3.</span> <span class="nav-text">iOS 客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.11.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zfonlyone</p>
+  <div class="site-description" itemprop="description">记录技术学习与个人生活</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://zfonlyone.github.io/2025/03/29/vps/V2Ray%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="zfonlyone">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代码诗集">
+      <meta itemprop="description" content="记录技术学习与个人生活">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="V2Ray配置教程 | 代码诗集">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          V2Ray配置教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-29 05:00:01" itemprop="dateCreated datePublished" datetime="2025-03-29T05:00:01+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-29 05:00:01" itemprop="dateModified" datetime="2025-03-29T05:00:01+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vps/" itemprop="url" rel="index"><span itemprop="name">vps</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>AI 生成</p>
+<h1 id="V2Ray-配置完全指南"><a href="#V2Ray-配置完全指南" class="headerlink" title="V2Ray 配置完全指南"></a>V2Ray 配置完全指南</h1><p>V2Ray 是一个优秀的网络代理工具，支持多种协议，安全性高且功能丰富。本文将详细介绍 V2Ray 的安装、配置和使用方法。</p>
+<span id="more"></span>
+
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>V2Ray 具有以下特点：</p>
+<ul>
+<li>多入口多出口: 一个 V2Ray 进程可以同时支持多个入站和出站协议</li>
+<li>可定制化路由: 可以按域名、IP、协议等路由流量</li>
+<li>多协议支持: VMess、Shadowsocks、Trojan、VLESS 等</li>
+<li>隐蔽性好: 流量混淆，可伪装成正常网站流量</li>
+</ul>
+<h2 id="2-安装"><a href="#2-安装" class="headerlink" title="2. 安装"></a>2. 安装</h2><h3 id="官方脚本安装"><a href="#官方脚本安装" class="headerlink" title="官方脚本安装"></a>官方脚本安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 curl (如已安装可跳过)</span></span><br><span class="line">apt update &amp;&amp; apt install -y curl <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">yum install -y curl <span class="comment"># CentOS</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 官方安装脚本</span></span><br><span class="line">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载最新发行版</span></span><br><span class="line">wget https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压文件</span></span><br><span class="line">unzip v2ray-linux-64.zip -d /usr/local/v2ray</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建配置目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /usr/local/etc/v2ray</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制配置文件</span></span><br><span class="line"><span class="built_in">cp</span> /usr/local/v2ray/config.json /usr/local/etc/v2ray/</span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-安装"><a href="#Docker-安装" class="headerlink" title="Docker 安装"></a>Docker 安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取官方镜像</span></span><br><span class="line">docker pull v2fly/v2fly-core</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d --name v2ray \</span><br><span class="line">  -v /path/to/config.json:/etc/v2ray/config.json \</span><br><span class="line">  -p 10086:10086 \</span><br><span class="line">  v2fly/v2fly-core</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-基本配置"><a href="#3-基本配置" class="headerlink" title="3. 基本配置"></a>3. 基本配置</h2><p>V2Ray 的配置文件为 JSON 格式，位于 <code>/usr/local/etc/v2ray/config.json</code>。以下是一些常见配置示例。</p>
+<h3 id="3-1-VMess-服务端配置"><a href="#3-1-VMess-服务端配置" class="headerlink" title="3.1 VMess 服务端配置"></a>3.1 VMess 服务端配置</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">10086</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vmess&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;clients&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;alterId&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;freedom&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：<code>id</code> 是一个 UUID，可以使用 <code>cat /proc/sys/kernel/random/uuid</code> 命令生成。</p>
+</blockquote>
+<h3 id="3-2-VMess-WebSocket-TLS-推荐配置"><a href="#3-2-VMess-WebSocket-TLS-推荐配置" class="headerlink" title="3.2 VMess + WebSocket + TLS (推荐配置)"></a>3.2 VMess + WebSocket + TLS (推荐配置)</h3><p>这是一个常用的配置，通过 WebSocket 和 TLS 提高隐蔽性和安全性。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">443</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vmess&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;clients&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;alterId&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;streamSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ws&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;wsSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/ray&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;security&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tls&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;tlsSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;certificates&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;certificateFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/path/to/fullchain.pem&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;keyFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/path/to/privkey.pem&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;freedom&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-VLESS-TCP-TLS-XTLS"><a href="#3-3-VLESS-TCP-TLS-XTLS" class="headerlink" title="3.3 VLESS + TCP + TLS + XTLS"></a>3.3 VLESS + TCP + TLS + XTLS</h3><p>VLESS 是 V2Ray 的一个轻量协议，结合 XTLS 可以获得极高的性能。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">443</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vless&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;clients&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;flow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls-rprx-direct&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;decryption&quot;</span><span class="punctuation">:</span> <span class="string">&quot;none&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;streamSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tcp&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;security&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xtls&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;xtlsSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;alpn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;http/1.1&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;certificates&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;certificateFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/path/to/fullchain.pem&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;keyFile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/path/to/privkey.pem&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;freedom&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-常用协议解析"><a href="#4-常用协议解析" class="headerlink" title="4. 常用协议解析"></a>4. 常用协议解析</h2><h3 id="4-1-VMess"><a href="#4-1-VMess" class="headerlink" title="4.1 VMess"></a>4.1 VMess</h3><p>VMess 是 V2Ray 特有的加密通信协议：</p>
+<ul>
+<li>特点：加密数据包、防重放攻击、动态加密</li>
+<li>适用场景：一般网络环境</li>
+</ul>
+<h3 id="4-2-VLESS"><a href="#4-2-VLESS" class="headerlink" title="4.2 VLESS"></a>4.2 VLESS</h3><p>VLESS 是一个无加密的协议，通常与 TLS 配合使用：</p>
+<ul>
+<li>特点：更轻量、性能更好</li>
+<li>适用场景：需要高性能传输的环境</li>
+</ul>
+<h3 id="4-3-Shadowsocks"><a href="#4-3-Shadowsocks" class="headerlink" title="4.3 Shadowsocks"></a>4.3 Shadowsocks</h3><p>支持 Shadowsocks 协议，兼容各种 Shadowsocks 客户端：</p>
+<ul>
+<li>特点：兼容性好、配置简单</li>
+<li>适用场景：简单便捷的代理需求</li>
+</ul>
+<h3 id="4-4-Trojan"><a href="#4-4-Trojan" class="headerlink" title="4.4 Trojan"></a>4.4 Trojan</h3><p>Trojan 协议伪装成 HTTPS 流量：</p>
+<ul>
+<li>特点：难以被探测、流量特征类似普通 HTTPS</li>
+<li>适用场景：对抗深度包检测的环境</li>
+</ul>
+<h2 id="5-网络传输协议"><a href="#5-网络传输协议" class="headerlink" title="5. 网络传输协议"></a>5. 网络传输协议</h2><h3 id="5-1-TCP"><a href="#5-1-TCP" class="headerlink" title="5.1 TCP"></a>5.1 TCP</h3><p>最基本的传输协议：</p>
+<ul>
+<li>特点：稳定可靠</li>
+<li>适用场景：稳定网络环境</li>
+</ul>
+<h3 id="5-2-WebSocket"><a href="#5-2-WebSocket" class="headerlink" title="5.2 WebSocket"></a>5.2 WebSocket</h3><p>基于 HTTP 协议的长连接：</p>
+<ul>
+<li>特点：易于搭配 Web 服务器、支持 CDN 中转</li>
+<li>适用场景：需要与网站共存或使用 CDN 加速</li>
+</ul>
+<h3 id="5-3-HTTP-2"><a href="#5-3-HTTP-2" class="headerlink" title="5.3 HTTP&#x2F;2"></a>5.3 HTTP&#x2F;2</h3><p>HTTP&#x2F;2 协议传输：</p>
+<ul>
+<li>特点：多路复用、头部压缩</li>
+<li>适用场景：与网站共存且要求性能较高</li>
+</ul>
+<h3 id="5-4-QUIC"><a href="#5-4-QUIC" class="headerlink" title="5.4 QUIC"></a>5.4 QUIC</h3><p>基于 UDP 的传输协议：</p>
+<ul>
+<li>特点：低延迟、多路复用</li>
+<li>适用场景：网络波动较大的环境</li>
+</ul>
+<h2 id="6-伪装与路由"><a href="#6-伪装与路由" class="headerlink" title="6. 伪装与路由"></a>6. 伪装与路由</h2><h3 id="6-1-网站伪装"><a href="#6-1-网站伪装" class="headerlink" title="6.1 网站伪装"></a>6.1 网站伪装</h3><p>通过 Nginx 或 Caddy 进行网站伪装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 Nginx 反向代理 WebSocket</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen 443 ssl;</span><br><span class="line">    server_name yourdomain.com;</span><br><span class="line">    </span><br><span class="line">    ssl_certificate /path/to/fullchain.pem;</span><br><span class="line">    ssl_certificate_key /path/to/privkey.pem;</span><br><span class="line">    </span><br><span class="line">    location / &#123;</span><br><span class="line">        root /var/www/html;</span><br><span class="line">        index index.html;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    location /ray &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:10086;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        proxy_set_header Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">        proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-高级路由功能"><a href="#6-2-高级路由功能" class="headerlink" title="6.2 高级路由功能"></a>6.2 高级路由功能</h3><p>V2Ray 支持复杂的路由规则，可以按域名、IP 段、协议等进行路由：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;routing&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;domain&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;geosite:category-ads&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;block&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;geoip:private&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;domain&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;geosite:cn&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;geoip:cn&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;proxy&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vmess&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="comment">/* ... */</span><span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;freedom&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;block&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blackhole&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="7-常见问题与故障排除"><a href="#7-常见问题与故障排除" class="headerlink" title="7. 常见问题与故障排除"></a>7. 常见问题与故障排除</h2><h3 id="连接问题"><a href="#连接问题" class="headerlink" title="连接问题"></a>连接问题</h3><ol>
+<li><p><strong>连接被重置</strong></p>
+<ul>
+<li>检查防火墙是否开放相应端口</li>
+<li>确认配置文件中的 IP、端口是否正确</li>
+<li>尝试更换协议或传输方式</li>
+</ul>
+</li>
+<li><p><strong>TLS 握手失败</strong></p>
+<ul>
+<li>检查证书路径是否正确</li>
+<li>确认证书未过期</li>
+<li>验证域名是否与证书匹配</li>
+</ul>
+</li>
+<li><p><strong>客户端无法连接</strong></p>
+<ul>
+<li>检查客户端和服务端配置是否匹配</li>
+<li>确认网络连接是否稳定</li>
+<li>查看服务端日志排查问题</li>
+</ul>
+</li>
+</ol>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><ol>
+<li><p><strong>降低延迟</strong></p>
+<ul>
+<li>选择合适的协议，如 VLESS + XTLS</li>
+<li>使用 TCP 或 QUIC 传输</li>
+</ul>
+</li>
+<li><p><strong>提高隐蔽性</strong></p>
+<ul>
+<li>使用 WebSocket + TLS + Web 伪装</li>
+<li>配置路由规则避免特征明显</li>
+</ul>
+</li>
+<li><p><strong>增加稳定性</strong></p>
+<ul>
+<li>配置多出站代理作为备用</li>
+<li>定期更新 V2Ray 版本</li>
+</ul>
+</li>
+</ol>
+<h2 id="8-服务管理"><a href="#8-服务管理" class="headerlink" title="8. 服务管理"></a>8. 服务管理</h2><h3 id="systemd-管理"><a href="#systemd-管理" class="headerlink" title="systemd 管理"></a>systemd 管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 V2Ray</span></span><br><span class="line">systemctl start v2ray</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止 V2Ray</span></span><br><span class="line">systemctl stop v2ray</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启 V2Ray</span></span><br><span class="line">systemctl restart v2ray</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 V2Ray 状态</span></span><br><span class="line">systemctl status v2ray</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> v2ray</span><br></pre></td></tr></table></figure>
+
+<h3 id="日志查看"><a href="#日志查看" class="headerlink" title="日志查看"></a>日志查看</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看实时日志</span></span><br><span class="line">journalctl -u v2ray -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看最近 100 条日志</span></span><br><span class="line">journalctl -u v2ray -n 100</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-定期维护"><a href="#9-定期维护" class="headerlink" title="9. 定期维护"></a>9. 定期维护</h2><ol>
+<li><p><strong>更新 V2Ray</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方脚本更新</span></span><br><span class="line">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>更新 GeoIP 和 GeoSite 数据库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 v2ray-dat-updater</span></span><br><span class="line">curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh | bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>证书续期</strong>：如果使用 Let’s Encrypt 证书，确保定期更新</p>
+</li>
+</ol>
+<h2 id="10-客户端配置"><a href="#10-客户端配置" class="headerlink" title="10. 客户端配置"></a>10. 客户端配置</h2><h3 id="Windows-macOS-客户端"><a href="#Windows-macOS-客户端" class="headerlink" title="Windows&#x2F;macOS 客户端"></a>Windows&#x2F;macOS 客户端</h3><p>推荐使用 V2RayN (Windows) 或 V2RayX (macOS)，配置方法：</p>
+<ol>
+<li>添加 VMess&#x2F;VLESS 服务器</li>
+<li>填入服务端对应的地址、端口、ID 等信息</li>
+<li>选择对应的传输协议（WebSocket、TCP 等）</li>
+<li>如使用 TLS，确保启用 TLS 并填写正确的域名</li>
+</ol>
+<h3 id="Android-客户端"><a href="#Android-客户端" class="headerlink" title="Android 客户端"></a>Android 客户端</h3><p>推荐使用 V2RayNG，配置方法与桌面端类似：</p>
+<ol>
+<li>点击右上角 + 号添加配置</li>
+<li>手动配置或扫描二维码导入</li>
+<li>设置路由模式（如全局、绕过大陆等）</li>
+</ol>
+<h3 id="iOS-客户端"><a href="#iOS-客户端" class="headerlink" title="iOS 客户端"></a>iOS 客户端</h3><p>由于 App Store 限制，推荐使用 Shadowrocket：</p>
+<ol>
+<li>添加节点，选择 VMess&#x2F;VLESS 类型</li>
+<li>填写服务器信息和传输配置</li>
+<li>启用代理并选择路由策略</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>V2Ray 是一款功能强大、配置灵活的代理工具。通过合理配置，可以满足不同场景下的网络需求。本文介绍了 V2Ray 的基本安装、配置和使用方法，希望对你有所帮助。</p>
+<p>对于更多高级用法，建议查阅<a target="_blank" rel="noopener" href="https://www.v2fly.org/">V2Ray 官方文档</a>。 </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%94%9F%E6%88%90/" rel="tag"># AI生成</a>
+              <a href="/tags/code/" rel="tag"># code</a>
+              <a href="/tags/proxy/" rel="tag"># proxy</a>
+              <a href="/tags/v2ray/" rel="tag"># v2ray</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/29/vps/cloudflare%E9%85%8D%E7%BD%AE/" rel="prev" title="cloudflare配置">
+                  <i class="fa fa-angle-left"></i> cloudflare配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/29/vps/VPS%E9%85%8D%E7%BD%AE/" rel="next" title="VPS配置">
+                  VPS配置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">zfonlyone</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
